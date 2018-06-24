@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzEnterpriseSettingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzEnterpriseSetting">
+        <id column="id" property="id" />
+        <result column="enterprise_id" property="enterpriseId" />
+        <result column="sys_code" property="sysCode" />
+        <result column="website_title" property="websiteTitle" />
+        <result column="key_words" property="keyWords" />
+        <result column="website_name" property="websiteName" />
+        <result column="website_author" property="websiteAuthor" />
+        <result column="website_intro" property="websiteIntro" />
+        <result column="website_email" property="websiteEmail" />
+        <result column="website_phone" property="websitePhone" />
+        <result column="work_time" property="workTime" />
+        <result column="copyright" property="copyright" />
+        <result column="address" property="address" />
+        <result column="website_logo" property="websiteLogo" />
+        <result column="website_banner" property="websiteBanner" />
+        <result column="state" property="state" />
+        <result column="single_sign" property="singleSign" />
+        <result column="sys_user_id" property="sysUserId" />
+    </resultMap>
+
+</mapper>

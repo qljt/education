@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzSmsLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzSmsLog">
+        <id column="id" property="id" />
+        <result column="phone" property="phone" />
+        <result column="createtime" property="createtime" />
+        <result column="content" property="content" />
+        <result column="is_suc" property="isSuc" />
+        <result column="sys_code" property="sysCode" />
+    </resultMap>
+
+</mapper>
