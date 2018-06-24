@@ -29,24 +29,24 @@ import java.util.UUID;
 public class QzEnterpriseServiceImplTest {
     @Autowired
     private IQzEnterpriseService iQzEnterpriseService;
+
     @Test
-    public void getListTest(){
-        Map<String,Object> map = new HashMap<>();
-        map.put("enterprise_name","");
+    public void getListTest() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("enterprise_name", "");
         Result result = iQzEnterpriseService.getList(map);
         System.out.println(result);
     }
+
     @Test
-    public  void  saveTest(){
+    public void saveTest() {
         QzEnterprise qzEnterprise = new QzEnterprise();
       /*  String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         qzEnterprise.setId(uuid);
         qzEnterprise.setCreatetime(DateUtil.now());*/
-        for (int i = 0; i <100 ; i++) {
-            qzEnterprise.setEnterpriseName(String.valueOf(ToolUtils.getRandomChar()));
-            qzEnterprise.setSysCode(RandomUtil.randomString(4));
-            iQzEnterpriseService.save(qzEnterprise);
-        }
+        qzEnterprise.setEnterpriseName(String.valueOf(ToolUtils.getRandomChar()));
+        qzEnterprise.setSysCode(RandomUtil.randomString(4));
+        iQzEnterpriseService.save(qzEnterprise);
 
     }
 

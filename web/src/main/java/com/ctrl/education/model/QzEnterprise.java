@@ -26,7 +26,6 @@ public class QzEnterprise extends Model<QzEnterprise> {
 
     private static final long serialVersionUID = 1L;
     @TableId("id")
-    @NotNull(message = "id不可为空", groups = {AddGroup.class, UpdateGroup.class})
     private String id;
     @TableField("enterprise_name")
     @NotNull(message = "企业名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
