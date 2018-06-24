@@ -1,9 +1,11 @@
 package com.ctrl.education.controller;
 
 
+import com.sun.org.glassfish.external.statistics.annotations.Reset;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Controller;
  * @author liyang
  * @since 2018-06-23
  */
-@Controller
+@RestController
 @RequestMapping("/sysOffice")
 public class SysOfficeController {
 

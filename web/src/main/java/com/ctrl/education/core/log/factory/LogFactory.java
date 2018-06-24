@@ -3,7 +3,9 @@ package com.ctrl.education.core.log.factory;
 import com.ctrl.education.core.constant.LogSucceed;
 import com.ctrl.education.core.constant.LogType;
 import com.ctrl.education.core.constant.SysConstant;
+import com.ctrl.education.model.SysLog;
 import com.ctrl.education.model.SysLoginLog;
+import com.ctrl.education.model.SysUser;
 
 import java.util.Date;
 
@@ -18,18 +20,9 @@ public class LogFactory {
     /**
      * 创建操作日志
      */
-   /* public static OperationLog createOperationLog(LogType logType, Integer userId, String bussinessName, String clazzName, String methodName, String msg, LogSucceed succeed) {
-        OperationLog operationLog = new OperationLog();
-        operationLog.setLogtype(logType.getMessage());
-        operationLog.setLogname(bussinessName);
-        operationLog.setUserid(userId);
-        operationLog.setClassname(clazzName);
-        operationLog.setMethod(methodName);
-        operationLog.setCreatetime(new Date());
-        operationLog.setSucceed(succeed.getMessage());
-        operationLog.setMessage(msg);
-        return operationLog;
-    }*/
+    public static SysLog createOperationLog(SysLog sysLog) {
+        return sysLog;
+    }
 
     /**
      * 创建登录日志

@@ -7,6 +7,7 @@ import com.ctrl.education.dao.SysLogMapper;
 import com.ctrl.education.dao.SysLoginLogMapper;
 import com.ctrl.education.model.SysLog;
 import com.ctrl.education.model.SysLoginLog;
+import com.ctrl.education.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,12 +68,11 @@ public class LogTaskFactory {
         };
     }
 
-     /* public static TimerTask bussinessLog(final Integer userId, final String bussinessName, final String clazzName, final String methodName, final String msg) {
+      public static TimerTask bussinessLog(SysLog sysLog) {
         return new TimerTask() {
             @Override
             public void run() {
-                SysLog operationLog = LogFactory.createOperationLog(
-                        LogType.BUSSINESS, userId, bussinessName, clazzName, methodName, msg, LogSucceed.SUCCESS);
+                SysLog operationLog = LogFactory.createOperationLog(sysLog);
                 try {
                     operationLogMapper.insert(operationLog);
                 } catch (Exception e) {
@@ -82,7 +82,7 @@ public class LogTaskFactory {
         };
     }
 
-    public static TimerTask exceptionLog(final Integer userId, final Exception exception) {
+   /* public static TimerTask exceptionLog(final Integer userId, final Exception exception) {
         return new TimerTask() {
             @Override
             public void run() {

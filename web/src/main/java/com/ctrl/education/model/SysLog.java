@@ -20,9 +20,6 @@ import java.util.Date;
  * @author liyang
  * @since 2018-06-03
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("sys_log")
 public class SysLog extends Model<SysLog> {
 
@@ -41,7 +38,7 @@ public class SysLog extends Model<SysLog> {
      * 操作用户id
      */
     @TableField("user_id")
-    private Long userId;
+    private String userId;
     /**
      * 操作用户名
      */
@@ -82,4 +79,108 @@ public class SysLog extends Model<SysLog> {
         return this.id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getParams() {
+        return params;
+    }
+
+    public void setParams(String params) {
+        this.params = params;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    @Override
+    public String toString() {
+        return "SysLog{" +
+                "id=" + id +
+                ", type=" + type +
+                ", userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", operation='" + operation + '\'' +
+                ", method='" + method + '\'' +
+                ", params='" + params + '\'' +
+                ", ip='" + ip + '\'' +
+                ", result=" + result +
+                ", remark='" + remark + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                '}';
+    }
 }
