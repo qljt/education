@@ -18,6 +18,7 @@ public class ImageConstant {
     // 图片路径
     public static final String EDITOR_PATH = File.separator + "images" + File.separator + "editor"; // 富文本编译器图片路径
     public static final String ENTERPRISE_FILE_PATH = File.separator + "excel" + File.separator + "enterprise"; //企业模块附件
+    public static final String ENTERPRISE_SETTING_FILE_PATH = File.separator + "excel" + File.separator + "enterpriseSetting"; //企业设置模块附件
     // 异常编码及提示
     public static final String UPLOAD_IMG_SUCCESS_MSG = "图片上传成功";
     public static final String NULL_EXCEPTION_CODE = "I0001";
