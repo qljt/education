@@ -44,7 +44,7 @@ public class QzEnterpriseServiceImplTest {
       /*  String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         qzEnterprise.setId(uuid);
         qzEnterprise.setCreatetime(DateUtil.now());*/
-        qzEnterprise.setEnterpriseName(String.valueOf(ToolUtils.getRandomChar()));
+        qzEnterprise.setEnterpriseName("齐鲁交通");
         qzEnterprise.setSysCode(RandomUtil.randomString(4));
         iQzEnterpriseService.save(qzEnterprise);
 

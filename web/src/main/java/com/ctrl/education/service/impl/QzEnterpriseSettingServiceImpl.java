@@ -4,9 +4,15 @@ import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.QzEnterpriseSetting;
 import com.ctrl.education.dao.QzEnterpriseSettingMapper;
+import com.ctrl.education.model.SysUser;
 import com.ctrl.education.service.IQzEnterpriseSettingService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.ctrl.education.shiro.ShiroKit;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,16 +27,26 @@ public class QzEnterpriseSettingServiceImpl extends ServiceImpl<QzEnterpriseSett
     @Override
     public Result getQZEntSettingById(Integer id) {
         QzEnterpriseSetting qzEnterpriseSetting = this.selectById(id);
-        return Result.ok().put("qzEnterpriseSetting",qzEnterpriseSetting);
+        return Result.ok().put("qzEnterpriseSetting", qzEnterpriseSetting);
     }
 
     @Override
     public Result save(QzEnterpriseSetting qzEnterpriseSetting) {
-       boolean flag =  this.insertOrUpdate(qzEnterpriseSetting);
+        SysUser sysUser = ShiroKit.getUser();
+        qzEnterpriseSetting.setSysUserId(sysUser.getId());
+        boolean flag = this.insertOrUpdate(qzEnterpriseSetting);
         if (flag) {
             return Result.ok(SystemConstant.ADD_SUCCESS);
         } else {
             return Result.error(SystemConstant.ADD_FAILURE);
         }
+    }
+
+    @Override
+    public Result getSettingInfo(String enterprise_id) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("enterprise_id",enterprise_id);
+        List<QzEnterpriseSetting> list = this.selectByMap(map);
+        return Result.ok().put("result",list.get(0));
     }
 }

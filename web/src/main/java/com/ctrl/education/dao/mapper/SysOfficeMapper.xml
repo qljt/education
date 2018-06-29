@@ -14,5 +14,15 @@
         <result column="remark" property="remark" />
         <result column="sys_code" property="sysCode" />
     </resultMap>
-
+    <select id="tree" resultType="com.ctrl.education.core.node.ZTreeNode">
+		select id,pid as pId,simplename as name,
+		(
+		CASE
+		WHEN (pId = 0 OR pId IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen from sys_dept
+	</select>
 </mapper>

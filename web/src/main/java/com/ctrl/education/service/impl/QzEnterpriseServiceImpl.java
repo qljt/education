@@ -77,9 +77,9 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
      * @return
      */
     @Override
-    public Result getEnterpriseById(Integer id) {
+    public Result getEnterpriseById(String id) {
         QzEnterprise qzEnterprise = this.baseMapper.selectById(id);
-        return Result.ok().put("qzEnterprise", qzEnterprise);
+        return Result.ok().put("data", qzEnterprise);
     }
 
     /**
@@ -108,9 +108,9 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
     public Result delete(String[] ids) {
         boolean bool = this.deleteBatchIds(Arrays.asList(ids));
         if(bool){
-            return Result.ok("删除成功");
+            return Result.ok(SystemConstant.DELETE_SUCCESS);
         }else {
-            return Result.ok("删除失败");
+            return Result.ok(SystemConstant.DELETE_FAILURE);
         }
     }
 
@@ -120,9 +120,9 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
         qzEnterpriseDto.setSysUserId(String.valueOf(ShiroKit.getUser().getId()));
         List list = ExcelUtils.importExcel(url,1,1, QzEnterpriseDto.class);
         if(null!=list&&list.size()>0){
-            return Result.ok("导入成功");
+            return Result.ok(SystemConstant.EXPORT_EXCELDATA_SUCCESS);
         }else{
-            return Result.ok("导入失败");
+            return Result.ok(SystemConstant.EXPORT_EXCEL_DATA_FAILURE);
         }
     }
 }

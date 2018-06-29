@@ -49,7 +49,8 @@ public class SystemConstant {
     public static final String UPLOAD_IMG_ERROR_MSG="上传失败！";
     public static final String UPLOADANDVALIDATEDSUCCESS="上传成功，数据验证成功";
     public static final String UPLOADANDVALIDATEDERROR = "上传成功，数据验证失败";
-    public static final String EXPORTEXCELDATASUCCESS="导入成功";
+    public static final String EXPORT_EXCELDATA_SUCCESS="导入成功";
+    public static final String EXPORT_EXCEL_DATA_FAILURE="导入成功";
     public static final String ALLOT_ROLE_SUCCESS_MSG="分配角色成功!";
     public static final String ALLOT_ROLE_FAILE_MSG="分配角色失败！";
     public static final String CATEGORY_NAME_REPEAT_MSG="分类名称重复";

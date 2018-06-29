@@ -3,6 +3,11 @@ package com.ctrl.education.model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.ctrl.education.core.validator.group.AddGroup;
+import com.ctrl.education.core.validator.group.UpdateGroup;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -33,10 +38,14 @@ public class SysOffice extends Model<SysOffice> {
     /**
      * 名称
      */
+    @NotNull(message = "名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 4, max = 30, message = "长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
     /**
      * 编码
      */
+    @NotNull(message = "编码不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 4, max = 30, message = "编码长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String code;
     /**
      * 类型

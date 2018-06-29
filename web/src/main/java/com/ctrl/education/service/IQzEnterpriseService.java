@@ -19,7 +19,7 @@ public interface IQzEnterpriseService extends IService<QzEnterprise> {
 
     Result save(QzEnterprise qzEnterprise);
 
-    Result getEnterpriseById(Integer id);
+    Result getEnterpriseById(String id);
 
     Result update(QzEnterprise qzEnterprise);
 

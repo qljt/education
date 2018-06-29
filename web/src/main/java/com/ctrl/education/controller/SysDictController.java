@@ -44,7 +44,7 @@ public class SysDictController {
 
         SysDict sysDict = sysDictService.selectById(id);
 
-        return Result.ok().put("SysDict", sysDict);
+        return Result.ok().put("data", sysDict);
     }
 
     @GetMapping("getDictsByTypeName/{typeName}")
@@ -52,7 +52,7 @@ public class SysDictController {
 
         List<SysDictDto> dicts = sysDictService.getDictsByTypeName(typeName);
 
-        return Result.ok().put("dicts", dicts);
+        return Result.ok().put("data", dicts);
     }
 
     @GetMapping("hasValue/{id}/{typeId}/{value}")
@@ -81,7 +81,7 @@ public class SysDictController {
         return Result.ok();
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("remove/{id}")
     public Result delete(@PathVariable("id") Integer id) {
 
         sysDictService.deleteById(id);

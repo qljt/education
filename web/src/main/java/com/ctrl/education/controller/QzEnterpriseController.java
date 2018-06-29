@@ -62,7 +62,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @GetMapping("info")
-    public Result getEnterpriseById(@PathVariable(value = "id") Integer id){
+    public Result getEnterpriseById(@PathVariable(value = "id") String id){
         Result result = iQzEnterpriseService.getEnterpriseById(id);
         return result;
     }
@@ -72,7 +72,7 @@ public class QzEnterpriseController extends BaseController {
      * @param ids
      * @return
      */
-    @GetMapping("delete")
+    @GetMapping("remove")
     public Result delete(@RequestParam(value = "ids[]") String[] ids){
         Result result = iQzEnterpriseService.delete(ids);
         return result;

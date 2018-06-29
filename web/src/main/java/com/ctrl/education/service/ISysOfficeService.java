@@ -1,7 +1,11 @@
 package com.ctrl.education.service;
 
+import com.ctrl.education.core.node.ZTreeNode;
+import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysOffice;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,11 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ISysOfficeService extends IService<SysOffice> {
 
+    Result tree();
+
+    Result save(SysOffice sysOffice);
+
+    Result modify(SysOffice sysOffice);
+
+    Result remove(String id);
 }

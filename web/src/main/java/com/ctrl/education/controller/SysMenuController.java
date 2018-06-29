@@ -4,6 +4,7 @@ package com.ctrl.education.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @author liyang
  * @since 2018-06-23
  */
-@Controller
+@RestController
 @RequestMapping("/sysMenu")
 public class SysMenuController {
 
