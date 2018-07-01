@@ -28,6 +28,10 @@ public class SysRole extends Model<SysRole> {
      */
     private String pid;
     /**
+     * 所有父级id的集合，逗号隔开
+     */
+    private String pids;
+    /**
      * 角色名称
      */
     private String name;
@@ -107,6 +111,14 @@ public class SysRole extends Model<SysRole> {
         this.createTime = createTime;
     }
 
+    public String getPids() {
+        return pids;
+    }
+
+    public void setPids(String pids) {
+        this.pids = pids;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -115,13 +127,14 @@ public class SysRole extends Model<SysRole> {
     @Override
     public String toString() {
         return "SysRole{" +
-        "id=" + id +
-        ", pid=" + pid +
-        ", name=" + name +
-        ", officeId=" + officeId +
-        ", desc=" + desc +
-        ", status=" + status +
-        ", createTime=" + createTime +
-        "}";
+                "id='" + id + '\'' +
+                ", pid='" + pid + '\'' +
+                ", pids='" + pids + '\'' +
+                ", name='" + name + '\'' +
+                ", officeId='" + officeId + '\'' +
+                ", desc='" + desc + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                '}';
     }
 }

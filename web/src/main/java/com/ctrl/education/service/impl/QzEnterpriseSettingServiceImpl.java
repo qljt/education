@@ -27,11 +27,11 @@ public class QzEnterpriseSettingServiceImpl extends ServiceImpl<QzEnterpriseSett
     @Override
     public Result getQZEntSettingById(Integer id) {
         QzEnterpriseSetting qzEnterpriseSetting = this.selectById(id);
-        return Result.ok().put("qzEnterpriseSetting", qzEnterpriseSetting);
+        return Result.ok().put(SystemConstant.RESULT_KEY, qzEnterpriseSetting);
     }
 
     @Override
-    public Result save(QzEnterpriseSetting qzEnterpriseSetting) {
+    public Result add(QzEnterpriseSetting qzEnterpriseSetting) {
         SysUser sysUser = ShiroKit.getUser();
         qzEnterpriseSetting.setSysUserId(sysUser.getId());
         boolean flag = this.insertOrUpdate(qzEnterpriseSetting);
@@ -41,12 +41,23 @@ public class QzEnterpriseSettingServiceImpl extends ServiceImpl<QzEnterpriseSett
             return Result.error(SystemConstant.ADD_FAILURE);
         }
     }
+    @Override
+    public Result modify(QzEnterpriseSetting qzEnterpriseSetting) {
+        SysUser sysUser = ShiroKit.getUser();
+        qzEnterpriseSetting.setSysUserId(sysUser.getId());
+        boolean flag = this.insertOrUpdate(qzEnterpriseSetting);
+        if (flag) {
+            return Result.ok(SystemConstant.UPDATE_SUCCESS);
+        } else {
+            return Result.error(SystemConstant.UPDATE_FAILURE);
+        }
+    }
 
     @Override
     public Result getSettingInfo(String enterprise_id) {
         Map<String,Object> map = new HashMap<>();
         map.put("enterprise_id",enterprise_id);
         List<QzEnterpriseSetting> list = this.selectByMap(map);
-        return Result.ok().put("result",list.get(0));
+        return Result.ok().put(SystemConstant.RESULT_KEY,list.get(0));
     }
 }

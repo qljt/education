@@ -1,6 +1,9 @@
 package com.ctrl.education.controller;
 
 
+import com.ctrl.education.core.annotation.BussinessLog;
+import com.ctrl.education.core.constant.SysConstant;
+import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.controller.BaseController;
 import com.ctrl.education.core.file.ImageConstant;
 import com.ctrl.education.core.utils.ExcelUtils;
@@ -38,6 +41,7 @@ public class QzEnterpriseController extends BaseController {
      * @param params 查询信息
      * @return result
      */
+    @BussinessLog(value = "分页获取企业信息",type = "2")
     @GetMapping("list")
     public Result getList(@RequestParam Map<String,Object> params){
         Result result = iQzEnterpriseService.getList(params);
@@ -49,18 +53,31 @@ public class QzEnterpriseController extends BaseController {
      * @param qzEnterprise
      * @return
      */
+    @BussinessLog(value = "添加企业信息",type = "3")
     @PostMapping
-    public Result save(@RequestBody QzEnterprise qzEnterprise){
+    public Result add(@RequestBody QzEnterprise qzEnterprise){
         ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
-        Result result= iQzEnterpriseService.save(qzEnterprise);
+        Result result= iQzEnterpriseService.add(qzEnterprise);
         return result;
     }
-
+    /**
+     *编辑企业信息
+     * @param qzEnterprise
+     * @return
+     */
+    @BussinessLog(value = "编辑企业信息",type = "3")
+    @PostMapping
+    public Result modify(@RequestBody QzEnterprise qzEnterprise){
+        ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
+        Result result= iQzEnterpriseService.modify(qzEnterprise);
+        return result;
+    }
     /**
      * 根据id获取企业信息
      * @param id
      * @return
      */
+    @BussinessLog(value = "根据id获取企业信息",type ="2")
     @GetMapping("info")
     public Result getEnterpriseById(@PathVariable(value = "id") String id){
         Result result = iQzEnterpriseService.getEnterpriseById(id);

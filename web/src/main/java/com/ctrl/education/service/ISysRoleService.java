@@ -1,5 +1,6 @@
 package com.ctrl.education.service;
 
+import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysRole;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ISysRoleService extends IService<SysRole> {
 
+    Result add(SysRole sysRole);
+
+    Result modify(SysRole sysRole);
+
+    Result tree();
+
+    Result remove(String id);
 }

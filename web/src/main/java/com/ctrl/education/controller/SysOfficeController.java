@@ -45,7 +45,7 @@ public class SysOfficeController {
      */
     @BussinessLog(value = "保存组织机构",type = "3")
     @PostMapping
-    public Result save(SysOffice sysOffice){
+    public Result add(SysOffice sysOffice){
         ValidatorUtils.validateEntity(sysOffice,AddGroup.class);
         officeSetPids(sysOffice);
         Result result = this.iSysOfficeService.save(sysOffice);

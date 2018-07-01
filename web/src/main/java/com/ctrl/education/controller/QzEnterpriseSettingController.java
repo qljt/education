@@ -44,10 +44,21 @@ public class QzEnterpriseSettingController {
      * @param qzEnterpriseSetting
      * @return
      */
-    @PostMapping("save")
-    public Result save(QzEnterpriseSetting qzEnterpriseSetting){
+    @PostMapping("add")
+    public Result add(QzEnterpriseSetting qzEnterpriseSetting){
         ValidatorUtils.validateEntity(qzEnterpriseSetting);
-        Result result = iQzEnterpriseSettingService.save(qzEnterpriseSetting);
+        Result result = iQzEnterpriseSettingService.add(qzEnterpriseSetting);
+        return result;
+    }
+    /**
+     * 保存企业配置信息
+     * @param qzEnterpriseSetting
+     * @return
+     */
+    @PostMapping("modify")
+    public Result modify(QzEnterpriseSetting qzEnterpriseSetting){
+        ValidatorUtils.validateEntity(qzEnterpriseSetting);
+        Result result = iQzEnterpriseSettingService.modify(qzEnterpriseSetting);
         return result;
     }
 

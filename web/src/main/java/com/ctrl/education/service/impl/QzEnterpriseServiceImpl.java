@@ -59,7 +59,7 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result save(QzEnterprise qzEnterprise) {
+    public Result add(QzEnterprise qzEnterprise) {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         qzEnterprise.setId(uuid);
         qzEnterprise.setCreatetime(DateUtil.now());
@@ -79,7 +79,7 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
     @Override
     public Result getEnterpriseById(String id) {
         QzEnterprise qzEnterprise = this.baseMapper.selectById(id);
-        return Result.ok().put("data", qzEnterprise);
+        return Result.ok().put(SystemConstant.RESULT_KEY, qzEnterprise);
     }
 
     /**
@@ -89,7 +89,7 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result update(QzEnterprise qzEnterprise) {
+    public Result modify(QzEnterprise qzEnterprise) {
         Integer count = this.baseMapper.updateById(qzEnterprise);
         if (count > 0) {
             return Result.ok(SystemConstant.ADD_SUCCESS);

@@ -17,11 +17,11 @@ import java.util.Map;
 public interface IQzEnterpriseService extends IService<QzEnterprise> {
     Result getList(Map<String,Object> params);
 
-    Result save(QzEnterprise qzEnterprise);
+    Result add(QzEnterprise qzEnterprise);
 
     Result getEnterpriseById(String id);
 
-    Result update(QzEnterprise qzEnterprise);
+    Result modify(QzEnterprise qzEnterprise);
 
     Result delete(String[] ids);
 

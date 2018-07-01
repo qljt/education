@@ -1,6 +1,7 @@
 package com.ctrl.education.controller;
 
 
+import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.utils.PageUtils;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.validator.ValidatorUtils;
@@ -44,7 +45,7 @@ public class SysDictController {
 
         SysDict sysDict = sysDictService.selectById(id);
 
-        return Result.ok().put("data", sysDict);
+        return Result.ok().put(SystemConstant.RESULT_KEY, sysDict);
     }
 
     @GetMapping("getDictsByTypeName/{typeName}")
@@ -52,7 +53,7 @@ public class SysDictController {
 
         List<SysDictDto> dicts = sysDictService.getDictsByTypeName(typeName);
 
-        return Result.ok().put("data", dicts);
+        return Result.ok().put(SystemConstant.RESULT_KEY, dicts);
     }
 
     @GetMapping("hasValue/{id}/{typeId}/{value}")

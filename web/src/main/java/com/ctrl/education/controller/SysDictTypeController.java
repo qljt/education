@@ -1,6 +1,7 @@
 package com.ctrl.education.controller;
 
 
+import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.utils.PageUtils;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.validator.ValidatorUtils;
@@ -42,7 +43,7 @@ public class SysDictTypeController {
 
         SysDictType sysDictType = sysDictTypeService.selectById(id);
 
-        return Result.ok().put("sysDictType", sysDictType);
+        return Result.ok().put(SystemConstant.RESULT_KEY, sysDictType);
     }
 
     @GetMapping("hasName/{id}/{name}")

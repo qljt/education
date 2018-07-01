@@ -27,7 +27,7 @@ public class SysOfficeServiceImpl extends ServiceImpl<SysOfficeMapper, SysOffice
     public Result  tree() {
         List<ZTreeNode> tree = this.baseMapper.tree();
         tree.add(ZTreeNode.createParent());
-      return Result.ok().put("data",tree);
+      return Result.ok().put(SystemConstant.RESULT_KEY,tree);
     }
 
     @Override

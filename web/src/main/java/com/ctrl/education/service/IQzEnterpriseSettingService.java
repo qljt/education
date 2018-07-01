@@ -15,7 +15,8 @@ public interface IQzEnterpriseSettingService extends IService<QzEnterpriseSettin
 
     Result getQZEntSettingById(Integer id);
 
-    Result save(QzEnterpriseSetting qzEnterpriseSetting);
+    Result add(QzEnterpriseSetting qzEnterpriseSetting);
+    Result modify(QzEnterpriseSetting qzEnterpriseSetting);
 
     Result getSettingInfo(String enterprise_id);
 }
