@@ -4,6 +4,8 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -19,10 +21,12 @@ import java.awt.image.BufferedImage;
  * @description
  * @date 2018-06-10 下午4:56
  */
+@RestController
+@RequestMapping("/sys")
 public class KaptchaController {
     @Autowired
     private Producer captchaProducer;
-    @GetMapping("/getKaptchaImage")
+    @GetMapping("/getCode")
     public void getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         response.setDateHeader("Expires", 0);
