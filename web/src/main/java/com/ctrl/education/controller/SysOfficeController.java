@@ -44,7 +44,7 @@ public class SysOfficeController {
      * 保存组织机构
      */
     @BussinessLog(value = "保存组织机构",type = "3")
-    @PostMapping
+    @PostMapping(value = "add")
     public Result save(SysOffice sysOffice){
         ValidatorUtils.validateEntity(sysOffice,AddGroup.class);
         officeSetPids(sysOffice);
@@ -55,7 +55,7 @@ public class SysOfficeController {
      * 修改组织机构
      */
     @BussinessLog(value = "=修改组织机构",type = "3")
-    @PostMapping
+    @PostMapping(value = "modify")
     public Result modify(SysOffice sysOffice){
         ValidatorUtils.validateEntity(sysOffice,UpdateGroup.class);
         officeSetPids(sysOffice);
@@ -63,7 +63,7 @@ public class SysOfficeController {
         return result;
     }
     @BussinessLog(value = "根据id删除组织机构",type = "3")
-    @GetMapping
+    @GetMapping(value = "remove")
     public Result remove(@RequestParam(value = "id") String id){
         Result result = iSysOfficeService.remove(id);
 
