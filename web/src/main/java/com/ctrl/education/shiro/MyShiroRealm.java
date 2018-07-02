@@ -51,21 +51,21 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        String name = token.getUsername();
+        String username = token.getUsername();
         String password = String.valueOf(token.getPassword());
         //访问一次，计数一次
         ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-        opsForValue.increment(SHIRO_LOGIN_COUNT + name, 1);
+        opsForValue.increment(SHIRO_LOGIN_COUNT + username, 1);
         //计数大于5时，设置用户被锁定一小时
-        if (Integer.parseInt(opsForValue.get(SHIRO_LOGIN_COUNT + name)) >= 5) {
-            opsForValue.set(SHIRO_IS_LOCK + name, "LOCK");
-            stringRedisTemplate.expire(SHIRO_IS_LOCK + name, 1, TimeUnit.HOURS);
+        if (Integer.parseInt(opsForValue.get(SHIRO_LOGIN_COUNT + username)) >= 5) {
+            opsForValue.set(SHIRO_IS_LOCK + username, "LOCK");
+            stringRedisTemplate.expire(SHIRO_IS_LOCK + username, 1, TimeUnit.HOURS);
         }
-        if ("LOCK".equals(opsForValue.get(SHIRO_IS_LOCK + name))) {
+        if ("LOCK".equals(opsForValue.get(SHIRO_IS_LOCK + username))) {
             throw new DisabledAccountException("由于密码输入错误次数大于5次，帐号已经禁止登录！");
         }
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("account", name);
+        map.put("username", username);
         map.put("password", SecureUtil.md5(password));
         SysUser user = null;
         // 从数据库获取对应用户名密码的用户
@@ -86,9 +86,9 @@ public class MyShiroRealm extends AuthorizingRealm {
             user.setLastLoginTime(new Date());
             iSysUserService.updateById(user);
             //清空登录计数
-            opsForValue.set(SHIRO_LOGIN_COUNT + name, "0");
+            opsForValue.set(SHIRO_LOGIN_COUNT + username, "0");
         }
-        Logger.getLogger(getClass()).info("身份认证成功，登录用户：" + name);
+        Logger.getLogger(getClass()).info("身份认证成功，登录用户：" + username);
         return new SimpleAuthenticationInfo(user, password, getName());
     }
 
