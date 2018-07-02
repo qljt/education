@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.ctrl.education.core.validator.group.AddGroup;
 import com.ctrl.education.core.validator.group.UpdateGroup;
 import lombok.Data;
@@ -25,7 +26,7 @@ import java.io.Serializable;
 public class QzEnterprise extends Model<QzEnterprise> {
 
     private static final long serialVersionUID = 1L;
-    @TableId("id")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     @TableField("enterprise_name")
     @NotNull(message = "企业名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
