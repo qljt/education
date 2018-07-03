@@ -60,8 +60,8 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Result add(QzEnterprise qzEnterprise) {
-        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-        qzEnterprise.setId(uuid);
+       /* String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+        qzEnterprise.setId(uuid);*/
         qzEnterprise.setCreatetime(DateUtil.now());
         Integer count = this.baseMapper.insert(qzEnterprise);
         if (count > 0) {
