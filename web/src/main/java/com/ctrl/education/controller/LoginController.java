@@ -40,7 +40,7 @@ public class LoginController extends BaseController {
         if(StringUtils.isEmpty(code)){
             return Result.error("验证码不能为空");
         }
-        String kaptcha = (String) HttpKit.getRequest().getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        String kaptcha = (String)getHttpServletRequest().getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (!code.equalsIgnoreCase(kaptcha)){
             return Result.error("验证码不正确");
         }
