@@ -61,6 +61,12 @@ public class SysRoleController {
         Result result = iSysRoleService.modify(sysRole);
         return result;
     }
+
+    /**
+     * 根据id删除角色
+     * @param id
+     * @return
+     */
     @BussinessLog(value = "根据id删除角色",type = "3")
     @RequestMapping("remove")
     public Result remove(@RequestParam(value = "id") String id){

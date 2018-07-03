@@ -1,10 +1,19 @@
 package com.ctrl.education.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.ctrl.education.core.utils.PageUtils;
+import com.ctrl.education.core.utils.Query;
+import com.ctrl.education.core.utils.Result;
+import com.ctrl.education.model.QzSmsLog;
 import com.ctrl.education.model.SysLoginLog;
 import com.ctrl.education.dao.SysLoginLogMapper;
 import com.ctrl.education.service.ISysLoginLogService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -17,4 +26,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLoginLog> implements ISysLoginLogService {
 
+    @Override
+    public Result getList(Map<String, Object> param) {
+        String start_time = (String)param.get("start_time");
+        String end_time = (String)param.get("end_time");
+        Page<SysLoginLog> page = this.selectPage(
+                new Query<SysLoginLog>(param).getPage(),
+                new EntityWrapper<SysLoginLog>()
+                        .between("createtime",start_time,end_time));
+        return new PageUtils(page).toLayTableResult();
+    }
 }

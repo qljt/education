@@ -1,12 +1,17 @@
 package com.ctrl.education.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.node.ZTreeNode;
 import com.ctrl.education.core.utils.Result;
+import com.ctrl.education.model.SysRelation;
 import com.ctrl.education.model.SysRole;
 import com.ctrl.education.dao.SysRoleMapper;
+import com.ctrl.education.service.ISysRelationService;
 import com.ctrl.education.service.ISysRoleService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
+    @Autowired
+    private ISysRelationService iSysRelationService;
     @Override
     @Transactional(
             rollbackFor = {Exception.class}
@@ -60,6 +67,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             rollbackFor = {Exception.class}
     )
     public Result remove(String id) {
+        if (hasRelation(id)){
+            return Result.error("请删除绑定的权限，再删除");
+        }
         boolean flag = this.deleteById(id);
         if (flag) {
             return Result.ok(SystemConstant.DELETE_SUCCESS);
@@ -67,4 +77,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             return Result.error(SystemConstant.DELETE_FAILURE);
         }
     }
+
+    private boolean hasRelation(String roleid){
+
+        SysRelation sysRelation = iSysRelationService.selectById(roleid);
+        if(null!=sysRelation){
+            return true;
+        }
+        return false;
+    }
+
 }

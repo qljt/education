@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -89,6 +90,40 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public Result getSysUser(String id) {
        SysUser sysUser =  this.baseMapper.selectById(id);
         return Result.ok().put(SystemConstant.RESULT_KEY,sysUser);
+    }
+
+    @Override
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    public Result resetPWD(Map<String, Object> map) {
+        String id = (String)map.get("id");
+        String newPWd  = (String)map.get("newPWd");
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser.setPassword(SecureUtil.md5(newPWd));
+        Integer count = this.baseMapper.updateById(sysUser);
+        if (count > 0) {
+            return Result.ok("修改密码成功");
+        } else {
+            return Result.error("修改密码失败");
+        }
+    }
+
+    @Override
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    public Result setRole(String id, String roleIds) {
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser.setRoleId(roleIds);
+        Integer count = this.baseMapper.updateById(sysUser);
+        if (count > 0) {
+            return Result.ok("分配角色成功");
+        } else {
+            return Result.error("分配角色失败");
+        }
     }
 
     private boolean getUserByUsername(SysUser sysUser){

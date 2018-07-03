@@ -9,6 +9,7 @@ import com.ctrl.education.core.validator.group.UpdateGroup;
 import com.ctrl.education.dto.SysUserDto;
 import com.ctrl.education.model.SysUser;
 import com.ctrl.education.service.ISysUserService;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -80,11 +81,42 @@ public class SysUserController {
         Result result = iSysUserService.remove(id);
         return result;
     }
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
     @BussinessLog(value = "根据id查询用户",type = "2")
     @RequestMapping("info")
     public Result getSysUser(@RequestParam(value = "id") String id){
         Result result = iSysUserService.getSysUser(id);
         return result;
     }
-}
 
+    /**
+     * 修改密码
+     * @param map
+     * @return
+     */
+    @BussinessLog(value = "修改密码",type = "3")
+    @RequestMapping("resetPWD")
+    public Result resetPWD(@RequestParam Map<String,Object> map){
+        Result result = iSysUserService.resetPWD(map);
+        return result;
+    }
+
+    /**
+     * 分配角色
+     * @param id
+     * @param roleIds
+     * @return
+     */
+    @BussinessLog(value = "分配角色",type = "3")
+    @RequestMapping("setRole")
+    public Result setRole(@RequestParam("id") String id,@RequestParam("roleIds") String roleIds){
+
+        Result result=iSysUserService.setRole(id,roleIds);
+        return  result;
+    }
+}
