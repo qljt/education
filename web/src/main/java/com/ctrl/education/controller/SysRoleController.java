@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
  * 角色表 前端控制器
  * </p>
  *
- * @author liyang
  * @since 2018-06-23
  */
 @RestController
@@ -31,7 +30,7 @@ public class SysRoleController {
      * 获取角色的tree列表
      */
     @BussinessLog(value = "获取角色的tree列表",type = "2")
-    @GetMapping(value = "/tree")
+    @RequestMapping(value = "/tree")
     public Result tree() {
         Result result = this.iSysRoleService.tree();
         return result;

@@ -18,7 +18,6 @@ import java.io.IOException;
 /**
  * com.ctrl.education.controller
  *
- * @author liyang
  * @name KaptchaController
  * @description
  * @date 2018-06-10 下午4:56
@@ -28,7 +27,7 @@ import java.io.IOException;
 public class KaptchaController {
     @Autowired
     private Producer captchaProducer;
-    @GetMapping("/getCode")
+    @RequestMapping("/getCode")
     public void getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
 

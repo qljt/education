@@ -23,7 +23,6 @@ import java.util.List;
  * 机构表 前端控制器
  * </p>
  *
- * @author liyang
  * @since 2018-06-23
  */
 @RestController
@@ -35,7 +34,7 @@ public class SysOfficeController {
      * 获取组织机构的tree列表
      */
     @BussinessLog(value = "获取组织机构的tree列表",type = "2")
-    @GetMapping(value = "/tree")
+    @RequestMapping(value = "/tree")
     public Result tree() {
         Result result = this.iSysOfficeService.tree();
         return result;
@@ -44,7 +43,7 @@ public class SysOfficeController {
      * 保存组织机构
      */
     @BussinessLog(value = "保存组织机构",type = "3")
-    @PostMapping
+    @RequestMapping(value = "add")
     public Result save(SysOffice sysOffice){
         ValidatorUtils.validateEntity(sysOffice,AddGroup.class);
         officeSetPids(sysOffice);
@@ -55,7 +54,7 @@ public class SysOfficeController {
      * 修改组织机构
      */
     @BussinessLog(value = "=修改组织机构",type = "3")
-    @PostMapping(value = "modify")
+    @RequestMapping(value = "modify")
     public Result modify(SysOffice sysOffice){
         ValidatorUtils.validateEntity(sysOffice,UpdateGroup.class);
         officeSetPids(sysOffice);
@@ -63,7 +62,7 @@ public class SysOfficeController {
         return result;
     }
     @BussinessLog(value = "根据id删除组织机构",type = "3")
-    @GetMapping(value = "remove")
+    @RequestMapping(value = "remove")
     public Result remove(@RequestParam(value = "id") String id){
         Result result = iSysOfficeService.remove(id);
 

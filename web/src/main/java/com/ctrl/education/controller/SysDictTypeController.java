@@ -21,7 +21,6 @@ import java.util.Map;
  * 系统字典表 前端控制器
  * </p>
  *
- * @author liyang
  * @since 2018-06-03
  */
 @RestController
@@ -30,7 +29,7 @@ public class SysDictTypeController {
     @Autowired
     private ISysDictTypeService sysDictTypeService;
 
-    @GetMapping("list")
+    @RequestMapping("list")
     public Result list(@RequestParam Map<String, Object> params) {
 
         PageUtils page = sysDictTypeService.queryPage(params);
@@ -38,7 +37,7 @@ public class SysDictTypeController {
         return page.toLayTableResult();
     }
 
-    @GetMapping("info/{id}")
+    @RequestMapping("info/{id}")
     public Result info(@PathVariable("id") Integer id){
 
         SysDictType sysDictType = sysDictTypeService.selectById(id);
@@ -46,12 +45,12 @@ public class SysDictTypeController {
         return Result.ok().put(SystemConstant.RESULT_KEY, sysDictType);
     }
 
-    @GetMapping("hasName/{id}/{name}")
+    @RequestMapping("hasName/{id}/{name}")
     public Result hasName(@PathVariable("id") Integer id, @PathVariable("name") String name) {
         return Result.ok().put("hasName", sysDictTypeService.hasName(id, name));
     }
 
-    @PostMapping(value = "save")
+    @RequestMapping(value = "save")
     public Result save(@RequestBody SysDictType sysDictType) {
 
         ValidatorUtils.validateEntity(sysDictType, AddGroup.class);

@@ -14,7 +14,7 @@ import java.util.Date;
  * @date 2018-06-07 18:34
  */
 public class UserOnlineDto extends SysUser implements Serializable {
-    private static final long serialVersionUID = 7414206337546944L;
+    private static final long serialVersionUID = 1L;
     //Session Id
     private String sessionId;
     //Session Host

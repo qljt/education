@@ -46,7 +46,7 @@ public class QzEnterpriseServiceImplTest {
         qzEnterprise.setCreatetime(DateUtil.now());*/
         qzEnterprise.setEnterpriseName("齐鲁交通");
         qzEnterprise.setSysCode(RandomUtil.randomString(4));
-        iQzEnterpriseService.save(qzEnterprise);
+        iQzEnterpriseService.add(qzEnterprise);
 
     }
 

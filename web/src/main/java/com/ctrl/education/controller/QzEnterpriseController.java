@@ -42,7 +42,7 @@ public class QzEnterpriseController extends BaseController {
      * @return result
      */
     @BussinessLog(value = "分页获取企业信息",type = "2")
-    @GetMapping("list")
+    @RequestMapping("list")
     public Result getList(@RequestParam Map<String,Object> params){
         Result result = iQzEnterpriseService.getList(params);
         return result;
@@ -54,7 +54,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @BussinessLog(value = "添加企业信息",type = "3")
-    @PostMapping("add")
+    @RequestMapping("add")
     public Result add(@RequestBody QzEnterprise qzEnterprise){
         ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
         Result result= iQzEnterpriseService.add(qzEnterprise);
@@ -66,7 +66,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @BussinessLog(value = "编辑企业信息",type = "3")
-    @PostMapping("modify")
+    @RequestMapping("modify")
     public Result modify(@RequestBody QzEnterprise qzEnterprise){
         ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
         Result result= iQzEnterpriseService.modify(qzEnterprise);
@@ -78,8 +78,8 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @BussinessLog(value = "根据id获取企业信息",type ="2")
-    @GetMapping("info")
-    public Result getEnterpriseById(@PathVariable(value = "id") String id){
+    @RequestMapping("info/{id}")
+    public Result getEnterpriseById(@PathVariable("id") String id){
         Result result = iQzEnterpriseService.getEnterpriseById(id);
         return result;
     }
@@ -89,7 +89,7 @@ public class QzEnterpriseController extends BaseController {
      * @param ids
      * @return
      */
-    @GetMapping("remove")
+    @RequestMapping("remove")
     public Result delete(@RequestParam(value = "ids[]") String[] ids){
         Result result = iQzEnterpriseService.delete(ids);
         return result;
@@ -102,7 +102,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      * @throws IOException
      */
-    @GetMapping("importExcel")
+    @RequestMapping("importExcel")
     public Result importQzEnterprise(@RequestParam("file") MultipartFile file,HttpServletRequest request) throws IOException{
         String folderPath = ImageConstant.ENTERPRISE_FILE_PATH;
         Result result = ExcelUtils.uploadExcel(file,folderPath,request);
@@ -110,7 +110,7 @@ public class QzEnterpriseController extends BaseController {
 
     }
 
-    @PostMapping(value = "importExcel")
+    @RequestMapping(value = "importExcel")
     public Result importExcel(HttpServletRequest request, @RequestBody String url) throws IOException {
         Result result = iQzEnterpriseService.importExcel(url);
         return result;

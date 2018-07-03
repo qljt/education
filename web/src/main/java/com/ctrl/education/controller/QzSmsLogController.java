@@ -18,7 +18,6 @@ import java.util.Map;
  * 短信记录表 前端控制器
  * </p>
  *
- * @author liyang
  * @since 2018-06-20
  */
 @RestController
@@ -32,7 +31,7 @@ public class QzSmsLogController {
      * @param map
      * @return
      */
-    @GetMapping("list")
+    @RequestMapping("list")
     public Result getList(@RequestParam Map<String, Object> map){
         Result result = iQzSmsLogService.getList(map);
         return result;

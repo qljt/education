@@ -1,10 +1,7 @@
-package com.ctrl.education.model;
+package com.ctrl.education.dto;
 
-import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.ctrl.education.core.validator.group.AddGroup;
 import com.ctrl.education.core.validator.group.UpdateGroup;
@@ -14,21 +11,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.io.Serializable;
+import java.util.Date;
 
 /**
- * <p>
- * 系统用户表
- * </p>
+ * com.ctrl.education.dto
  *
- * @author liyang
- * @since 2018-06-23
+ * @name SysUserDto
+ * @description
+ * @date 2018-07-03 13:34
  */
-@TableName("sys_user")
-public class SysUser extends Model<SysUser> {
-
-    private static final long serialVersionUID = 1L;
-
+public class SysUserDto {
     /**
      * 主键
      */
@@ -57,10 +49,6 @@ public class SysUser extends Model<SysUser> {
      */
     @Length(min = 1, max = 50, message = "昵称长度为0-0。", groups = {AddGroup.class, UpdateGroup.class})
     private String nickname;
-    /**
-     * 头像
-     */
-    private String avatar;
     /**
      * 生日
      */
@@ -97,40 +85,10 @@ public class SysUser extends Model<SysUser> {
      */
     private Integer status;
     /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-    /**
      * 机构id
      */
     @TableField("office_id")
     private String officeId;
-    /**
-     * 最后登录时间
-     */
-    @TableField("last_login_time")
-    private Date lastLoginTime;
-    public SysUser(){
-    }
-    public SysUser(SysUser sysUser){
-        super();
-        this.id = sysUser.getId();
-        this.username = sysUser.getUsername();
-        this.password = sysUser.getPassword();
-        this.realname = sysUser.getRealname();
-        this.nickname = sysUser.getRealname();
-        this.avatar = sysUser.getAvatar();
-        this.birthday = sysUser.getBirthday();
-        this.gender = sysUser.getGender();
-        this.email = sysUser.getEmail();
-        this.mobile = sysUser.getEmail();
-        this.phone = sysUser.getPhone();
-        this.status = sysUser.getStatus();
-        this.createTime = sysUser.getCreateTime();
-        this.officeId = sysUser.getOfficeId();
-        this.lastLoginTime = sysUser.getLastLoginTime();
-    }
 
     public String getId() {
         return id;
@@ -170,14 +128,6 @@ public class SysUser extends Model<SysUser> {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public Date getBirthday() {
@@ -236,14 +186,6 @@ public class SysUser extends Model<SysUser> {
         this.status = status;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public String getOfficeId() {
         return officeId;
     }
@@ -252,38 +194,40 @@ public class SysUser extends Model<SysUser> {
         this.officeId = officeId;
     }
 
-    public Date getLastLoginTime() {
-        return lastLoginTime;
+    public SysUserDto() {
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
+    public SysUserDto(String username, String password, String realname, String nickname, Date birthday, Integer gender, String email, String mobile, String roleId, String phone, Integer status, String officeId) {
+        this.username = username;
+        this.password = password;
+        this.realname = realname;
+        this.nickname = nickname;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.email = email;
+        this.mobile = mobile;
+        this.roleId = roleId;
+        this.phone = phone;
+        this.status = status;
+        this.officeId = officeId;
     }
 
     @Override
     public String toString() {
-        return "SysUser{" +
-        "id=" + id +
-        ", username=" + username +
-        ", password=" + password +
-        ", realname=" + realname +
-        ", nickname=" + nickname +
-        ", avatar=" + avatar +
-        ", birthday=" + birthday +
-        ", gender=" + gender +
-        ", email=" + email +
-        ", mobile=" + mobile +
-        ", roleId=" + roleId +
-        ", phone=" + phone +
-        ", status=" + status +
-        ", createTime=" + createTime +
-        ", officeId=" + officeId +
-        ", lastLoginTime=" + lastLoginTime +
-        "}";
+        return "SysUserDto{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", realname='" + realname + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", roleId='" + roleId + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", officeId='" + officeId + '\'' +
+                '}';
     }
 }

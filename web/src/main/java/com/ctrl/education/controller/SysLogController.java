@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
  * 系统日志 前端控制器
  * </p>
  *
- * @author liyang
  * @since 2018-06-03
  */
 @Controller

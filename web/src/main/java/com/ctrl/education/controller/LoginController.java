@@ -4,7 +4,6 @@ import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.controller.BaseController;
 import com.ctrl.education.core.log.factory.LogManager;
 import com.ctrl.education.core.log.factory.LogTaskFactory;
-import com.ctrl.education.core.support.HttpKit;
 import com.ctrl.education.core.utils.IpUtils;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysUser;
@@ -23,7 +22,6 @@ import java.util.Map;
 /**
  * com.ctrl.education.controller
  *
- * @author liyang
  * @name LoginController
  * @description
  * @date 2018-06-05 上午12:45
@@ -32,7 +30,7 @@ import java.util.Map;
 @RequestMapping("/sys")
 public class LoginController extends BaseController {
 
-    @PostMapping("login")
+    @RequestMapping("login")
     public Result login(@RequestParam Map<String,Object> param){
         String account = param.get("username").toString().trim().toLowerCase();
         String password = param.get("password").toString().trim().toLowerCase();
@@ -61,17 +59,17 @@ public class LoginController extends BaseController {
      * 未登录，shiro应重定向到登录界面，此处返回未登录状态信息由前端控制跳转页面
      * @return
      */
-    @GetMapping("/unauth")
+    @RequestMapping("/unauth")
     public Result unauth() {
         return Result.error(10002,"您尚未登录");
     }
-    @GetMapping("logout")
+    @RequestMapping("logout")
     public Result logout(){
         SecurityUtils.getSubject().logout();
         LogManager.me().executeLog(LogTaskFactory.exitLog(ShiroKit.getUser().getId(),IpUtils.getIpAddr(getHttpServletRequest())));
         return Result.ok("退出成功");
     }
-    @GetMapping("kickout")
+    @RequestMapping("kickout")
     public Result kickout(){
         return Result.error(10001,"您被剔除");
     }

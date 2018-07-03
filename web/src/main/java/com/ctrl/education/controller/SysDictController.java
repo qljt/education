@@ -23,7 +23,6 @@ import java.util.Map;
  * 系统字典表 前端控制器
  * </p>
  *
- * @author liyang
  * @since 2018-06-03
  */
 @RestController
@@ -32,7 +31,7 @@ public class SysDictController {
     @Autowired
     private ISysDictService sysDictService;
 
-    @GetMapping("list")
+    @RequestMapping("list")
     public Result list(@RequestParam Map<String, Object> params) {
 
         PageUtils page = sysDictService.queryPage(params);
@@ -40,7 +39,7 @@ public class SysDictController {
         return page.toLayTableResult();
     }
 
-    @GetMapping("info/{id}")
+    @RequestMapping("info/{id}")
     public Result info(@PathVariable("id") Integer id) {
 
         SysDict sysDict = sysDictService.selectById(id);
@@ -48,7 +47,7 @@ public class SysDictController {
         return Result.ok().put(SystemConstant.RESULT_KEY, sysDict);
     }
 
-    @GetMapping("getDictsByTypeName/{typeName}")
+    @RequestMapping("getDictsByTypeName/{typeName}")
     public Result getDictsByTypeName(@PathVariable("typeName") String typeName) {
 
         List<SysDictDto> dicts = sysDictService.getDictsByTypeName(typeName);
@@ -56,13 +55,13 @@ public class SysDictController {
         return Result.ok().put(SystemConstant.RESULT_KEY, dicts);
     }
 
-    @GetMapping("hasValue/{id}/{typeId}/{value}")
+    @RequestMapping("hasValue/{id}/{typeId}/{value}")
     public Result hasValue(@PathVariable("id") Integer id, @PathVariable("typeId") Integer typeId,
                            @PathVariable("value") String value) {
         return Result.ok().put("hasValue", sysDictService.hasValue(id, typeId, value));
     }
 
-    @PostMapping(value = "save")
+    @RequestMapping(value = "save")
     public Result save(@RequestBody SysDict sysDict) {
 
         ValidatorUtils.validateEntity(sysDict, AddGroup.class);

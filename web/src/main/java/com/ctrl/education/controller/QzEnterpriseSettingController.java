@@ -33,7 +33,7 @@ public class QzEnterpriseSettingController {
      * @param id
      * @return
      */
-    @GetMapping("info")
+    @RequestMapping("info")
     public Result getQZEntSettingById(@RequestParam(value = "id") Integer id){
         Result result = iQzEnterpriseSettingService.getQZEntSettingById(id);
         return result;
@@ -44,7 +44,7 @@ public class QzEnterpriseSettingController {
      * @param qzEnterpriseSetting
      * @return
      */
-    @PostMapping("add")
+    @RequestMapping("add")
     public Result add(QzEnterpriseSetting qzEnterpriseSetting){
         ValidatorUtils.validateEntity(qzEnterpriseSetting);
         Result result = iQzEnterpriseSettingService.add(qzEnterpriseSetting);
@@ -55,7 +55,7 @@ public class QzEnterpriseSettingController {
      * @param qzEnterpriseSetting
      * @return
      */
-    @PostMapping("modify")
+    @RequestMapping("modify")
     public Result modify(QzEnterpriseSetting qzEnterpriseSetting){
         ValidatorUtils.validateEntity(qzEnterpriseSetting);
         Result result = iQzEnterpriseSettingService.modify(qzEnterpriseSetting);
@@ -67,14 +67,14 @@ public class QzEnterpriseSettingController {
      * @param enterprise_id
      * @return
      */
-    @GetMapping("getSettingInfo")
+    @RequestMapping("getSettingInfo")
     public Result getSettingInfo(@PathVariable(value = "enterprise_id") String enterprise_id){
        Result result =  iQzEnterpriseSettingService.getSettingInfo(enterprise_id);
         return result;
     }
 
     //文件上传
-    @PostMapping("uploadfile")
+    @RequestMapping("uploadfile")
     public Result uploadfile(MultipartFile[] files, HttpServletRequest request) throws IOException {
         //文件夹路径
         String folderPath = ImageConstant.ENTERPRISE_SETTING_FILE_PATH;

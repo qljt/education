@@ -1,5 +1,6 @@
 package com.ctrl.education.common;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import org.omg.CORBA.IDLType;
 
 import java.io.File;
 
@@ -38,7 +40,8 @@ public class MPGenerator {
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(false);// XML columList
         //作者
-        gc.setAuthor("liyang");
+       // gc.setAuthor("");
+        gc.setIdType(IdType.UUID);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -63,7 +66,7 @@ public class MPGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略,下划线转驼峰
         // 修改成自己需要的表
-        strategy.setInclude(new String[]{"sys_user","sys_role","sys_relation","sys_office","sys_menu"}); // 需要生成的表,多个表逗号隔开
+        strategy.setInclude(new String[]{"sys_user","sys_role"}); // 需要生成的表,多个表逗号隔开
         mpg.setStrategy(strategy);
         //lombok方式
         //strategy.setEntityLombokModel(true);
