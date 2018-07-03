@@ -9,12 +9,9 @@ import com.ctrl.education.model.SysRole;
 import com.ctrl.education.service.ISysRoleService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -45,7 +42,7 @@ public class SysRoleController {
      * @return
      */
     @BussinessLog(value = "添加角色",type = "3")
-    @RequestMapping
+    @RequestMapping("add")
     public Result add(SysRole sysRole){
         ValidatorUtils.validateEntity(sysRole);
         roleSetPids(sysRole);
@@ -58,7 +55,7 @@ public class SysRoleController {
      * @return
      */
     @BussinessLog(value = "修改角色",type = "3")
-    @RequestMapping
+    @RequestMapping("modify")
     public Result modify(SysRole sysRole){
         ValidatorUtils.validateEntity(sysRole);
         roleSetPids(sysRole);
@@ -66,7 +63,7 @@ public class SysRoleController {
         return result;
     }
     @BussinessLog(value = "根据id删除角色",type = "3")
-    @GetMapping
+    @RequestMapping("remove")
     public Result remove(@RequestParam(value = "id") String id){
         Result result = iSysRoleService.remove(id);
 

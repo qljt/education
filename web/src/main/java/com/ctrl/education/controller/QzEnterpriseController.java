@@ -54,7 +54,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @BussinessLog(value = "添加企业信息",type = "3")
-    @PostMapping
+    @PostMapping("add")
     public Result add(@RequestBody QzEnterprise qzEnterprise){
         ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
         Result result= iQzEnterpriseService.add(qzEnterprise);
@@ -66,7 +66,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @BussinessLog(value = "编辑企业信息",type = "3")
-    @PostMapping
+    @PostMapping("modify")
     public Result modify(@RequestBody QzEnterprise qzEnterprise){
         ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
         Result result= iQzEnterpriseService.modify(qzEnterprise);
