@@ -61,6 +61,7 @@ public class SystemConstant {
     public static final String REGISTER_SUCCESS="注册成功";
     public static final String REGISTER_FAIL="注册失败";
     public static final String RESULT_KEY="result";
+    public static final String USER_NAME_IS_EXIST = "该账号已经存在";
 
     /**
      * 数据权限过滤
