@@ -60,6 +60,7 @@ public class SystemConstant {
     public static final String PASSWORD_INCORRECT="密码不正确";
     public static final String REGISTER_SUCCESS="注册成功";
     public static final String REGISTER_FAIL="注册失败";
+    public static final String RESULT_KEY="result";
 
     /**
      * 数据权限过滤

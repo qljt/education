@@ -12,7 +12,7 @@ public class SysConstant {
     /**
      * 日志类型
      */
-    public enum LogType {
+    public static enum LogType {
 
         /**
          * 登录登出日志
@@ -54,7 +54,7 @@ public class SysConstant {
     /**
      * 通用变量，表示可用、禁用、显示、隐藏
      */
-    public enum StatusType {
+    public static enum StatusType {
 
         /**
          * 禁用，隐藏
