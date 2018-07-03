@@ -1,7 +1,10 @@
 package com.ctrl.education.model;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -19,6 +22,7 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * 主键id
      */
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 父级菜单编号

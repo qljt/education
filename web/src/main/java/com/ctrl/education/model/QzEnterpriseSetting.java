@@ -2,11 +2,13 @@ package com.ctrl.education.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotations.Version;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,7 +25,7 @@ import lombok.experimental.Accessors;
 public class QzEnterpriseSetting extends Model<QzEnterpriseSetting> {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 企业ID

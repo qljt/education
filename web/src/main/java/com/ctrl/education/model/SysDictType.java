@@ -29,7 +29,7 @@ public class SysDictType extends Model<SysDictType> {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private Integer id;
     /**
      * 类型名称
