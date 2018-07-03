@@ -4,6 +4,7 @@ import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.controller.BaseController;
 import com.ctrl.education.core.log.factory.LogManager;
 import com.ctrl.education.core.log.factory.LogTaskFactory;
+import com.ctrl.education.core.support.HttpKit;
 import com.ctrl.education.core.utils.IpUtils;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysUser;
@@ -35,14 +36,15 @@ public class LoginController extends BaseController {
 
     @PostMapping("login")
     public Result login(@RequestParam Map<String,Object> param){
-        String account = param.get("acccount").toString().trim().toLowerCase();
+        String account = param.get("username").toString().trim().toLowerCase();
         String password = param.get("password").toString().trim().toLowerCase();
         String code = param.get("code").toString().trim();
         if(StringUtils.isEmpty(code)){
-            return Result.ok("验证码不能为空");
+            return Result.error("验证码不能为空");
         }
-        if (!Constants.KAPTCHA_SESSION_KEY.equals(code)){
-            return Result.ok("验证码不正确");
+        String kaptcha = (String) HttpKit.getRequest().getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        if (!code.equalsIgnoreCase(kaptcha)){
+            return Result.error("验证码不正确");
         }
         Subject subject = ShiroKit.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(account,password);

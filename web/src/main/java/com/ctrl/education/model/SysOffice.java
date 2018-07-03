@@ -2,7 +2,9 @@ package com.ctrl.education.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.ctrl.education.core.validator.group.AddGroup;
 import com.ctrl.education.core.validator.group.UpdateGroup;
 import org.hibernate.validator.constraints.Length;
@@ -26,34 +28,41 @@ public class SysOffice extends Model<SysOffice> {
     /**
      * 主键
      */
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 父级id
      */
+    @TableId("pid")
     private String pid;
     /**
      * 所有父级id的集合，逗号隔开
      */
+    @TableId("pids")
     private String pids;
     /**
      * 名称
      */
+    @TableId("name")
     @NotNull(message = "名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
     @Length(min = 4, max = 30, message = "长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
     /**
      * 编码
      */
+    @TableId("code")
     @NotNull(message = "编码不可为空", groups = {AddGroup.class, UpdateGroup.class})
     @Length(min = 4, max = 30, message = "编码长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String code;
     /**
      * 类型
      */
+    @TableId("type")
     private Integer type;
     /**
      * 状态，1：禁用，2：启用，3：删除
      */
+    @TableId("status")
     private Integer status;
     /**
      * 备注

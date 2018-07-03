@@ -61,6 +61,7 @@ public class ShiroConfig {
         // 配置不会被拦截的链接 顺序判断
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/sys/login", "anon");
+        filterChainDefinitionMap.put("/sys/getCode", "anon");
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
         //限制同一帐号同时在线的个数。
