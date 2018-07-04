@@ -78,6 +78,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
     }
 
+    /**
+     * 根据角色id查询角色绑定的角色
+     * @param roleid
+     * @return
+     */
     private boolean hasRelation(String roleid){
 
         SysRelation sysRelation = iSysRelationService.selectById(roleid);
