@@ -3,6 +3,7 @@ package com.ctrl.education.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ctrl.education.core.constant.SystemConstant;
+import com.ctrl.education.core.node.MenuNode;
 import com.ctrl.education.core.node.ZTreeNode;
 import com.ctrl.education.core.utils.PageUtils;
 import com.ctrl.education.core.utils.Query;
@@ -10,14 +11,12 @@ import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.utils.ToolUtils;
 import com.ctrl.education.model.SysMenu;
 import com.ctrl.education.dao.SysMenuMapper;
-import com.ctrl.education.model.SysRole;
 import com.ctrl.education.service.ISysMenuService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,5 +116,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
            sysMenu.setPid(menu.getId());
            sysMenu.setPids(menu.getPids()+""+menu.getId()+",");
         }
+    }
+
+    @Override
+    public List<MenuNode> getMenusByRoleIds(List<String> roleIds) {
+        return this.baseMapper.getMenusByRoleIds(roleIds);
     }
 }

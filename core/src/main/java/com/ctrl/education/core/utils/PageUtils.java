@@ -104,11 +104,11 @@ public class PageUtils implements Serializable {
     }
 
     /**
-     * 为兼容layui表格的数据格式而存在的方法。
+     * 为兼容bootstrap-table表格的数据格式而存在的方法。
      * */
     public Result toLayTableResult(){
         return Result.ok()
-                .put("count", this.getTotalCount())
-                .put("data", this.getList());
+                .put("total", this.getTotalCount())
+                .put("rows", this.getList());
     }
 }

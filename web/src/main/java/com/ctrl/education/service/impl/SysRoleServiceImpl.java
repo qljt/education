@@ -100,10 +100,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
         boolean flag = iSysRelationService.deleteById(roleId);
         if (flag) {
-            for (int i = 0; i < Arrays.asList(ids).size(); i++) {
+            String[] idss = ids.split(",");
+            for (String id:idss) {
                 SysRelation sysRelation = new SysRelation();
                 sysRelation.setRoleid(roleId);
-                sysRelation.setMenuid(String.valueOf(i));
+                sysRelation.setMenuid(String.valueOf(id));
                 iSysRelationService.insert(sysRelation);
             }
         }

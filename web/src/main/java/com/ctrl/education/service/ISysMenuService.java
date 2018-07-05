@@ -1,5 +1,6 @@
 package com.ctrl.education.service;
 
+import com.ctrl.education.core.node.MenuNode;
 import com.ctrl.education.core.node.ZTreeNode;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysMenu;
@@ -29,4 +30,6 @@ public interface ISysMenuService extends IService<SysMenu> {
     Result save(SysMenu sysMenu);
 
     Result modify(SysMenu sysMenu);
+
+    List<MenuNode> getMenusByRoleIds(List<String> roleIds);
 }

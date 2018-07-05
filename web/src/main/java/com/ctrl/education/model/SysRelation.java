@@ -1,7 +1,10 @@
 package com.ctrl.education.model;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -20,6 +23,7 @@ public class SysRelation extends Model<SysRelation> {
     /**
      * 主键
      */
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 菜单id

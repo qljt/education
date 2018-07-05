@@ -1,12 +1,9 @@
 package com.ctrl.education.core.constant;
 
 /**
- * com.aloha.app.core.constant
  *
- * @author zgl
  * @name SystemConstant
  * @description
- * @date 2018-02-24 17:33
  */
 public class SystemConstant {
 

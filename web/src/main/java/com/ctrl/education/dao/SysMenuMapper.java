@@ -1,5 +1,6 @@
 package com.ctrl.education.dao;
 
+import com.ctrl.education.core.node.MenuNode;
 import com.ctrl.education.core.node.ZTreeNode;
 import com.ctrl.education.model.SysMenu;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
@@ -21,4 +22,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     List<String> getMenuIdsByRoleId(String roleId);
 
     List<ZTreeNode> menuTreeListByMenuIds(List<String> menuIds);
+
+    List<MenuNode> getMenusByRoleIds(List<String> roleIds);
 }
