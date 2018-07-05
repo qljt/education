@@ -102,7 +102,7 @@ public class QzEnterpriseController extends BaseController {
      * @return
      * @throws IOException
      */
-    @RequestMapping("importExcel")
+    @RequestMapping("importQzEnterprise")
     public Result importQzEnterprise(@RequestParam("file") MultipartFile file,HttpServletRequest request) throws IOException{
         String folderPath = ImageConstant.ENTERPRISE_FILE_PATH;
         Result result = ExcelUtils.uploadExcel(file,folderPath,request);

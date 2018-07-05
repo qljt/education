@@ -19,4 +19,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * 获取ztree的节点列表
      */
     List<ZTreeNode> tree();
+
+    List<ZTreeNode> roleTreeListByRoleId(String[] roleIds);
 }

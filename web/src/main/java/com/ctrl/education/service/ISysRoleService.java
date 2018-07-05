@@ -4,6 +4,8 @@ import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysRole;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.Map;
+
 /**
  * <p>
  * 角色表 服务类
@@ -21,4 +23,10 @@ public interface ISysRoleService extends IService<SysRole> {
     Result tree();
 
     Result remove(String id);
+
+    Result setAuthority(String roleId, String ids);
+
+    Result roleTreeListByUserId(String userId);
+
+    Result getList(Map<String,Object> map);
 }

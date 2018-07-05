@@ -1,7 +1,12 @@
 package com.ctrl.education.service;
 
+import com.ctrl.education.core.node.ZTreeNode;
+import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysMenu;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +18,15 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
+    Result getList(Map<String,Object> map);
+
+    List<ZTreeNode> menuTreeList();
+
+    List<String> getMenuIdsByRoleId(String roleId);
+
+    List<ZTreeNode> menuTreeListByMenuIds(List<String> menuIds);
+
+    Result save(SysMenu sysMenu);
+
+    Result modify(SysMenu sysMenu);
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.Map;
+
 /**
  * <p>
  * 角色表 前端控制器
@@ -26,14 +28,27 @@ public class SysRoleController {
     @Autowired
     private ISysRoleService iSysRoleService;
 
+    @BussinessLog(value = "获取角色列表",type = "2")
+    @RequestMapping("list")
+    public Result getList(@RequestParam Map<String,Object> map){
+        Result result = iSysRoleService.getList(map);
+        return result;
+    }
+
     /**
      * 获取角色的tree列表
      */
     @BussinessLog(value = "获取角色的tree列表",type = "2")
-    @RequestMapping(value = "/tree")
-    public Result tree() {
-        Result result = this.iSysRoleService.tree();
+    @RequestMapping(value = "/roleTreeList")
+    public Result roleTreeList() {
+        Result result = iSysRoleService.tree();
         return result;
+    }
+    @RequestMapping("roleTreeListByUserId")
+    public Result roleTreeListByUserId(@RequestParam(value = "userId") String userId){
+        Result result = iSysRoleService.roleTreeListByUserId(userId);
+        return result;
+
     }
     /**
      * 增加角色
@@ -72,6 +87,13 @@ public class SysRoleController {
     public Result remove(@RequestParam(value = "id") String id){
         Result result = iSysRoleService.remove(id);
 
+        return result;
+    }
+    @BussinessLog(value = "设置角色的权限",type = "3")
+    @RequestMapping("setAuthority")
+    public Result setAuthority(@RequestParam("roleId") String roleId, @RequestParam("ids") String ids){
+
+        Result result =iSysRoleService.setAuthority(roleId,ids);
         return result;
     }
     private void roleSetPids(SysRole sysRole) {

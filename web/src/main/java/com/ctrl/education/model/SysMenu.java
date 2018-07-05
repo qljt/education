@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.ctrl.education.core.validator.group.AddGroup;
+import com.ctrl.education.core.validator.group.UpdateGroup;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -35,7 +39,15 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * 菜单名称
      */
+    @NotNull(message = "菜单名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 4, max =200, message = "菜单名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
+    /**
+     * 菜单编码
+     */
+    @NotNull(message = "菜单名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 4, max = 200, message = "菜单名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
+    private  String code;
     /**
      * 菜单图标
      */
@@ -43,6 +55,8 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * url地址
      */
+    @NotNull(message = "菜单地址不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 4, max = 200, message = "菜单地址长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String url;
     /**
      * 菜单排序号
@@ -166,6 +180,14 @@ public class SysMenu extends Model<SysMenu> {
         this.isopen = isopen;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -174,18 +196,19 @@ public class SysMenu extends Model<SysMenu> {
     @Override
     public String toString() {
         return "SysMenu{" +
-        "id=" + id +
-        ", pid=" + pid +
-        ", pids=" + pids +
-        ", name=" + name +
-        ", icon=" + icon +
-        ", url=" + url +
-        ", num=" + num +
-        ", levels=" + levels +
-        ", ismenu=" + ismenu +
-        ", tips=" + tips +
-        ", status=" + status +
-        ", isopen=" + isopen +
-        "}";
+                "id='" + id + '\'' +
+                ", pid='" + pid + '\'' +
+                ", pids='" + pids + '\'' +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", icon='" + icon + '\'' +
+                ", url='" + url + '\'' +
+                ", num=" + num +
+                ", levels=" + levels +
+                ", ismenu=" + ismenu +
+                ", tips='" + tips + '\'' +
+                ", status=" + status +
+                ", isopen=" + isopen +
+                '}';
     }
 }
