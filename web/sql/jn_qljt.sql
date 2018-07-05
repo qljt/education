@@ -136,6 +136,9 @@ CREATE TABLE `qz_enterprise` (
 
 /*Data for the table `qz_enterprise` */
 
+insert  into `qz_enterprise`(`id`,`enterprise_name`,`sys_code`,`createtime`,`link_name`,`link_phone`,`link_email`,`content`,`state`,`sys_user_id`) values 
+('a015110e1fac468ebf4f2678cf95145e','齐鲁交通','0xib','2018-07-02 15:57:53',NULL,NULL,NULL,NULL,NULL,NULL);
+
 /*Table structure for table `qz_enterprise_setting` */
 
 DROP TABLE IF EXISTS `qz_enterprise_setting`;
@@ -38379,9 +38382,9 @@ insert  into `sys_district`(`id`,`pid`,`name`,`deep`,`lat`,`lng`,`isz`) values
 (513436206,513436,'子威乡',4,28.20615005,103.07757568,1),
 (513436207,513436,'依洛拉达乡',4,28.25312042,103.06552124,1),
 (513436208,513436,'典补乡',4,28.36697578,103.02878571,1),
-(513436209,513436,'哈洛乡',4,28.43313789,103.00319672,1);
+(513436209,513436,'哈洛乡',4,28.43313789,103.00319672,1),
+(513436210,513436,'牛牛坝乡',4,28.25748444,102.99509430,1);
 insert  into `sys_district`(`id`,`pid`,`name`,`deep`,`lat`,`lng`,`isz`) values 
-(513436210,513436,'牛牛坝乡',4,28.25748444,102.99509430,1),
 (513436211,513436,'尔合乡',4,28.26483917,102.92230988,1),
 (513436212,513436,'竹库乡',4,28.21361732,102.94631958,1),
 (513436213,513436,'候古莫乡',4,28.33902550,102.94927216,1),
@@ -46931,7 +46934,7 @@ DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log` (
   `id` varchar(32) NOT NULL COMMENT '记录id',
   `type` int(11) DEFAULT NULL COMMENT '日志类型 1-登录 2-访问 3-操作 4-异常 5-授权',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '操作用户id',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '操作用户id',
   `username` varchar(50) DEFAULT NULL COMMENT '操作用户名',
   `operation` varchar(50) DEFAULT NULL COMMENT '用户操作',
   `method` varchar(200) DEFAULT NULL COMMENT '调用方法',
@@ -46962,27 +46965,42 @@ CREATE TABLE `sys_login_log` (
 
 /*Data for the table `sys_login_log` */
 
+insert  into `sys_login_log`(`id`,`logname`,`userid`,`createtime`,`succeed`,`message`,`ip`) values 
+('08eac584dc2349ad8b87a5046cf83cac','登录日志','3b13237665d94a6db0e0c885a9702977','2018-07-05 21:09:02','成功',NULL,'192.168.1.108'),
+('6cfa998c312640d2a2ff714e06562e52','登录日志','3b13237665d94a6db0e0c885a9702977','2018-07-05 21:08:27','成功',NULL,'192.168.1.108'),
+('c76df28d24df49719ae63b6620e7f733','登录日志','3b13237665d94a6db0e0c885a9702977','2018-07-03 11:30:38','成功',NULL,'192.168.1.108');
+
 /*Table structure for table `sys_menu` */
 
 DROP TABLE IF EXISTS `sys_menu`;
 
 CREATE TABLE `sys_menu` (
   `id` varchar(32) NOT NULL COMMENT '主键id',
+  `code` varchar(255) DEFAULT NULL COMMENT '编码',
   `pid` text COMMENT '父级菜单编号',
   `pids` text COMMENT '当前菜单的所有父菜单编号',
   `name` varchar(255) DEFAULT NULL COMMENT '菜单名称',
   `icon` varchar(255) DEFAULT NULL COMMENT '菜单图标',
   `url` varchar(255) DEFAULT NULL COMMENT 'url地址',
-  `num` int(65) DEFAULT NULL COMMENT '菜单排序号',
+  `num` int(65) DEFAULT '0' COMMENT '菜单排序号',
   `levels` int(65) DEFAULT NULL COMMENT '菜单层级',
   `ismenu` int(11) DEFAULT NULL COMMENT '是否是菜单（1：是  0：不是）',
   `tips` varchar(255) DEFAULT NULL COMMENT '备注',
-  `status` int(65) DEFAULT NULL COMMENT '菜单状态 :  1:启用   0:不启用',
+  `status` int(65) DEFAULT '1' COMMENT '菜单状态 :  1:启用   0:不启用',
   `isopen` int(11) DEFAULT NULL COMMENT '是否打开:    1:打开   0:不打开',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 /*Data for the table `sys_menu` */
+
+insert  into `sys_menu`(`id`,`code`,`pid`,`pids`,`name`,`icon`,`url`,`num`,`levels`,`ismenu`,`tips`,`status`,`isopen`) values 
+('0049a69635b44f11862d282368606ed3','sysMenu','d8f4aa88587149949212d751a7b85d73','0,d8f4aa88587149949212d751a7b85d73,','菜单管理','fa fa-address-card-o','sysMenu/menuList.html',1,2,1,NULL,1,NULL),
+('3095b8492dd74c529c504325a50ee474','sysRole','d8f4aa88587149949212d751a7b85d73','0,d8f4aa88587149949212d751a7b85d73,','角色管理','fa fa-street-view','sysRole/roleList.html',2,2,1,NULL,1,NULL),
+('540e16cc7b284d29a3861d3f28d0476d','enterprise','0','0,','企业管理','fa fa-tv','#',3,1,1,NULL,1,NULL),
+('a4d3f74678164fe1918a76091834c76f','sysUser','d8f4aa88587149949212d751a7b85d73','0,d8f4aa88587149949212d751a7b85d73,','用户管理','fa fa-user','sysUser/sysUserList.html',2,2,1,NULL,1,NULL),
+('cef296d8b0cf454fa5f62a50298553fa','qzEnterprise','540e16cc7b284d29a3861d3f28d0476d','0,540e16cc7b284d29a3861d3f28d0476d,','企业管理','fa fa-building','qzEnterprise/qzEnterprise.html',1,2,1,NULL,1,NULL),
+('d8f4aa88587149949212d751a7b85d73','system','0','0,','系统管理','fa fa-tv','#',2,1,1,NULL,1,NULL),
+('f11e7931e47845f79fef8241f95fda31','sysOffice','d8f4aa88587149949212d751a7b85d73','0,d8f4aa88587149949212d751a7b85d73,','组织机构管理','fa fa-sitemap','sysOffice/officeList.html',4,2,1,NULL,1,NULL);
 
 /*Table structure for table `sys_office` */
 
@@ -46995,13 +47013,16 @@ CREATE TABLE `sys_office` (
   `name` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '名称',
   `code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '编码',
   `type` tinyint(1) unsigned DEFAULT NULL COMMENT '类型',
-  `status` tinyint(1) unsigned DEFAULT NULL COMMENT '状态，1：禁用，2：启用，3：删除',
+  `status` tinyint(1) unsigned DEFAULT NULL COMMENT '状态，1：启用，2：禁用，3：删除',
   `remark` text CHARACTER SET utf8mb4 COMMENT '备注',
   `sys_code` varchar(32) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '系统编码（企业编码）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='机构表';
 
 /*Data for the table `sys_office` */
+
+insert  into `sys_office`(`id`,`pid`,`pids`,`name`,`code`,`type`,`status`,`remark`,`sys_code`) values 
+('1dcddd66c34a4094912466392542f8f7','0','0','总公司','AAAA',NULL,NULL,NULL,'0xib');
 
 /*Table structure for table `sys_relation` */
 
@@ -47015,6 +47036,15 @@ CREATE TABLE `sys_relation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色和菜单关联表';
 
 /*Data for the table `sys_relation` */
+
+insert  into `sys_relation`(`id`,`menuid`,`roleid`) values 
+('185eb65b186245969dc0c2df991d3870','a4d3f74678164fe1918a76091834c76f','63696cac480141c0a593cd69390b7bf6'),
+('651cb9b9fc564d3ca298f70a36d15957','f11e7931e47845f79fef8241f95fda31','63696cac480141c0a593cd69390b7bf6'),
+('75a250e61432457fa0fab30674379d72','3095b8492dd74c529c504325a50ee474','63696cac480141c0a593cd69390b7bf6'),
+('952deebb3b9745dcaf6241b957cca0f8','540e16cc7b284d29a3861d3f28d0476d','63696cac480141c0a593cd69390b7bf6'),
+('9ca666744a7645918ce4970f8c691f52','d8f4aa88587149949212d751a7b85d73','63696cac480141c0a593cd69390b7bf6'),
+('b3baff0f2c9d4fe19a49387355c4d866','cef296d8b0cf454fa5f62a50298553fa','63696cac480141c0a593cd69390b7bf6'),
+('ea6a657d955746e8bf60577d6f6653e0','0049a69635b44f11862d282368606ed3','63696cac480141c0a593cd69390b7bf6');
 
 /*Table structure for table `sys_role` */
 
@@ -47032,6 +47062,9 @@ CREATE TABLE `sys_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 /*Data for the table `sys_role` */
+
+insert  into `sys_role`(`id`,`pid`,`name`,`office_id`,`desc`,`status`,`create_time`) values 
+('63696cac480141c0a593cd69390b7bf6','0','超级管理员','1dcddd66c34a4094912466392542f8f7',NULL,NULL,'2018-07-02 16:00:00');
 
 /*Table structure for table `sys_user` */
 
@@ -47058,6 +47091,15 @@ CREATE TABLE `sys_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户表';
 
 /*Data for the table `sys_user` */
+
+insert  into `sys_user`(`id`,`username`,`password`,`realname`,`nickname`,`avatar`,`birthday`,`gender`,`email`,`mobile`,`role_id`,`phone`,`status`,`create_time`,`office_id`,`last_login_time`) values 
+('3b13237665d94a6db0e0c885a9702977','admin','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:05:20','1dcddd66c34a4094912466392542f8f7','2018-07-05 21:09:02'),
+('54d6b285078644a2b172e6844634a6b5','admin3','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:10:53','1dcddd66c34a4094912466392542f8f7',NULL),
+('761ff15e90354f69b7948910aff61bc8','admin4','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:11:13','1dcddd66c34a4094912466392542f8f7',NULL),
+('77afa33d9f2447858221d24a8cfb7225','admin0','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:08:55','1dcddd66c34a4094912466392542f8f7',NULL),
+('8c3db37094464aa39d2254672e8f00c1','admin1','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:07:25','1dcddd66c34a4094912466392542f8f7',NULL),
+('ac95d578701b4a72bcd063d5f77c51cb','admin5','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:11:33','1dcddd66c34a4094912466392542f8f7',NULL),
+('de7462bcb1ea4274b26beff4c399aab5','admin2','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,0,NULL,NULL,'63696cac480141c0a593cd69390b7bf6',NULL,1,'2018-07-02 16:09:01','1dcddd66c34a4094912466392542f8f7',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
