@@ -106,6 +106,9 @@ public class SysUser extends Model<SysUser> {
      */
     @TableField("office_id")
     private String officeId;
+
+    @TableField("post")
+    private String post;
     /**
      * 最后登录时间
      */
@@ -130,6 +133,7 @@ public class SysUser extends Model<SysUser> {
         this.createTime = sysUser.getCreateTime();
         this.officeId = sysUser.getOfficeId();
         this.lastLoginTime = sysUser.getLastLoginTime();
+        this.post = sysUser.getPost();
     }
 
     public String getId() {
@@ -260,6 +264,14 @@ public class SysUser extends Model<SysUser> {
         this.lastLoginTime = lastLoginTime;
     }
 
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -283,6 +295,7 @@ public class SysUser extends Model<SysUser> {
         ", status=" + status +
         ", createTime=" + createTime +
         ", officeId=" + officeId +
+        ", post=" + post +
         ", lastLoginTime=" + lastLoginTime +
         "}";
     }

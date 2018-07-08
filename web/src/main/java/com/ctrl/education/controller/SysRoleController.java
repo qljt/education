@@ -2,6 +2,7 @@ package com.ctrl.education.controller;
 
 
 import com.ctrl.education.core.annotation.BussinessLog;
+import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.validator.ValidatorUtils;
 import com.ctrl.education.model.SysOffice;
@@ -28,6 +29,11 @@ public class SysRoleController {
     @Autowired
     private ISysRoleService iSysRoleService;
 
+    /**
+     * 获取角色列表
+     * @param map
+     * @return
+     */
     @BussinessLog(value = "获取角色列表",type = "2")
     @RequestMapping("list")
     public Result getList(@RequestParam Map<String,Object> map){
@@ -44,11 +50,29 @@ public class SysRoleController {
         Result result = iSysRoleService.tree();
         return result;
     }
+
+    /**
+     * 根据用户获取角色tree
+     * @param userId
+     * @return
+     */
     @RequestMapping("roleTreeListByUserId")
     public Result roleTreeListByUserId(@RequestParam(value = "userId") String userId){
         Result result = iSysRoleService.roleTreeListByUserId(userId);
         return result;
 
+    }
+
+    /**
+     * 根据角色id查询角色对象
+     * @param id
+     * @return
+     */
+    @BussinessLog(value = "根据角色ida查询角色",type = "2")
+    @RequestMapping("info/{id}")
+    public Result getRoleById(@PathVariable("id") String id){
+        SysRole sysRole = iSysRoleService.selectById(id);
+        return Result.ok().put(SystemConstant.RESULT_KEY,sysRole);
     }
     /**
      * 增加角色
