@@ -1,5 +1,6 @@
 package com.ctrl.education.service.impl;
 
+import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.model.SysRole;
 import com.ctrl.education.service.ISysRoleService;
 import org.junit.Test;
@@ -8,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * com.ctrl.education.service.impl
@@ -25,11 +27,18 @@ public class SysRoleServiceImplTest {
     @Test
     public void add() {
         SysRole sysRole = new SysRole();
-        sysRole.setName("超级管理员");
-        sysRole.setPid("0");
+        sysRole.setName("二级管理员");
         sysRole.setOfficeId("1dcddd66c34a4094912466392542f8f7");
-        iSysRoleService.insert(sysRole);
+        iSysRoleService.add(sysRole);
 
+    }
+    @Test
+    public void getList(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("page","0");
+        map.put("limit","15");
+        Result result = iSysRoleService.getList(map);
+        System.out.println(result);
     }
     @Test
     public void setAuthority(){

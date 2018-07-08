@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysRole">
-        <id column="id" property="id" />
-        <result column="pid" property="pid" />
+        <id column="id" property="id"/>
+        <result column="pid" property="pid"/>
         <result column="pids" property="pids"/>
-        <result column="name" property="name" />
-        <result column="office_id" property="officeId" />
-        <result column="desc" property="desc" />
-        <result column="status" property="status" />
-        <result column="create_time" property="createTime" />
+        <result column="name" property="name"/>
+        <result column="office_id" property="officeId"/>
+        <result column="desc" property="desc"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
     </resultMap>
     <select id="tree" resultType="com.ctrl.education.core.node.ZTreeNode">
         select id,pid as pId,name,
@@ -63,5 +63,26 @@
         ORDER BY
         pId,
         num ASC
+    </select>
+    <select id="getList" parameterType="java.util.Map" resultType="com.ctrl.education.dto.SysRoleDto">
+        SELECT
+        role.*,
+        office.name AS officeName
+        FROM (SELECT
+        r1.id,
+        r1.pid,
+        r1.pids,
+        r1.status,
+        r1.desc,
+        r1.office_id,
+        r1.office_id,
+        r1.name,
+        r2.name AS pName
+        FROM sys_role AS r1 INNER JOIN sys_role r2 ON (r2.id = r1.pid OR r2.pid = 0)) role LEFT JOIN sys_office office
+        ON role.office_id = office.id
+        <if test="name != null">
+            WHERE role.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        LIMIT ${offset},${limit}
     </select>
 </mapper>

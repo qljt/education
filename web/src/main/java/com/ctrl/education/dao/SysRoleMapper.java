@@ -1,10 +1,13 @@
 package com.ctrl.education.dao;
 
 import com.ctrl.education.core.node.ZTreeNode;
+import com.ctrl.education.dto.SysRoleDto;
 import com.ctrl.education.model.SysRole;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,4 +24,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     List<ZTreeNode> tree();
 
     List<ZTreeNode> roleTreeListByRoleId(String[] roleIds);
+
+    List<SysRoleDto> getList(Map<String,Object> map);
 }

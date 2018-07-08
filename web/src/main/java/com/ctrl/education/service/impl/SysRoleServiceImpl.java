@@ -1,5 +1,6 @@
 package com.ctrl.education.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -8,6 +9,8 @@ import com.ctrl.education.core.node.ZTreeNode;
 import com.ctrl.education.core.utils.PageUtils;
 import com.ctrl.education.core.utils.Query;
 import com.ctrl.education.core.utils.Result;
+import com.ctrl.education.core.utils.ToolUtils;
+import com.ctrl.education.dto.SysRoleDto;
 import com.ctrl.education.model.QzEnterprise;
 import com.ctrl.education.model.SysRelation;
 import com.ctrl.education.model.SysRole;
@@ -23,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +50,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             rollbackFor = {Exception.class}
     )
     public Result add(SysRole sysRole) {
+        this.roleSetPids(sysRole);
         boolean flag = this.insert(sysRole);
         if (flag) {
             return Result.ok(SystemConstant.ADD_SUCCESS);
@@ -59,6 +64,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             rollbackFor = {Exception.class}
     )
     public Result modify(SysRole sysRole) {
+        this.roleSetPids(sysRole);
         boolean flag = this.updateById(sysRole);
         if (flag) {
             return Result.ok(SystemConstant.UPDATE_SUCCESS);
@@ -126,14 +132,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public Result getList(Map<String, Object> map) {
-        String name = (String) map.get("name");
-        Page<SysRole> page = this.selectPage(
-                new Query<SysRole>(map).getPage(),
-                new EntityWrapper<SysRole>()
-                        .like(StringUtils.isNotBlank(name), "name", name)
-                        .orderBy("createtime", true)
-        );
-        return new PageUtils(page).toLayTableResult();
+        Object obj = ToolUtils.getFirstOrNull(map);
+        Integer offset = Integer.parseInt((String)map.get("offset"));
+        map.put("offset",offset-1<0?0:offset-1);
+        List<SysRoleDto> list = baseMapper.getList(map);
+        // 获取总条数
+        Integer totalCount = baseMapper.selectCount(new EntityWrapper<SysRole>());
+        return new Result().ok()
+                .put("total", totalCount)
+                .put("rows", list);
     }
 
     /**
@@ -150,5 +157,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
         return false;
     }
+
+    private void roleSetPids(SysRole sysRole) {
+        if (StringUtils.isEmpty(sysRole.getPid()) || sysRole.getPid().equals(0)) {
+            sysRole.setPid("0");
+            sysRole.setPids("0,");
+        } else {
+            String pid = sysRole.getPid();
+            SysRole temp = this.selectById(pid);
+            String pids = temp.getPids();
+            sysRole.setPid(pid);
+            sysRole.setPids(pids + "" + pid + ",");
+        }
+    }
+
 
 }

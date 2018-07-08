@@ -268,4 +268,20 @@ public class ToolUtils {
         }
         return str.toString().trim();
     }
+    /**
+     * 获取map中第一个数据值
+     *
+     * @param map 数据源
+     * @return
+     */
+    public static Object getFirstOrNull(Map<String, Object> map) {
+        Object obj = null;
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            obj = entry.getValue();
+            if (obj != null) {
+                break;
+            }
+        }
+        return  obj;
+    }
 }

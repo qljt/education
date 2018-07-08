@@ -83,7 +83,6 @@ public class SysRoleController {
     @RequestMapping("add")
     public Result add(SysRole sysRole){
         ValidatorUtils.validateEntity(sysRole);
-        roleSetPids(sysRole);
         Result result = iSysRoleService.add(sysRole);
         return result;
     }
@@ -96,7 +95,6 @@ public class SysRoleController {
     @RequestMapping("modify")
     public Result modify(SysRole sysRole){
         ValidatorUtils.validateEntity(sysRole);
-        roleSetPids(sysRole);
         Result result = iSysRoleService.modify(sysRole);
         return result;
     }
@@ -120,17 +118,6 @@ public class SysRoleController {
         Result result =iSysRoleService.setAuthority(roleId,ids);
         return result;
     }
-    private void roleSetPids(SysRole sysRole) {
-        if (StringUtils.isEmpty(sysRole.getPid()) || sysRole.getPid().equals(0)) {
-            sysRole.setPid("0");
-            sysRole.setPids("0,");
-        } else {
-            String pid = sysRole.getPid();
-            SysRole temp = iSysRoleService.selectById(pid);
-            String pids = temp.getPids();
-            sysRole.setPid(pid);
-            sysRole.setPids(pids + "" + pid + ",");
-        }
-    }
+
 }
 
