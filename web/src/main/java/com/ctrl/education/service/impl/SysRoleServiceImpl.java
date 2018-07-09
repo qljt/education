@@ -132,9 +132,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public Result getList(Map<String, Object> map) {
-        Object obj = ToolUtils.getFirstOrNull(map);
         Integer offset = Integer.parseInt((String)map.get("offset"));
-        map.put("offset",offset-1<0?0:offset-1);
+        map.put("offset",offset-1<0?"0":offset-1+"");
         List<SysRoleDto> list = baseMapper.getList(map);
         // 获取总条数
         Integer totalCount = baseMapper.selectCount(new EntityWrapper<SysRole>());

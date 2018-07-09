@@ -22,7 +22,7 @@
 		ELSE
 		'false'
 		END
-		) as isOpen from sys_role
+		) as isOpen from sys_role WHERE status=1
     </select>
     <select id="roleTreeListByRoleId" resultType="com.ctrl.education.core.node.ZTreeNode">
         SELECT
