@@ -75,8 +75,8 @@
         r1.status,
         r1.desc,
         r1.office_id,
-        r1.office_id,
         r1.name,
+        r1.create_time AS createTime,
         r2.name AS pName
         FROM sys_role AS r1 INNER JOIN sys_role r2 ON (r2.id = r1.pid OR r2.pid = 0)) role LEFT JOIN sys_office office
         ON role.office_id = office.id

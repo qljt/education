@@ -26,10 +26,12 @@ public class SysRoleServiceImplTest {
     private ISysRoleService iSysRoleService;
     @Test
     public void add() {
-        SysRole sysRole = new SysRole();
-        sysRole.setName("二级管理员");
-        sysRole.setOfficeId("1dcddd66c34a4094912466392542f8f7");
-        iSysRoleService.add(sysRole);
+        for (int i = 0; i <100 ; i++) {
+            SysRole sysRole = new SysRole();
+            sysRole.setName("管理员"+i);
+            sysRole.setOfficeId("1dcddd66c34a4094912466392542f8f7");
+            iSysRoleService.add(sysRole);
+        }
 
     }
     @Test
