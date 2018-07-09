@@ -75,7 +75,7 @@ public class LogAspect {
             sysLog.setOperation(sysLogAnnotation.value());
             String type = sysLogAnnotation.type();
             if (StringUtils.isNotEmpty(type)) {
-                sysLog.setType(SysConstant.LogType.valueOf(type).getValue());
+                sysLog.setType(Integer.valueOf(type));
             } else {
                 sysLog.setType(SysConstant.LogType.OPERATION.getValue());
             }

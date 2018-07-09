@@ -29,7 +29,7 @@ public class SysLog extends Model<SysLog> {
      * 记录id
      */
     @TableId(value = "id", type = IdType.UUID)
-    private Long id;
+    private String id;
     /**
      * 日志类型 1-登录 2-访问 3-操作 4-异常 5-授权
      */
@@ -79,11 +79,11 @@ public class SysLog extends Model<SysLog> {
         return this.id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
