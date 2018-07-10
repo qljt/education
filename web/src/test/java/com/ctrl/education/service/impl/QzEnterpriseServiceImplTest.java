@@ -40,13 +40,18 @@ public class QzEnterpriseServiceImplTest {
 
     @Test
     public void saveTest() {
+        for (int i = 0; i < 100; i++) {
+
         QzEnterprise qzEnterprise = new QzEnterprise();
-      /*  String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-        qzEnterprise.setId(uuid);
-        qzEnterprise.setCreatetime(DateUtil.now());*/
-        qzEnterprise.setEnterpriseName("齐鲁交通");
+        qzEnterprise.setEnterpriseName("齐鲁交通"+i);
         qzEnterprise.setSysCode(RandomUtil.randomString(4));
+        qzEnterprise.setSysUserId("3b13237665d94a6db0e0c885a9702977");
+        qzEnterprise.setLinkName("李阳"+i);
+        qzEnterprise.setLinkPhone("15063359912");
+        qzEnterprise.setLinkEmail("liyang@sdaloha.com");
+        qzEnterprise.setContent("测试1"+i);
         iQzEnterpriseService.add(qzEnterprise);
+        }
 
     }
 

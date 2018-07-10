@@ -4,16 +4,31 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzEnterprise">
-        <id column="id" property="id" />
-        <result column="enterprise_name" property="enterpriseName" />
-        <result column="sys_code" property="sysCode" />
-        <result column="createtime" property="createtime" />
-        <result column="link_name" property="linkName" />
-        <result column="link_phone" property="linkPhone" />
-        <result column="link_email" property="linkEmail" />
-        <result column="content" property="content" />
-        <result column="state" property="state" />
-        <result column="sys_user_id" property="sysUserId" />
+        <id column="id" property="id"/>
+        <result column="enterprise_name" property="enterpriseName"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="createtime" property="createtime"/>
+        <result column="link_name" property="linkName"/>
+        <result column="link_phone" property="linkPhone"/>
+        <result column="link_email" property="linkEmail"/>
+        <result column="content" property="content"/>
+        <result column="state" property="state"/>
+        <result column="sys_user_id" property="sysUserId"/>
     </resultMap>
+    <sql id="BaseColumnList">
+        en.id,en.enterprise_name AS enterpriseName,en.sys_code AS sysCode,
+        en.createtime,en.link_name AS linkName,link_phone AS linkPhone,link_email AS linkEmail,en.content,en.state,en.sys_user_id,u.username AS userName
+    </sql>
+    <select id="getList" resultType="com.ctrl.education.dto.QzEnterpriseDto">
+        SELECT
+        <include refid="BaseColumnList"/>
+        FROM qz_enterprise AS en LEFT JOIN jn_qljt.sys_user AS u
+        on en.sys_user_id = u.id WHERE 1=1
+        <if test="enterprise_name != null">
+            AND en.enterprise_name LIKE CONCAT('%',#{enterprise_name},'%')
+        </if>
+        ORDER BY en.createtime DESC
+        LIMIT ${offset},${limit}
+    </select>
 
 </mapper>

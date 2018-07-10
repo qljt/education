@@ -63,7 +63,7 @@ public class QzEnterprise extends Model<QzEnterprise> {
      */
     private String content;
     /**
-     * 状态 0删除 1正常 2禁用
+     * 状态  1启用 2禁用 3删除
      */
     private Integer state;
     /**

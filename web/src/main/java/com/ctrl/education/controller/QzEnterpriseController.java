@@ -90,8 +90,8 @@ public class QzEnterpriseController extends BaseController {
      * @return
      */
     @RequestMapping("remove")
-    public Result delete(@RequestParam(value = "ids[]") String[] ids){
-        Result result = iQzEnterpriseService.delete(ids);
+    public Result remove(@RequestParam(value = "id") String id){
+        Result result = iQzEnterpriseService.delete(id);
         return result;
     }
 

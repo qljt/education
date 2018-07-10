@@ -1,7 +1,11 @@
 package com.ctrl.education.dao;
 
+import com.ctrl.education.dto.QzEnterpriseDto;
 import com.ctrl.education.model.QzEnterprise;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface QzEnterpriseMapper extends BaseMapper<QzEnterprise> {
 
+    List<QzEnterpriseDto> getList(Map<String, Object> params);
 }

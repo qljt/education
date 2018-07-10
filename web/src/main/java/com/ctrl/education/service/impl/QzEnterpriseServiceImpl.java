@@ -41,14 +41,12 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
      */
     @Override
     public Result getList(Map<String, Object> params) {
-        String enterpriseName = (String) params.get("enterprise_name");
-        Page<QzEnterprise> page = this.selectPage(
-                new Query<QzEnterprise>(params).getPage(),
-                new EntityWrapper<QzEnterprise>()
-                        .like(StringUtils.isNotBlank(enterpriseName), "enterprise_name", enterpriseName)
-                        .orderBy("createtime", true)
-        );
-        return new PageUtils(page).toLayTableResult();
+        List<QzEnterpriseDto> list = baseMapper.getList(params);
+        // 获取总条数
+        Integer totalCount = baseMapper.selectCount(new EntityWrapper<QzEnterprise>());
+        return new Result().ok()
+                .put("total", totalCount)
+                .put("rows", list);
     }
 
     /**
@@ -63,6 +61,7 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
        /* String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         qzEnterprise.setId(uuid);*/
         qzEnterprise.setCreatetime(DateUtil.now());
+        qzEnterprise.setSysUserId(ShiroKit.getUser().getId());
         Integer count = this.baseMapper.insert(qzEnterprise);
         if (count > 0) {
             return Result.ok(SystemConstant.ADD_SUCCESS);
@@ -100,13 +99,13 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
 
     /**
      * 删除企业信息，多个id
-     * @param ids
+     * @param id
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result delete(String[] ids) {
-        boolean bool = this.deleteBatchIds(Arrays.asList(ids));
+    public Result delete(String id) {
+        boolean bool = this.deleteById(id);
         if(bool){
             return Result.ok(SystemConstant.DELETE_SUCCESS);
         }else {
@@ -117,7 +116,7 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
     @Override
     public Result importExcel(String url) {
         QzEnterpriseDto qzEnterpriseDto = new QzEnterpriseDto();
-        qzEnterpriseDto.setSysUserId(String.valueOf(ShiroKit.getUser().getId()));
+        //qzEnterpriseDto.setSysUserId(String.valueOf(ShiroKit.getUser().getId()));
         List list = ExcelUtils.importExcel(url,1,1, QzEnterpriseDto.class);
         if(null!=list&&list.size()>0){
             return Result.ok(SystemConstant.EXPORT_EXCELDATA_SUCCESS);
