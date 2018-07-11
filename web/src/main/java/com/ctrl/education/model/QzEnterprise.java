@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.ctrl.education.core.validator.group.AddGroup;
 import com.ctrl.education.core.validator.group.UpdateGroup;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
@@ -33,7 +34,6 @@ public class QzEnterprise extends Model<QzEnterprise> {
      * 系统编码（企业编码）
      */
     @TableField("sys_code")
-    @NotNull(message = "企业编码不可为空", groups = {AddGroup.class, UpdateGroup.class})
     @Length(min = 4, max = 30, message = "企业编码长度为4-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String sysCode;
     /**
@@ -56,6 +56,7 @@ public class QzEnterprise extends Model<QzEnterprise> {
      * 联系邮箱
      */
     @TableField("link_email")
+    @Email(message = "邮箱格式有误。", groups = {AddGroup.class, UpdateGroup.class})
     @Length(min = 4, max = 90, message = "联系电话长度为4-90。", groups = {AddGroup.class, UpdateGroup.class})
     private String linkEmail;
     /**
