@@ -157,6 +157,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return false;
     }
 
+    @Override
+    public SysRoleDto selectByRoleId(String id) {
+        SysRoleDto sysRoleDto = baseMapper.selectByRoleId(id);
+        return sysRoleDto;
+    }
+
     private void roleSetPids(SysRole sysRole) {
         if (StringUtils.isEmpty(sysRole.getPid()) || sysRole.getPid().equals(0)) {
             sysRole.setPid("0");

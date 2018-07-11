@@ -1,6 +1,7 @@
 package com.ctrl.education.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -62,6 +63,7 @@ public class QzEnterpriseServiceImpl extends ServiceImpl<QzEnterpriseMapper, QzE
         qzEnterprise.setId(uuid);*/
         qzEnterprise.setCreatetime(DateUtil.now());
         qzEnterprise.setSysUserId(ShiroKit.getUser().getId());
+        qzEnterprise.setSysCode(RandomUtil.randomString(4));
         Integer count = this.baseMapper.insert(qzEnterprise);
         if (count > 0) {
             return Result.ok(SystemConstant.ADD_SUCCESS);

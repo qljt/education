@@ -69,7 +69,7 @@
         role.*,
         office.name AS officeName
         FROM (SELECT
-        r1.id,
+        DISTINCT(r1.id),
         r1.pid,
         r1.pids,
         r1.status,
@@ -80,9 +80,29 @@
         r2.name AS pName
         FROM sys_role AS r1 INNER JOIN sys_role r2 ON (r2.id = r1.pid OR r2.pid = 0)) role LEFT JOIN sys_office office
         ON role.office_id = office.id
+
         <if test="name != null">
             WHERE role.name LIKE CONCAT('%',#{name},'%')
         </if>
+        order by role.createTime desc
         LIMIT ${offset},${limit}
+    </select>
+    <select id="selectByRoleId" resultType="com.ctrl.education.dto.SysRoleDto">
+         SELECT
+        role.*,
+        office.name AS officeName
+        FROM (SELECT
+        DISTINCT(r1.id),
+        r1.pid,
+        r1.pids,
+        r1.status,
+        r1.desc,
+        r1.office_id,
+        r1.name,
+        r1.create_time AS createTime,
+        r2.name AS pName
+        FROM sys_role AS r1 INNER JOIN sys_role r2 ON (r2.id = r1.pid OR r2.pid = 0)) role LEFT JOIN sys_office office
+        ON role.office_id = office.id
+        where role.id=#{id}
     </select>
 </mapper>

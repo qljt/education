@@ -4,9 +4,9 @@ spring:
     #jdbc配置
         driver-class-name: com.mysql.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://localhost:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        url: jdbc:mysql://47.92.93.50:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: root
-        password: 12345678
+        password: 52rabbit1314
         #数据库连接池配置
         max-active: 20
         #初始化数量
@@ -29,7 +29,7 @@ spring:
         filters: stat, wall, log4j
   redis:
     host: 127.0.0.1
-    password: 123456
+    password: foobared
     port: 6379
     timeout: 0
     pool:

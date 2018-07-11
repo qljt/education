@@ -29,6 +29,8 @@ public class SysRoleServiceImplTest {
         for (int i = 0; i <100 ; i++) {
             SysRole sysRole = new SysRole();
             sysRole.setName("管理员"+i);
+            sysRole.setPid("63696cac480141c0a593cd69390b7bf6");
+            sysRole.setPids("63696cac480141c0a593cd69390b7bf6,");
             sysRole.setOfficeId("1dcddd66c34a4094912466392542f8f7");
             iSysRoleService.add(sysRole);
         }

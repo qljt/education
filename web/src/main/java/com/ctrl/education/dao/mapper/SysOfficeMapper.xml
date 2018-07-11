@@ -15,7 +15,7 @@
         <result column="sys_code" property="sysCode" />
     </resultMap>
     <select id="tree" resultType="com.ctrl.education.core.node.ZTreeNode">
-		select id,pid as pId,simplename as name,
+		select id,pid as pId,name as name,
 		(
 		CASE
 		WHEN (pId = 0 OR pId IS NULL) THEN
@@ -23,6 +23,6 @@
 		ELSE
 		'false'
 		END
-		) as isOpen from sys_dept
+		) as isOpen from sys_office
 	</select>
 </mapper>

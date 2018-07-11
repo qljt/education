@@ -5,6 +5,7 @@ import com.ctrl.education.core.annotation.BussinessLog;
 import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.validator.ValidatorUtils;
+import com.ctrl.education.dto.SysRoleDto;
 import com.ctrl.education.model.SysOffice;
 import com.ctrl.education.model.SysRole;
 import com.ctrl.education.service.ISysRoleService;
@@ -45,7 +46,7 @@ public class SysRoleController {
      * 获取角色的tree列表
      */
     @BussinessLog(value = "获取角色的tree列表",type = "2")
-    @RequestMapping(value = "/roleTreeList")
+    @RequestMapping(value = "/tree")
     public Result roleTreeList() {
         Result result = iSysRoleService.tree();
         return result;
@@ -69,10 +70,10 @@ public class SysRoleController {
      * @return
      */
     @BussinessLog(value = "根据角色ida查询角色",type = "2")
-    @RequestMapping("info/{id}")
-    public Result getRoleById(@PathVariable("id") String id){
-        SysRole sysRole = iSysRoleService.selectById(id);
-        return Result.ok().put(SystemConstant.RESULT_KEY,sysRole);
+    @RequestMapping("info")
+    public Result getRoleById(@RequestParam(value = "id") String id){
+        SysRoleDto sysRoleDto = iSysRoleService.selectByRoleId(id);
+        return Result.ok().put(SystemConstant.RESULT_KEY,sysRoleDto);
     }
     /**
      * 增加角色

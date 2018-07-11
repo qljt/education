@@ -6,7 +6,11 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.ctrl.education.core.validator.group.AddGroup;
+import com.ctrl.education.core.validator.group.UpdateGroup;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -38,6 +42,8 @@ public class SysRole extends Model<SysRole> {
     /**
      * 角色名称
      */
+    @NotNull(message = "角色不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 20, message = "长度为1-20。", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
     /**
      * 组织架构id

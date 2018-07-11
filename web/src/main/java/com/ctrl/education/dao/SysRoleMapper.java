@@ -26,4 +26,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     List<ZTreeNode> roleTreeListByRoleId(String[] roleIds);
 
     List<SysRoleDto> getList(Map<String,Object> map);
+
+    SysRoleDto selectByRoleId(String id);
 }
