@@ -55,7 +55,7 @@ public class QzEnterpriseController extends BaseController {
      */
     @BussinessLog(value = "添加企业信息",type = "3")
     @RequestMapping("add")
-    public Result add(@RequestBody QzEnterprise qzEnterprise){
+    public Result add(QzEnterprise qzEnterprise){
         ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
         Result result= iQzEnterpriseService.add(qzEnterprise);
         return result;
@@ -86,7 +86,7 @@ public class QzEnterpriseController extends BaseController {
 
     /**
      * 根据多个id删除企业信息
-     * @param ids
+     * @param id
      * @return
      */
     @RequestMapping("remove")
