@@ -42,6 +42,7 @@ public class SysRoleDto{
     /**
      * 组织架构id
      */
+    @TableField("office_id")
     private String officeId;
     /**
      * 角色描述
