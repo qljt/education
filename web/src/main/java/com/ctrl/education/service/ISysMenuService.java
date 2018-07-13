@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
-    Result getList(Map<String,Object> map);
+    List<Map<String,Object>> getList(Map<String,Object> map);
 
     List<ZTreeNode> menuTreeList();
 

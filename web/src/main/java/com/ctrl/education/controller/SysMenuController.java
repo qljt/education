@@ -37,9 +37,9 @@ public class SysMenuController {
      */
     @BussinessLog(value = "获取菜单列表", type = "2")
     @RequestMapping("list")
-    public Result getList(@RequestParam Map<String, Object> map) {
-        Result result = iSysMenuService.getList(map);
-        return result;
+    public List<Map<String,Object>> getList(@RequestParam Map<String, Object> map) {
+        List<Map<String,Object>> list = iSysMenuService.getList(map);
+        return list;
     }
 
     /**
@@ -54,6 +54,7 @@ public class SysMenuController {
     /**
      * 获取菜单列表(选择父级菜单用)
      */
+    @BussinessLog(value = "获取菜单列表(选择父级菜单用)",type = "2")
     @RequestMapping(value = "/selectMenuTreeList")
     public Result selectMenuTreeList() {
         List<ZTreeNode> menuTreeList = this.iSysMenuService.menuTreeList();
@@ -62,7 +63,7 @@ public class SysMenuController {
     }
 
     /**
-     * 获取角色列表
+     * 获取菜单列表
      */
     @RequestMapping(value = "/menuTreeListByRoleId/{roleId}")
     public List<ZTreeNode> menuTreeListByRoleId(@PathVariable String roleId) {
@@ -99,6 +100,19 @@ public class SysMenuController {
         ValidatorUtils.validateEntity(sysMenu);
         Result result = this.iSysMenuService.modify(sysMenu);
         return result;
+    }
+
+    /**
+     * 根据id获取菜单
+     * @param id
+     * @return
+     */
+    @BussinessLog(value = "根据id获取菜单",type ="2")
+    @RequestMapping("info")
+    public Result getInfo(@RequestParam(value = "id")String id){
+       SysMenu sysMenu =  this.iSysMenuService.selectById(id);
+       return Result.ok().put(SystemConstant.RESULT_KEY,sysMenu);
+
     }
 }
 

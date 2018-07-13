@@ -4,33 +4,26 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysMenu">
-        <id column="id" property="id" />
+        <id column="id" property="id"/>
         <result column="code" property="code"/>
-        <result column="pid" property="pid" />
-        <result column="pids" property="pids" />
-        <result column="name" property="name" />
-        <result column="icon" property="icon" />
-        <result column="url" property="url" />
-        <result column="num" property="num" />
-        <result column="levels" property="levels" />
-        <result column="ismenu" property="ismenu" />
-        <result column="tips" property="tips" />
-        <result column="status" property="status" />
-        <result column="isopen" property="isopen" />
+        <result column="pid" property="pid"/>
+        <result column="pids" property="pids"/>
+        <result column="name" property="name"/>
+        <result column="icon" property="icon"/>
+        <result column="url" property="url"/>
+        <result column="num" property="num"/>
+        <result column="levels" property="levels"/>
+        <result column="ismenu" property="ismenu"/>
+        <result column="tips" property="tips"/>
+        <result column="status" property="status"/>
+        <result column="isopen" property="isopen"/>
     </resultMap>
     <select id="menuTreeList" resultType="com.ctrl.education.core.node.ZTreeNode">
         SELECT
         m1.id AS id,
-        (
-        CASE
-        WHEN (m2.id = 0 OR m2.id IS NULL) THEN
-        0
-        ELSE
-        m2.id
-        END
-        ) AS pId,
-        m1. NAME
-        AS NAME,
+        m1.code,
+        IFNULL(m1.pid,0) AS pid,
+        m1.name,
         (
         CASE
         WHEN (m2.id = 0 OR m2.id IS NULL) THEN
@@ -38,12 +31,10 @@
         ELSE
         'false'
         END
-        ) as isOpen
+        ) AS isOpen
         FROM
         sys_menu m1
-        LEFT join sys_menu m2 ON m1.pcode = m2. CODE
-        ORDER BY
-        m1.id ASC
+        LEFT JOIN sys_menu m2 ON m1.pid = m2.id
     </select>
     <select id="getMenuIdsByRoleId" resultType="java.lang.String">
         select menuid from

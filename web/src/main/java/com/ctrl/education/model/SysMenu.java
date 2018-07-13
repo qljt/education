@@ -40,13 +40,13 @@ public class SysMenu extends Model<SysMenu> {
      * 菜单名称
      */
     @NotNull(message = "菜单名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max =200, message = "菜单名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max =200, message = "菜单名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
     /**
      * 菜单编码
      */
-    @NotNull(message = "菜单名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 200, message = "菜单名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "菜单编码不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 200, message = "菜单名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private  String code;
     /**
      * 菜单图标
@@ -56,7 +56,7 @@ public class SysMenu extends Model<SysMenu> {
      * url地址
      */
     @NotNull(message = "菜单地址不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 200, message = "菜单地址长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 200, message = "菜单地址长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String url;
     /**
      * 菜单排序号

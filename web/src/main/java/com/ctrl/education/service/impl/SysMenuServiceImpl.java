@@ -32,15 +32,13 @@ import java.util.Map;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
     @Override
-    public Result getList(Map<String, Object> map) {
-        String name = (String) map.get("menuName");
-        Page<SysMenu> page = this.selectPage(
-                new Query<SysMenu>(map).getPage(),
-                new EntityWrapper<SysMenu>()
-                        .like(StringUtils.isNotBlank(name), "name", name)
-                        .orderBy("createtime", true)
-        );
-        return new PageUtils(page).toLayTableResult();
+    public List<Map<String,Object>> getList(Map<String, Object> map) {
+        String name = (String) map.get("name");
+        List<Map<String,Object> >list = this.selectMaps( new EntityWrapper<SysMenu>()
+                .like(StringUtils.isNotBlank(name), "name", name)
+                .orderBy("num", true));
+
+        return list;
     }
 
     @Override
