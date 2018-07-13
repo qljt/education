@@ -21,7 +21,7 @@ public class Result extends HashMap<String, Object> {
 
     public Result() {
         put("code", SystemConstant.SUCCESS);
-        put("msg", "SUCCESS");
+        put("msg", SystemConstant.QUERY_SUCCESS);
     }
 
     public static Result error() {

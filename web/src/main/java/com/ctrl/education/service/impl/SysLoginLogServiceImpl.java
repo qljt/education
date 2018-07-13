@@ -28,12 +28,13 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
 
     @Override
     public Result getList(Map<String, Object> param) {
-        String start_time = (String)param.get("start_time");
-        String end_time = (String)param.get("end_time");
+        String start_time = (String) param.get("start_time");
+        String end_time = (String) param.get("end_time");
         Page<SysLoginLog> page = this.selectPage(
                 new Query<SysLoginLog>(param).getPage(),
                 new EntityWrapper<SysLoginLog>()
-                        .between("createtime",start_time,end_time));
+                        .between(StringUtils.isNotBlank(start_time), "createtime", start_time, end_time)
+                        .orderBy("createtime", true));
         return new PageUtils(page).toLayTableResult();
     }
 }

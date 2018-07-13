@@ -25,7 +25,7 @@ public interface ISysMenuService extends IService<SysMenu> {
 
     List<String> getMenuIdsByRoleId(String roleId);
 
-    List<ZTreeNode> menuTreeListByMenuIds(List<String> menuIds);
+    List<ZTreeNode> menuTreeListByMenuIds(String roleId);
 
     Result save(SysMenu sysMenu);
 

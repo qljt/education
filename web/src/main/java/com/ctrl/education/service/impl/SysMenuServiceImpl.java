@@ -53,8 +53,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<ZTreeNode> menuTreeListByMenuIds(List<String> menuIds) {
-        return this.baseMapper.menuTreeListByMenuIds(menuIds);
+    public List<ZTreeNode> menuTreeListByMenuIds(String roleId) {
+        return this.baseMapper.menuTreeListByMenuIds(roleId);
     }
 
     @Override

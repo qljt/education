@@ -105,4 +105,7 @@
         ON role.officeId = office.id
         where role.id=#{id}
     </select>
+    <delete id="deleteRolesById">
+        delete from sys_relation where roleid = #{roleId}
+    </delete>
 </mapper>

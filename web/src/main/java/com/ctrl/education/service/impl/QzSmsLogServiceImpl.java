@@ -34,8 +34,10 @@ public class QzSmsLogServiceImpl extends ServiceImpl<QzSmsLogMapper, QzSmsLog> i
         Page<QzSmsLog> page = this.selectPage(
                 new Query<QzSmsLog>(map).getPage(),
                 new EntityWrapper<QzSmsLog>()
-                        .like(StringUtils.isNotBlank(is_suc), "phone", phone)
-                        .eq("is_suc",is_suc).between("createtime",start_time,end_time));
+                        .like(StringUtils.isNotBlank(phone), "phone", phone)
+                        .eq("is_suc",is_suc)
+                        .between(StringUtils.isNotBlank(start_time),"createtime",start_time,end_time)
+                        .orderBy("createtime",true));
         return new PageUtils(page).toLayTableResult();
     }
 }

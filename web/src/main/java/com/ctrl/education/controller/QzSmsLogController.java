@@ -1,6 +1,7 @@
 package com.ctrl.education.controller;
 
 
+import com.ctrl.education.core.annotation.BussinessLog;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.service.IQzSmsLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class QzSmsLogController {
      * @param map
      * @return
      */
+    @BussinessLog(value = "短信记录查询",type = "2")
     @RequestMapping("list")
     public Result getList(@RequestParam Map<String, Object> map){
         Result result = iQzSmsLogService.getList(map);

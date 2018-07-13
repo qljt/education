@@ -27,16 +27,18 @@ import java.util.Map;
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements ISysLogService {
     @Override
     public Result getList(Map<String, Object> map) {
-        Integer type = (Integer)map.get("type");
+        String type = (String)map.get("type");
         String username = (String)map.get("username");
         String start_time = (String)map.get("start_time");
         String end_time = (String)map.get("end_time");
         Page<SysLog> page = this.selectPage(
                 new Query<SysLog>(map).getPage(),
                 new EntityWrapper<SysLog>()
-                        .eq(StringUtils.isNotBlank(type.toString()), "type", type)
+                        .eq(StringUtils.isNotBlank(type), "type", type)
                         .like(StringUtils.isNotBlank(username), "username", username)
-                        .between("createtime",start_time,end_time));
+                        .between(StringUtils.isNotBlank(start_time),"gmt_create",start_time,end_time)
+                        .orderBy("gmt_create",true));
+
         return new PageUtils(page).toLayTableResult();
     }
 }

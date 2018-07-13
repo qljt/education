@@ -32,4 +32,6 @@ public interface ISysRoleService extends IService<SysRole> {
     Result getList(Map<String,Object> map);
 
     SysRoleDto selectByRoleId(String id);
+
+    int deleteRolesById(String roleId);
 }

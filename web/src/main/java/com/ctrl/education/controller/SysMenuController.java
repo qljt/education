@@ -66,14 +66,14 @@ public class SysMenuController {
      * 获取菜单列表
      */
     @RequestMapping(value = "/menuTreeListByRoleId/{roleId}")
-    public List<ZTreeNode> menuTreeListByRoleId(@PathVariable String roleId) {
+    public Result menuTreeListByRoleId(@PathVariable String roleId) {
         List<String> menuIds = this.iSysMenuService.getMenuIdsByRoleId(roleId);
         if (ToolUtils.isEmpty(menuIds)) {
             List<ZTreeNode> roleTreeList = this.iSysMenuService.menuTreeList();
-            return roleTreeList;
+            return Result.ok().put(SystemConstant.RESULT_KEY,roleTreeList);
         } else {
-            List<ZTreeNode> roleTreeListByUserId = this.iSysMenuService.menuTreeListByMenuIds(menuIds);
-            return roleTreeListByUserId;
+            List<ZTreeNode> roleTreeListByUserId = this.iSysMenuService.menuTreeListByMenuIds(roleId);
+            return Result.ok().put(SystemConstant.RESULT_KEY,roleTreeListByUserId);
         }
     }
 

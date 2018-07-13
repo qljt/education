@@ -44,6 +44,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private ISysRelationService iSysRelationService;
     @Autowired
     private ISysUserService iSysUserService;
+    @Autowired
+    private ISysRoleService iSysRoleService;
 
     @Override
     @Transactional(
@@ -104,16 +106,26 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (StringUtils.isEmpty(roleId)) {
             return Result.error("请求错误");
         }
-        boolean flag = iSysRelationService.deleteById(roleId);
-        if (flag) {
+        int del = iSysRoleService.deleteRolesById(roleId);
+        if (del>0) {
             String[] idss = ids.split(",");
+            int count = 0;
             for (String id:idss) {
                 SysRelation sysRelation = new SysRelation();
                 sysRelation.setRoleid(roleId);
                 sysRelation.setMenuid(String.valueOf(id));
-                iSysRelationService.insert(sysRelation);
+                boolean bool = iSysRelationService.insert(sysRelation);
+                if(bool){
+                    count++;
+                }
+            }
+            if(idss.length==count){
+                return Result.ok(SystemConstant.ALLOT_ROLE_SUCCESS_MSG);
+            }else{
+                return Result.error(SystemConstant.ALLOT_ROLE_FAILE_MSG);
             }
         }
+
         return null;
     }
 
@@ -176,5 +188,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
     }
 
-
+    @Override
+    public int deleteRolesById(String roleId) {
+        int count = baseMapper.deleteRolesById(roleId);
+        return count;
+    }
 }

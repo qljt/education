@@ -53,6 +53,13 @@ public class ZTreeNode {
     public Boolean getChecked() {
         return checked;
     }
+    public Boolean getIsOpen() {
+        return open;
+    }
+
+    public void setIsOpen(Boolean open) {
+        this.open = open;
+    }
 
     public void setChecked(Boolean checked) {
         this.checked = checked;

@@ -41,16 +41,9 @@
         sys_relation where roleid = #{roleId}
     </select>
     <select id="menuTreeListByMenuIds" resultType="com.ctrl.education.core.node.ZTreeNode">
-        SELECT
+        <!--SELECT
         m1.id AS id,
-        (
-        CASE
-        WHEN (m2.id = 0 OR m2.id IS NULL) THEN
-        0
-        ELSE
-        m2.id
-        END
-        ) AS pId,
+        IFNULL(m1.pid,0) AS pid,
         m1. NAME AS NAME,
         (
         CASE
@@ -63,7 +56,7 @@
         ) as isOpen,
         (
         CASE
-        WHEN (m3.ID = 0 OR m3.ID
+        WHEN (m3.id = 0 OR m3.id
         IS NULL) THEN
         'false'
         ELSE
@@ -74,7 +67,7 @@
         sys_menu m1
         LEFT JOIN
         sys_menu m2
-        ON m1.pcode = m2. CODE
+        ON m1.pid = m2.id
         left join (
         SELECT
         ID
@@ -88,7 +81,29 @@
         </foreach>
         ) m3 on m1.id = m3.id
         ORDER BY
-        m1.id ASC
+        m1.id ASC-->
+
+
+        select
+        a.id,
+        a.pid,a.name,
+        (
+        CASE
+        WHEN (a.id = 0 OR a.id IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) AS isOpen,
+        (case
+        when (isnull(m2.menuid))
+        then "false"
+        else "true"
+        end) "checked"
+        from sys_menu as a left join (select r.menuid,r.roleid
+        from sys_relation r
+        where r.roleid=#{roleId}) as m2
+        on a.id = m2.menuid
     </select>
     <select id="getMenusByRoleIds" resultType="com.ctrl.education.core.node.MenuNode">
         SELECT
