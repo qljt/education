@@ -32,4 +32,6 @@ public interface ISysMenuService extends IService<SysMenu> {
     Result modify(SysMenu sysMenu);
 
     List<MenuNode> getMenusByRoleIds(List<String> roleIds);
+
+    Result remove(String id);
 }

@@ -75,6 +75,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
     public Result modify(SysMenu sysMenu) {
         menuSetPcode(sysMenu);
         boolean flag = this.updateById(sysMenu);
@@ -82,6 +85,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             return Result.ok(SystemConstant.UPDATE_SUCCESS);
         }else {
             return Result.error(SystemConstant.UPDATE_FAILURE);
+        }
+    }
+
+    @Override
+
+    public Result remove(String id) {
+        if(StringUtils.isEmpty(id)){
+            return Result.ok(SystemConstant.PARAM_ERROR);
+        }
+        boolean flag = this.deleteById(id);
+
+        if(flag){
+            return Result.ok(SystemConstant.DELETE_SUCCESS);
+        }else {
+            return Result.error(SystemConstant.DELETE_FAILURE);
         }
     }
 

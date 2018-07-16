@@ -1,19 +1,20 @@
 package com.ctrl.education.controller;
 
 
+import com.ctrl.education.core.annotation.BussinessLog;
 import com.ctrl.education.core.constant.SystemConstant;
-import com.ctrl.education.core.utils.PageUtils;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.validator.ValidatorUtils;
-import com.ctrl.education.core.validator.group.AddGroup;
-import com.ctrl.education.core.validator.group.UpdateGroup;
-import com.ctrl.education.dto.SysDictDto;
 import com.ctrl.education.model.SysDict;
+import com.ctrl.education.model.SysMenu;
 import com.ctrl.education.service.ISysDictService;
+import com.ctrl.education.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -23,70 +24,90 @@ import java.util.Map;
  * 系统字典表 前端控制器
  * </p>
  *
- * @since 2018-06-03
+ * @author ${author}
+ * @since 2018-07-15
  */
 @RestController
 @RequestMapping("/sysDict")
 public class SysDictController {
     @Autowired
-    private ISysDictService sysDictService;
+    private ISysDictService iSysDictService;
 
+    /**
+     * 获取字典树
+     *
+     * @return
+     */
+    @BussinessLog(value = "获取字典树", type = "2")
+    @RequestMapping("tree")
+    public Result getDicTree() {
+        Result result = iSysDictService.getTreee();
+        return result;
+    }
+
+    /**
+     * 获取字典列表
+     *
+     * @param param
+     * @return
+     */
+    @BussinessLog(value = "获取字典列表", type = "2")
     @RequestMapping("list")
-    public Result list(@RequestParam Map<String, Object> params) {
+    public List<Map<String, Object>> getList(@RequestParam Map<String, Object> param) {
+        return iSysDictService.getList(param);
 
-        PageUtils page = sysDictService.queryPage(params);
-
-        return page.toLayTableResult();
     }
 
-    @RequestMapping("info/{id}")
-    public Result info(@PathVariable("id") Integer id) {
+    /**
+     * 增加字典
+     * @param sysDict
+     * @return
+     */
+    @BussinessLog(value = "增加字典",type ="3")
+    @RequestMapping("add")
+    public Result save(SysDict sysDict) {
+        ValidatorUtils.validateEntity(sysDict);
+        Result result = this.iSysDictService.save(sysDict);
+        return result;
+    }
+    /**
+     * 修改字典
+     * @param sysDict
+     * @return
+     */
+    @BussinessLog(value = "修改字典",type ="3")
+    @RequestMapping("modify")
+    public Result modify(SysDict sysDict){
+        ValidatorUtils.validateEntity(sysDict);
+        Result result = this.iSysDictService.modify(sysDict);
+        return result;
+    }
+    /**
+     * 删除字典
+     * @param id
+     * @return
+     */
+    @BussinessLog(value = "删除字典",type ="3")
+    @RequestMapping("remove")
+    public Result remove(@RequestParam("id") String id){
+        return this.iSysDictService.remove(id);
 
-        SysDict sysDict = sysDictService.selectById(id);
-
-        return Result.ok().put(SystemConstant.RESULT_KEY, sysDict);
     }
 
-    @RequestMapping("getDictsByTypeName/{typeName}")
-    public Result getDictsByTypeName(@PathVariable("typeName") String typeName) {
+    /**
+     * 根据id获取字典
+     * @param id
+     * @return
+     */
+    @BussinessLog(value = "根据id获取字典",type ="2")
+    @RequestMapping("info")
+    public Result getInfo(@RequestParam(value = "id")String id){
+        SysDict sysDict =  this.iSysDictService.selectById(id);
+        return Result.ok().put(SystemConstant.RESULT_KEY,sysDict);
 
-        List<SysDictDto> dicts = sysDictService.getDictsByTypeName(typeName);
-
-        return Result.ok().put(SystemConstant.RESULT_KEY, dicts);
     }
 
-    @RequestMapping("hasValue/{id}/{typeId}/{value}")
-    public Result hasValue(@PathVariable("id") Integer id, @PathVariable("typeId") Integer typeId,
-                           @PathVariable("value") String value) {
-        return Result.ok().put("hasValue", sysDictService.hasValue(id, typeId, value));
-    }
 
-    @RequestMapping(value = "save")
-    public Result save(@RequestBody SysDict sysDict) {
 
-        ValidatorUtils.validateEntity(sysDict, AddGroup.class);
-
-        sysDictService.insert(sysDict);
-
-        return Result.ok();
-    }
-
-    @PutMapping("update")
-    public Result update(@RequestBody SysDict sysDict) {
-
-        ValidatorUtils.validateEntity(sysDict, UpdateGroup.class);
-
-        sysDictService.updateById(sysDict);
-
-        return Result.ok();
-    }
-
-    @DeleteMapping("remove/{id}")
-    public Result delete(@PathVariable("id") Integer id) {
-
-        sysDictService.deleteById(id);
-
-        return Result.ok();
-    }
 }
 

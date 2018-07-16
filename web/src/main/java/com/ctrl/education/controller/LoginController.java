@@ -14,6 +14,7 @@ import com.ctrl.education.shiro.ShiroKit;
 import com.google.code.kaptcha.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -64,6 +65,8 @@ public class LoginController extends BaseController {
 
         } catch (IncorrectCredentialsException e) {
             return Result.error(500, e.getMessage());
+        }catch (AccountException e1){
+            return Result.error(e1.getMessage());
         }
     }
 

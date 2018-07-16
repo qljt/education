@@ -58,15 +58,15 @@ public class MPGenerator {
         // 修改成自己的数据库
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("123456");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false");
+        dsc.setPassword("52rabbit1314");
+        dsc.setUrl("jdbc:mysql://47.92.93.50:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false");
         mpg.setDataSource(dsc);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略,下划线转驼峰
         // 修改成自己需要的表
-        strategy.setInclude(new String[]{"sys_user","sys_role"}); // 需要生成的表,多个表逗号隔开
+        strategy.setInclude(new String[]{"sys_dict"}); // 需要生成的表,多个表逗号隔开
         mpg.setStrategy(strategy);
         //lombok方式
         //strategy.setEntityLombokModel(true);

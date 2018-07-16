@@ -90,7 +90,7 @@ public class SysMenuController {
         return result;
     }
     /**
-     * 增加菜单
+     * 修改菜单
      * @param sysMenu
      * @return
      */
@@ -100,6 +100,17 @@ public class SysMenuController {
         ValidatorUtils.validateEntity(sysMenu);
         Result result = this.iSysMenuService.modify(sysMenu);
         return result;
+    }
+    /**
+     * 删除菜单
+     * @param id
+     * @return
+     */
+    @BussinessLog(value = "删除菜单",type ="3")
+    @RequestMapping("remove")
+    public Result remove(@RequestParam("id") String id){
+         return this.iSysMenuService.remove(id);
+
     }
 
     /**
@@ -114,5 +125,6 @@ public class SysMenuController {
        return Result.ok().put(SystemConstant.RESULT_KEY,sysMenu);
 
     }
+
 }
 

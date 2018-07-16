@@ -1,14 +1,14 @@
 package com.ctrl.education.model;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.ctrl.education.core.validator.group.AddGroup;
+import com.ctrl.education.core.validator.group.UpdateGroup;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -16,12 +16,8 @@ import java.io.Serializable;
  * 系统字典表
  * </p>
  *
- * @author liyang
- * @since 2018-06-03
+ * @since 2018-07-15
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("sys_dict")
 public class SysDict extends Model<SysDict> {
 
@@ -31,25 +27,23 @@ public class SysDict extends Model<SysDict> {
      * 主键
      */
     @TableId(value = "id", type = IdType.UUID)
-    private Integer id;
+    private String id;
     /**
-     * 类型id
+     * 字典编码
      */
-    @TableField("type_id")
-    private Integer typeId;
+    @NotNull(message = "编码不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max =200, message = "编码长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
+    private String code;
     /**
      * 父级id
      */
-    @TableField("parent_id")
-    private Integer parentId;
+    private String pid;
     /**
-     * 标签
+     * 字典名称
      */
-    private String label;
-    /**
-     * 值
-     */
-    private String value;
+    @NotNull(message = "字典名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max =200, message = "字典名称长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
+    private String name;
     /**
      * 排序
      */
@@ -60,9 +54,68 @@ public class SysDict extends Model<SysDict> {
     private String remark;
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "SysDict{" +
+        "id=" + id +
+        ", code=" + code +
+        ", pid=" + pid +
+        ", name=" + name +
+        ", sort=" + sort +
+        ", remark=" + remark +
+        "}";
+    }
 }
