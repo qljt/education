@@ -4,9 +4,9 @@ spring:
     #jdbc配置
         driver-class-name: com.mysql.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://47.92.97.133:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        url: jdbc:mysql://192.168.1.213:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: root
-        password: root
+        password: aloha
         #数据库连接池配置
         max-active: 20
         #初始化数量
@@ -28,8 +28,8 @@ spring:
         #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
         filters: stat, wall, log4j
   redis:
-    host: 127.0.0.1
-    password: 123456
+    host: 192.168.1.213
+    password: foobared
     port: 6379
     timeout: 0
     pool:
