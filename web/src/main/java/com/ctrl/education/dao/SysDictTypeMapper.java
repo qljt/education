@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * 系统字典表 Mapper 接口
  * </p>
  *
- * @author liyang
- * @since 2018-06-03
+ * @author ctrl
+ * @since 2018-07-21
  */
 public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
 

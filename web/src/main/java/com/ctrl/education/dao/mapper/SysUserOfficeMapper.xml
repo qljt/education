@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.SysUserOfficeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysUserOffice">
+        <id column="id" property="id" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="office_id" property="officeId" />
+        <result column="dept_id" property="deptId" />
+        <result column="is_director" property="isDirector" />
+        <result column="job" property="job" />
+        <result column="post_id" property="postId" />
+        <result column="grade_id" property="gradeId" />
+        <result column="sort" property="sort" />
+    </resultMap>
+    <select id="getList" resultType="map">
+                SELECT
+          o.name AS officeName,
+          dept.name AS deptName,
+          dict.label AS gradeName,
+          (
+            CASE
+              WHEN uo.is_director = 0
+              THEN "否"
+              ELSE "是"
+            END
+          ) AS isDirector,
+          uo.job
+        FROM
+          sys_user_office uo
+          LEFT JOIN sys_office o
+            ON uo.office_id = o.id
+          LEFT JOIN
+            (SELECT
+              id,
+              NAME
+            FROM
+              sys_office) AS dept
+            ON uo.dept_id = dept.id
+          LEFT JOIN sys_post p
+            ON uo.post_id = p.id
+          LEFT JOIN
+            (SELECT
+              sd.id AS dictId,
+              sd.label,
+              sd.value
+            FROM
+              sys_dict_type sdt
+              LEFT JOIN sys_dict sd
+                ON sdt.id = sd.type_id
+            WHERE sdt.name = "sys_grade") dict
+            ON uo.grade_id = dict.dictId
+        WHERE uo.sys_user_id = #{sys_user_id}
+    LIMIT ${offset},${limit}
+    </select>
+</mapper>

@@ -33,36 +33,26 @@ public class SysOffice extends Model<SysOffice> {
     /**
      * 父级id
      */
-    @TableId("pid")
     private String pid;
     /**
      * 所有父级id的集合，逗号隔开
      */
-    @TableId("pids")
     private String pids;
     /**
      * 名称
      */
-    @TableId("name")
-    @NotNull(message = "名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 30, message = "长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
     /**
      * 编码
      */
-    @TableId("code")
-    @NotNull(message = "编码不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 30, message = "编码长度为1-200。", groups = {AddGroup.class, UpdateGroup.class})
     private String code;
     /**
-     * 类型
+     * 类型1.部门 2.单位
      */
-    @TableId("type")
     private Integer type;
     /**
-     * 状态，1：禁用，2：启用，3：删除
+     * 状态，1：启用，0：禁用，3：删除
      */
-    @TableId("status")
     private Integer status;
     /**
      * 备注
@@ -73,7 +63,37 @@ public class SysOffice extends Model<SysOffice> {
      */
     @TableField("sys_code")
     private String sysCode;
+    /**
+     * 机构性质
+     */
+    @TableField("office_nature")
+    private String officeNature;
+    /**
+     * 是否虚拟机构 1:是0否
+     */
+    @TableField("is_virtual")
+    private Integer isVirtual;
+    /**
+     * 所属行业
+     */
+    @TableField("sys_industry")
+    private String sysIndustry;
+    /**
+     * 所处政区
+     */
+    @TableField("sys_region")
+    private String sysRegion;
+    /**
+     * 人数
+     */
+    @TableField("person_count")
+    private Integer personCount;
 
+    /**
+     * 排序值
+     */
+    @TableField("sort")
+    private Integer sort;
 
     public String getId() {
         return id;
@@ -147,6 +167,50 @@ public class SysOffice extends Model<SysOffice> {
         this.sysCode = sysCode;
     }
 
+    public String getOfficeNature() {
+        return officeNature;
+    }
+
+    public void setOfficeNature(String officeNature) {
+        this.officeNature = officeNature;
+    }
+
+    public Integer getIsVirtual() {
+        return isVirtual;
+    }
+
+    public void setIsVirtual(Integer isVirtual) {
+        this.isVirtual = isVirtual;
+    }
+
+    public String getSysIndustry() {
+        return sysIndustry;
+    }
+
+    public void setSysIndustry(String sysIndustry) {
+        this.sysIndustry = sysIndustry;
+    }
+
+    public String getSysRegion() {
+        return sysRegion;
+    }
+
+    public void setSysRegion(String sysRegion) {
+        this.sysRegion = sysRegion;
+    }
+
+    public Integer getPersonCount() {
+        return personCount;
+    }
+
+    public void setPersonCount(Integer personCount) {
+        this.personCount = personCount;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -155,15 +219,21 @@ public class SysOffice extends Model<SysOffice> {
     @Override
     public String toString() {
         return "SysOffice{" +
-        "id=" + id +
-        ", pid=" + pid +
-        ", pids=" + pids +
-        ", name=" + name +
-        ", code=" + code +
-        ", type=" + type +
-        ", status=" + status +
-        ", remark=" + remark +
-        ", sysCode=" + sysCode +
-        "}";
+                "id=" + id +
+                ", pid=" + pid +
+                ", pids=" + pids +
+                ", name=" + name +
+                ", code=" + code +
+                ", type=" + type +
+                ", status=" + status +
+                ", remark=" + remark +
+                ", sysCode=" + sysCode +
+                ", officeNature=" + officeNature +
+                ", isVirtual=" + isVirtual +
+                ", sysIndustry=" + sysIndustry +
+                ", sysRegion=" + sysRegion +
+                ", personCount=" + personCount +
+                ", sort=" + sort +
+                "}";
     }
 }

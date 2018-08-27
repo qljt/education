@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzExaminationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzExamination">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="major_id" property="majorId"/>
+        <result column="paper_id" property="paperId"/>
+        <result column="paper_name" property="paperName"/>
+        <result column="teacher_id" property="teacherId"/>
+        <result column="teacher_name" property="teacherName"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="status" property="status"/>
+        <result column="sweep_time" property="sweepTime"/>
+        <result column="sys_user_id" property="sysUserId"/>
+        <result column="office_id" property="officeId"/>
+        <result column="createtime" property="createtime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="edit_permissions" property="editPermissions"/>
+        <result column="is_assign" property="isAssign"/>
+        <result column="is_rec_reg" property="isRecReg"/>
+        <result column="show_type" property="showType"/>
+        <result column="submit_limit" property="submitLimit"/>
+        <result column="show_result" property="showResult"/>
+        <result column="sele_limit" property="seleLimit"/>
+        <result column="plan_limit" property="planLimit"/>
+        <result column="send_msg" property="sendMsg"/>
+        <result column="nmks" property="nmks"/>
+        <result column="jifen" property="jifen"/>
+        <result column="is_auto_tian_kong" property="isAutoTianKong"/>
+        <result column="show_notes" property="showNotes"/>
+        <result column="is_custom_notes" property="isCustomNotes"/>
+        <result column="custom_notes" property="customNotes"/>
+        <result column="type" property="type"/>
+        <result column="is_simulation" property="isSimulation"/>
+        <result column="remark" property="remark"/>
+        <result column="app_code" property="appCode"/>
+    </resultMap>
+    <select id="getList">
+        select *
+        from qz_examination
+        <if test="name != null and name != ''">
+            where name = #{name}
+        </if>
+        <if test="teacherName != null and teacherName  != ''">
+            and teacher_name = #{teacherName}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+    </select>
+    <update id="remove" parameterType="java.lang.String">
+        update  qz_examination set state = 0 where id = #{id}
+    </update>
+</mapper>

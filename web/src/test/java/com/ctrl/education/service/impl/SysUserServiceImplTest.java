@@ -27,10 +27,10 @@ public class SysUserServiceImplTest {
     @Test
     public void add() {
         SysUser sysUser = new SysUser();
-            sysUser.setUsername("admin" + 5);
+            sysUser.setUsername("admin");
             sysUser.setPassword(SecureUtil.md5("123456"));
-            sysUser.setRoleId("63696cac480141c0a593cd69390b7bf6");
-            sysUser.setOfficeId("1dcddd66c34a4094912466392542f8f7");
+           // sysUser.setRoleId("fba8a9fd2a904afdb337236b68d01e32");
+            //sysUser.setOfficeId("1f50f25bd16b42c29959dd806537ce67");
             iSysUserService.insert(sysUser);
     }
 

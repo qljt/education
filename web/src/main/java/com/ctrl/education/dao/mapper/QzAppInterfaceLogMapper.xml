@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzAppInterfaceLogMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzAppInterfaceLog">
+        <id column="id" property="id"/>
+        <result column="subsiteCode" property="subsiteCode"/>
+        <result column="interface_name" property="interfaceName"/>
+        <result column="createtime" property="createtime"/>
+        <result column="interface_num" property="interfaceNum"/>
+        <result column="click" property="click"/>
+        <result column="interface_name_cn" property="interfaceNameCn"/>
+    </resultMap>
+    <!-- 通用查询映射结果 -->
+    <select id="getChart" resultType="java.util.Map">
+        SELECT
+        GROUP_CONCAT( DISTINCT interface_name_cn ) AS `names`,
+        GROUP_CONCAT( pc_ck ) pc,
+        GROUP_CONCAT( ios_ck ) ios,
+        GROUP_CONCAT( android_ck ) android,
+        GROUP_CONCAT( pc_ck + ios_ck + android_ck ) AS total
+        FROM
+        (
+        SELECT
+        interface_name_cn,
+        SUM( pc_ck ) pc_ck,
+        SUM( ios_ck ) ios_ck,
+        SUM( android_ck ) android_ck
+        FROM
+        (
+        SELECT
+        interface_name_cn,
+        interface_name,
+        createtime,
+        subsiteCode,
+        CASE
+        subsiteCode
+        WHEN 0 THEN
+        SUM( IFNULL( click, 0 ) ) ELSE 0
+        END AS pc_ck,
+        CASE
+        subsiteCode
+        WHEN 1 THEN
+        SUM( IFNULL( click, 0 ) ) ELSE 0
+        END AS ios_ck,
+        CASE
+        subsiteCode
+        WHEN 2 THEN
+        SUM( IFNULL( click, 0 ) ) ELSE 0
+        END AS android_ck
+        FROM
+        qz_app_interface_log
+        GROUP BY
+        interface_name,
+        subsiteCode
+        ) temp
+        WHERE 1=1
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            AND (createtime BETWEEN CONCAT(#{startTime},' 00:00:00') AND CONCAT(#{endTime},' 23:59:59'))
+        </if>
+        <if test="subsiteCode!=null and subsiteCode != ''">
+            AND temp.subsiteCode = 2
+        </if>
+        GROUP BY
+        interface_name
+        ) res
+    </select>
+</mapper>

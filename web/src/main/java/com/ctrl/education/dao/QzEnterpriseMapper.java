@@ -17,5 +17,4 @@ import java.util.Map;
  */
 public interface QzEnterpriseMapper extends BaseMapper<QzEnterprise> {
 
-    List<QzEnterpriseDto> getList(Map<String, Object> params);
 }

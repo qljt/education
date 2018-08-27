@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzForumGroupUsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzForumGroupUsers">
+        <id column="id" property="id" />
+        <result column="group_id" property="groupId" />
+        <result column="users_id" property="usersId" />
+        <result column="createtime" property="createtime" />
+        <result column="state" property="state" />
+        <result column="sys_code" property="sysCode" />
+    </resultMap>
+    <select id="getQzusersByGroup" resultType="java.util.Map">
+        SELECT
+            qfgu.id,
+            qfgu.createtime,
+            qu.account,
+            qu.nickname
+        FROM
+            qz_forum_group_users qfgu
+            LEFT JOIN qz_users qu ON qfgu.users_id = qu.id
+        WHERE
+            qfgu.group_id = #{groupId}
+        ORDER BY
+            qfgu.createtime DESC
+        LIMIT ${offset},${limit}
+    </select>
+
+</mapper>

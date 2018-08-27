@@ -4,22 +4,103 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysUser">
-        <id column="id" property="id" />
-        <result column="username" property="username" />
-        <result column="password" property="password" />
-        <result column="realname" property="realname" />
-        <result column="nickname" property="nickname" />
-        <result column="avatar" property="avatar" />
-        <result column="birthday" property="birthday" />
-        <result column="gender" property="gender" />
-        <result column="email" property="email" />
-        <result column="mobile" property="mobile" />
-        <result column="role_id" property="roleId" />
-        <result column="phone" property="phone" />
-        <result column="status" property="status" />
-        <result column="create_time" property="createTime" />
-        <result column="office_id" property="officeId" />
-        <result column="last_login_time" property="lastLoginTime" />
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="realname" property="realname"/>
+        <result column="nickname" property="nickname"/>
+        <result column="avatar" property="avatar"/>
+        <result column="birthday" property="birthday"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <result column="mobile" property="mobile"/>
+        <result column="phone" property="phone"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
     </resultMap>
+    <select id="getList" parameterType="map" resultType="java.util.Map">
+        SELECT
+        su.id,
+        su.username,
+        su.realname,
+        su.nickname,
+        su.phone,
+        su.mobile,
+        su.status,
+        (
+        CASE
+        su.gender
+        WHEN 0
+        THEN "保密"
+        WHEN 1
+        THEN "男"
+        WHEN 2
+        THEN "女"
+        ELSE "其他"
+        END
+        ) AS gender,
+        su.create_time AS createTime,
+        su.last_login_time AS lastLoginTime,
+        su.email,
+        GROUP_CONCAT( DISTINCT sr.name SEPARATOR '/') AS "roleName",
+        GROUP_CONCAT( DISTINCT sg.group_name SEPARATOR '/') AS "groupName"
+        FROM
+        sys_user su
+        LEFT JOIN sys_user_role sur
+        ON su.id = sur.user_id
+        LEFT JOIN sys_role sr
+        ON sr.id = sur.role_id
+        LEFT JOIN sys_user_group sug
+        ON su.id = sug.user_id
+        LEFT JOIN sys_group sg
+        ON sg.id = sug.group_id
+        where 1=1
+        <if test="username != null and username != ''">
+            and su.username LIKE CONCAT('%', #{username}, '%')
+        </if>
+        <if test="office_id != null and office_id != ''">
+            and su.office_id =#{office_id}
+        </if>
+        group by su.id order by su.create_time desc
+        LIMIT ${offset},${limit}
+    </select>
+    <select id="selectUserOfficeById" resultType="com.ctrl.education.dto.SysUserOfficeDto">
+           SELECT
+               uo.office_id as officeId,
+               uo.post_id as postId,
+               uo.dept_id as deptId,
+               uo.grade_id as gradeId,
+               o.name AS officeName,
+               dept.name AS deptName,
+               dict.label AS gradeName,
+               uo.is_director AS isDirector,
+               uo.job
+          FROM
+          sys_user_office uo
+          LEFT JOIN sys_office o
+            ON uo.office_id = o.id
+          LEFT JOIN
+            (SELECT
+              id,
+              NAME
+            FROM
+              sys_office) AS dept
+            ON uo.dept_id = dept.id
+          LEFT JOIN sys_post p
+            ON uo.post_id = p.id
+          LEFT JOIN
+            (SELECT
+              sd.id AS dictId,
+              sd.label,
+              sd.value
+            FROM
+              sys_dict_type sdt
+              LEFT JOIN sys_dict sd
+                ON sdt.id = sd.type_id
+            WHERE sdt.name = "sys_grade") dict
+            ON uo.grade_id = dict.dictId
+        WHERE uo.sys_user_id = #{id}
+    </select>
 
 </mapper>

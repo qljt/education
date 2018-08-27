@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzQuestionBankMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzQuestionBank">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="parent_id" property="parentId" />
+        <result column="is_child" property="isChild" />
+        <result column="state" property="state" />
+        <result column="sort" property="sort" />
+        <result column="createtime" property="createtime" />
+        <result column="spell" property="spell" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="office_id" property="officeId"/>
+        <result column="is_practice" property="isPractice"/>
+        <result column="edit_permissions" property="editPermissions"/>
+        <result column="share_admin" property="shareAdmin"/>
+        <result column="use_student" property="useStudent"/>
+        <result column="major_id" property="majorId"/>
+    </resultMap>
+    <select id="selectMaxCode">
+        select max(b.code) code
+        from qz_question_bank b
+    </select>
+</mapper>

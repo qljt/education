@@ -1,10 +1,12 @@
 package com.ctrl.education.service;
 
+import com.ctrl.education.core.node.ZTreeNode;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.dto.SysRoleDto;
 import com.ctrl.education.model.SysRole;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,4 +36,9 @@ public interface ISysRoleService extends IService<SysRole> {
     SysRoleDto selectByRoleId(String id);
 
     int deleteRolesById(String roleId);
+
+    List<ZTreeNode> roleTreeList();
+
+    List<ZTreeNode> roleTreeListByRoleId(String[] strArray);
+
 }

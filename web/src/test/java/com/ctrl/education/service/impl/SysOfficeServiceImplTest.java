@@ -1,5 +1,6 @@
 package com.ctrl.education.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.ctrl.education.model.SysOffice;
 import com.ctrl.education.service.ISysOfficeService;
 import org.junit.Test;
@@ -26,8 +27,8 @@ public class SysOfficeServiceImplTest {
     @Test
     public void save() {
         SysOffice sysOffice = new SysOffice();
-        sysOffice.setCode("AAAA");
-        sysOffice.setName("总公司");
+        sysOffice.setCode(RandomUtil.randomString(4));
+        sysOffice.setName("齐鲁交通");
         sysOffice.setPid("0");
         sysOffice.setPids("0");
         sysOffice.setSysCode("0xib");

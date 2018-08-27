@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzTeacherMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzTeacher">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="tea_type_id" property="teaTypeId"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="icon" property="icon"/>
+        <result column="seniority" property="seniority"/>
+        <result column="tea_title" property="teaTitle"/>
+        <result column="content" property="content"/>
+        <result column="state" property="state"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="sys_user_id" property="sysUserId"/>
+    </resultMap>
+    <resultMap id="teacherLevel" type="com.ctrl.education.model.SysDict">
+        <result column="value" property="value"/>
+        <result column="label" property="label"/>
+    </resultMap>
+    <select id="teacherList" resultMap="BaseResultMap" >
+        SELECT id,name,tea_title,seniority,content
+        FROM qz_teacher
+        WHERE state = 1
+    </select>
+    <insert id="addTeacher" parameterType="com.ctrl.education.model.QzTeacher"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO qz_teacher VALUES (#{id},#{name},#{teaTypeId},#{account},#{password},#{icon},#{seniority},
+        #{content},#{teaTitle},#{sysCode},#{state},#{sysUserId})
+    </insert>
+    <select id="selectTeacher" resultMap="teacherLevel" >
+        SELECT value,label
+        FROM sys_dict
+        WHERE type_id = (SELECT id
+                          FROM sys_dict_type
+                          WHERE name = 'tea_grade')
+    </select>
+    <select id="getTeacherById" resultMap="BaseResultMap" parameterType="string">
+        SELECT *
+        FROM qz_teacher
+        where id = #{id}
+    </select>
+    <update id="modifyTeacher" parameterType="com.ctrl.education.model.QzTeacher">
+        UPDATE qz_teacher SET name = #{name},tea_type_id = #{teaTypeId},account = #{account},password = #{password},
+        icon = #{icon},seniority = #{seniority},content = #{content},tea_title = #{teaTitle}
+        where id = #{id}
+    </update>
+    <delete id="removeTeacher" parameterType="string">
+        DELETE FROM qz_teacher WHERE id = #{id}
+    </delete>
+    <select id="selectReview" resultMap="BaseResultMap">
+        select id,name
+        from qz_teacher
+        where state = 1
+    </select>
+</mapper>

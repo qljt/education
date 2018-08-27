@@ -2,11 +2,8 @@ package com.ctrl.education.core.log.factory;
 
 import com.ctrl.education.core.constant.LogSucceed;
 import com.ctrl.education.core.constant.LogType;
-import com.ctrl.education.core.constant.SysConstant;
 import com.ctrl.education.model.SysLog;
 import com.ctrl.education.model.SysLoginLog;
-import com.ctrl.education.model.SysUser;
-
 import java.util.Date;
 
 /**

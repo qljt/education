@@ -23,7 +23,7 @@ public interface IQzEnterpriseService extends IService<QzEnterprise> {
 
     Result modify(QzEnterprise qzEnterprise);
 
-    Result delete(String id);
+    Result delete(QzEnterprise qzEnterprise);
 
-    Result importExcel(String url);
+    Result disable(QzEnterprise qzEnterprise);
 }

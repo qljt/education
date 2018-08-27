@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzCoursewareMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzCourseware">
+        <id column="id" property="id"/>
+        <result column="cou_name" property="couName"/>
+        <result column="type_id" property="typeId"/>
+        <result column="tea_ids" property="teaIds"/>
+        <result column="depart_ids" property="departIds"/>
+        <result column="users_ids" property="usersIds"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="public_scope" property="publicScope"/>
+        <result column="image" property="image"/>
+        <result column="content" property="content"/>
+        <result column="state" property="state"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="createtime" property="createtime"/>
+        <result column="sys_user_id" property="sysUserId"/>
+    </resultMap>
+    <resultMap id="teacherResultMap" type="com.ctrl.education.model.QzTeacher">
+        <result column="name" property="name"/>
+        <result column="tea_type_id" property="teaTypeId"/>
+    </resultMap>
+    <resultMap id="classifyResultMap" type="com.ctrl.education.model.QzMajor">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <resultMap id="deptResultMap" type="com.ctrl.education.model.SysOffice">
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <resultMap id="userResultMap" type="com.ctrl.education.model.QzUsers">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+    </resultMap>
+    <insert id="addCourseware" parameterType="com.ctrl.education.model.QzCourseware" useGeneratedKeys="true"
+            keyProperty="id">
+              INSERT INTO qz_courseware
+              (id,cou_name,type_id,tea_ids,depart_ids,users_ids,start_time,end_time,
+              public_scope,image,content,createtime,sys_user_id,state,sys_code)
+              VALUES
+              (#{id},#{couName},#{typeId},#{teaIds},#{departIds},#{usersIds},#{startTime},#{endTime},#{publicScope},#{image},
+              #{content},#{createtime},#{sysUserId},#{state},#{sysCode})
+    </insert>
+    <select id="allTeacher" resultMap="teacherResultMap">
+        SELECT name,id
+        FROM qz_teacher
+        WHERE state = 1
+    </select>
+    <select id="selectClassify" resultMap="classifyResultMap">
+        SELECT id,name
+        FROM qz_major
+        WHERE state = 1
+    </select>
+    <select id="selectDept" resultMap="deptResultMap">
+        SELECT code,name
+        FROM sys_office
+        WHERE status = 1
+    </select>
+    <select id="selectUser" resultMap="userResultMap" parameterType="string">
+     SELECT id,nickname
+     FROM qz_users
+     WHERE depart_id IN (${departIds}) and state = 1
+    </select>
+    <select id="getList" parameterType="map" resultType="java.util.Map">
+        SELECT cou.id as id,cou.cou_name as couName,coum.type AS "majorType",qccs.type AS "sectionType",
+        cou.public_scope as publicScope,cou.courseware_num as coursewareNum,COUNT(qccs.length_time) AS "hour",
+        COUNT(qcn.id) as "noteNum",COUNT(qcq.id) as "contentNum",COUNT(qcc.id) as "commentNum"
+        FROM qz_courseware cou
+        LEFT JOIN qz_courseware_major coum
+        ON coum.class_id = cou.id
+        LEFT JOIN qz_cou_chapter_section qccs
+        ON qccs.cou_id = cou.id
+        LEFT JOIN qz_courseware_note qcn
+        ON qcn.cou_id = cou.id
+        LEFT JOIN qz_cou_question qcq
+        ON qcq.cou_id = cou.id
+        LEFT JOIN qz_cou_comment qcc
+        ON qcc.cou_id = cou.id
+        WHERE 1=1
+        <if test="id != null and id != ''">
+            and cou.id = #{id}
+        </if>
+        <if test="couName != null and couName != ''">
+            and cou.cou_name like CONCAT('%', #{couName}, '%')
+        </if>
+        <if test="state != null and state != ''">
+            and cou.state = #{state}
+        </if>
+        <choose>
+            <when test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                and createtime between ${startTime} and ${endTime}
+            </when>
+        </choose>
+        GROUP BY cou.id ORDER BY cou.createtime DESC
+        LIMIT ${offset},${limit}
+    </select>
+    <update id="remove" parameterType="java.lang.String">
+        update qz_courseware set state = 0 where id = #{id}
+    </update>
+    <select id="getCourwareById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from qz_courseware where id = #{id}
+    </select>
+    <update id="modify" parameterType="com.ctrl.education.model.QzCourseware">
+        update qz_courseware
+        set
+        <if test="couName != null and couName != ''">
+            cou_name = #{couName}
+        </if>
+        <if test="typeId != null and typeId != ''">
+            type_id = #{typeId}
+        </if>
+        <if test="teaIds != null and teaIds != ''">
+            tea_ids = #{teaIds}
+        </if>
+        <if test="departIds != null and departIds != ''">
+            depart_ids = #{departIds}
+        </if>
+        <if test="usersIds != null and usersIds != ''">
+            users_ids = #{usersIds}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            start_time = #{startTime}
+        </if>
+        <if test="endTime != null and != ''">
+            end_time = #{endTime}
+        </if>
+        <if test="publicScope != null and publicScope != ''">
+            public_scope = #{publicScope}
+        </if>
+        <if test="content != null and content != ''">
+            content = #{content}
+        </if>
+        <if test="image != null and image != ''">
+            image = #{image}
+        </if>
+        where id = #{id}
+    </update>
+</mapper>

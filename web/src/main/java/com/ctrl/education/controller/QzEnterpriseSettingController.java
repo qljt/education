@@ -73,13 +73,17 @@ public class QzEnterpriseSettingController {
         return result;
     }
 
-    //文件上传
-    @RequestMapping("uploadfile")
-    public Result uploadfile(MultipartFile[] files, HttpServletRequest request) throws IOException {
-        //文件夹路径
-        String folderPath = ImageConstant.ENTERPRISE_SETTING_FILE_PATH;
-        //接收文件并保存
-       return  new UploadFileUtil().uploadFile(files, folderPath,request);
+    /**
+     * 富文本编辑器上传图片
+     * @param editorImages
+     * @param request
+     * @return
+     */
+    @RequestMapping("uploadEditImage")
+    public Result uploadEditImage(MultipartFile[] editorImages, HttpServletRequest request) {
+
+        Result result = UploadFileUtil.uploadFile(editorImages,ImageConstant.EDITOR_PATH,request);
+        return result;
     }
 }
 

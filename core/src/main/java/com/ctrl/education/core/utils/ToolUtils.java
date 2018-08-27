@@ -136,7 +136,7 @@ public class ToolUtils {
     /**
      * 对象是否不为空(新增)
      *
-     * @param obj String,List,Map,Object[],int[],long[]
+     * @param o String,List,Map,Object[],int[],long[]
      * @return
      */
     public static boolean isNotEmpty(Object o) {
@@ -146,7 +146,7 @@ public class ToolUtils {
     /**
      * 对象是否为空
      *
-     * @param obj String,List,Map,Object[],int[],long[]
+     * @param o String,List,Map,Object[],int[],long[]
      * @return
      */
     @SuppressWarnings("rawtypes")
@@ -159,7 +159,11 @@ public class ToolUtils {
                 return true;
             }
         } else if (o instanceof List) {
-            if (((List) o).size() == 0) {
+            if (((List) o).size() == 0 || ((List) o).isEmpty()) {
+                return true;
+            }
+        }else if (o instanceof ArrayList) {
+            if (((ArrayList) o).size() == 0 || ((ArrayList) o).isEmpty()) {
                 return true;
             }
         } else if (o instanceof Map) {
@@ -183,6 +187,7 @@ public class ToolUtils {
                 return true;
             }
         }
+
         return false;
     }
 

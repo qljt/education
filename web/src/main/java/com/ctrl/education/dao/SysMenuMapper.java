@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,4 +26,8 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     List<ZTreeNode> menuTreeListByMenuIds(@Param("roleId") String roleId);
 
     List<MenuNode> getMenusByRoleIds(List<String> roleIds);
+
+    List<Map<String,Object>> selectChildById(@Param("id")String id);
+
+    Map<String,Object> selectMenuById(String id);
 }

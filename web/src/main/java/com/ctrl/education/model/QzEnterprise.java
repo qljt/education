@@ -28,13 +28,13 @@ public class QzEnterprise extends Model<QzEnterprise> {
     private String id;
     @TableField("enterprise_name")
     @NotNull(message = "企业名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 190, message = "企业名称长度为4-190。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 190, message = "企业名称长度为1-190。", groups = {AddGroup.class, UpdateGroup.class})
     private String enterpriseName;
     /**
      * 系统编码（企业编码）
      */
     @TableField("sys_code")
-    @Length(min = 4, max = 30, message = "企业编码长度为4-30。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 30, message = "企业编码长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String sysCode;
     /**
      * 创建时间
@@ -44,20 +44,20 @@ public class QzEnterprise extends Model<QzEnterprise> {
      * 联系人
      */
     @TableField("link_name")
-    @Length(min = 4, max = 90, message = "联系人长度为4-90。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 90, message = "联系人长度i为1-90。", groups = {AddGroup.class, UpdateGroup.class})
     private String linkName;
     /**
      * 联系电话
      */
     @TableField("link_phone")
-    @Length(min = 4, max = 30, message = "联系电话长度为4-30。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 30, message = "联系电话长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String linkPhone;
     /**
      * 联系邮箱
      */
     @TableField("link_email")
     @Email(message = "邮箱格式有误。", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 90, message = "联系电话长度为4-90。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 90, message = "联系电话长度1-90。", groups = {AddGroup.class, UpdateGroup.class})
     private String linkEmail;
     /**
      * 公司介绍

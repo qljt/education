@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzCertificateTemplateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzCertificateTemplate">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="tem_path" property="temPath"/>
+        <result column="sort" property="sort"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="state" property="state"/>
+        <result column="createtime" property="createtime"/>
+        <result column="sys_user_id" property="sysUserId"/>
+    </resultMap>
+    <select id="selectTemplate" resultMap="BaseResultMap">
+        select id,name from qz_certificate_template where state = 1
+    </select>
+</mapper>

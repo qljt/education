@@ -24,19 +24,19 @@ import java.util.Map;
  * @since 2018-06-20
  */
 @Service
-public class QzSmsLogServiceImpl extends ServiceImpl<QzSmsLogMapper, QzSmsLog> implements IQzSmsLogService {
+public class    QzSmsLogServiceImpl extends ServiceImpl<QzSmsLogMapper, QzSmsLog> implements IQzSmsLogService {
     @Override
     public Result getList(Map<String, Object> map) {
         String phone = (String) map.get("phone");
-        String is_suc = (String) map.get("is_suc");
-        String start_time = (String)map.get("start_time");
-        String end_time = (String)map.get("end_time");
+        String isSuc = (String) map.get("isSuc");
+        String startTime = (String)map.get("startTime");
+        String endTime = (String)map.get("endTime");
         Page<QzSmsLog> page = this.selectPage(
                 new Query<QzSmsLog>(map).getPage(),
                 new EntityWrapper<QzSmsLog>()
                         .like(StringUtils.isNotBlank(phone), "phone", phone)
-                        .eq("is_suc",is_suc)
-                        .between(StringUtils.isNotBlank(start_time),"createtime",start_time,end_time)
+                        .eq("is_suc",isSuc)
+                        .between(StringUtils.isNotBlank(startTime),"createtime",startTime,endTime)
                         .orderBy("createtime",true));
         return new PageUtils(page).toLayTableResult();
     }

@@ -1,6 +1,7 @@
 package com.ctrl.education.controller;
 
 
+import com.ctrl.education.common.UploadFileUtil;
 import com.ctrl.education.core.annotation.BussinessLog;
 import com.ctrl.education.core.constant.SysConstant;
 import com.ctrl.education.core.constant.SystemConstant;
@@ -56,7 +57,7 @@ public class QzEnterpriseController extends BaseController {
     @BussinessLog(value = "添加企业信息",type = "3")
     @RequestMapping("add")
     public Result add(QzEnterprise qzEnterprise){
-        ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
+
         Result result= iQzEnterpriseService.add(qzEnterprise);
         return result;
     }
@@ -67,8 +68,8 @@ public class QzEnterpriseController extends BaseController {
      */
     @BussinessLog(value = "编辑企业信息",type = "3")
     @RequestMapping("modify")
-    public Result modify(@RequestBody QzEnterprise qzEnterprise){
-        ValidatorUtils.validateEntity(qzEnterprise,AddGroup.class);
+    public Result modify( QzEnterprise qzEnterprise){
+
         Result result= iQzEnterpriseService.modify(qzEnterprise);
         return result;
     }
@@ -85,34 +86,35 @@ public class QzEnterpriseController extends BaseController {
     }
 
     /**
-     * 根据多个id删除企业信息
-     * @param id
+     * 根据id删除企业信息
+     * @param qzEnterprise
      * @return
      */
     @RequestMapping("remove")
-    public Result remove(@RequestParam(value = "id") String id){
-        Result result = iQzEnterpriseService.delete(id);
+    public Result remove(QzEnterprise qzEnterprise){
+        Result result = iQzEnterpriseService.delete(qzEnterprise);
         return result;
     }
-
     /**
-     * 上传文件到服务器
-     * @param file
+     * 启用禁用企业
+     * @param qzEnterprise
+     * @return
+     */
+    @RequestMapping("disable")
+    public Result disable(QzEnterprise qzEnterprise){
+        Result result = iQzEnterpriseService.disable(qzEnterprise);
+        return result;
+    }
+    /**
+     * 富文本编辑器上传图片
+     * @param editorImages
      * @param request
      * @return
-     * @throws IOException
      */
-    @RequestMapping("importQzEnterprise")
-    public Result importQzEnterprise(@RequestParam("file") MultipartFile file,HttpServletRequest request) throws IOException{
-        String folderPath = ImageConstant.ENTERPRISE_FILE_PATH;
-        Result result = ExcelUtils.uploadExcel(file,folderPath,request);
-      return result;
+    @RequestMapping("uploadEditImage")
+    public Result uploadEditImage(MultipartFile[] editorImages, HttpServletRequest request) {
 
-    }
-
-    @RequestMapping(value = "importExcel")
-    public Result importExcel(HttpServletRequest request, @RequestBody String url) throws IOException {
-        Result result = iQzEnterpriseService.importExcel(url);
+        Result result = UploadFileUtil.uploadFile(editorImages,ImageConstant.EDITOR_PATH,request);
         return result;
     }
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.SysGroupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysGroup">
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="group_name" property="groupName" />
+        <result column="sort" property="sort" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+    <select id="tree" resultType="com.ctrl.education.core.node.ZTreeNode">
+
+		 SELECT
+        m1.id AS id,
+        m1.group_name as name,
+        IFNULL(m1.pid,0) AS pid,
+        (
+        CASE
+        WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) AS isOpen
+        FROM
+        sys_group m1
+        LEFT JOIN sys_group m2 ON m1.pid = m2.id
+    </select>
+    <select id="selectGroupById" resultType="java.util.Map">
+         SELECT
+            a.group_name as groupName,
+            a.id,
+            a.pid,
+            a.sort,
+            CASE
+              a.pid
+              WHEN "0"
+              THEN "顶级"
+              ELSE
+              (SELECT
+                b.group_name
+              FROM
+                sys_group b
+              WHERE a.pid = b.id)
+            END AS pName
+          FROM
+            sys_group a
+            WHERE a.id = #{id}
+    </select>
+    <select id="groupTreeList" resultType="com.ctrl.education.core.node.ZTreeNode">
+        select id "id",pId
+        "pId",group_name as "name",(case when (pId=0 or pId is null) then 'true'
+        else 'false' end) "open" from sys_group
+
+    </select>
+    <select id="groupTreeListByUserId" resultType="com.ctrl.education.core.node.ZTreeNode">
+        <!--SELECT
+        r.id "id",
+        pId "pId",
+        group_name AS "name",
+        (
+        CASE
+        WHEN (pId IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) "open",
+        (
+        CASE
+        WHEN ( r1.id IS NULL) THEN
+        'false'
+        ELSE
+        'true'
+        END
+        ) "checked"
+        FROM
+        sys_user_group r
+        LEFT JOIN (
+        SELECT
+        id
+        FROM
+        sys_user_group
+        WHERE
+        id IN
+
+        <foreach collection="array" index="index" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+
+        ) r1 ON r.id = r1.id-->
+        SELECT
+        a.id,
+        a.pid,
+        a.group_name AS name,
+        (
+        CASE
+        WHEN (a.id = 0
+        OR a.id IS NULL)
+        THEN 'true'
+        ELSE 'false'
+        END
+        ) AS isOpen,
+        (
+        CASE
+        WHEN (ISNULL(p2.group_id))
+        THEN "false"
+        ELSE "true"
+        END
+        ) "checked"
+        FROM
+        sys_group AS a
+        LEFT JOIN
+        (SELECT
+        r.user_id,
+        r.group_id
+        FROM
+        sys_user_group r
+        WHERE r.user_id =#{userId}) as p2
+        ON a.id = p2.group_id
+    </select>
+</mapper>

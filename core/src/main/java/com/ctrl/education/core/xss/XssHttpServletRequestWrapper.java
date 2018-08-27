@@ -1,5 +1,8 @@
 package com.ctrl.education.core.xss;
 
+import com.ctrl.education.core.utils.JsoupUtil;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
@@ -12,79 +15,81 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @date 2018-04-21 10:33
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
-    public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
+    HttpServletRequest orgRequest = null;
+    private boolean isIncludeRichText = false;
 
-        super(servletRequest);
-
+    public XssHttpServletRequestWrapper(HttpServletRequest request, boolean isIncludeRichText) {
+        super(request);
+        orgRequest = request;
+        this.isIncludeRichText = isIncludeRichText;
     }
 
-    public String[] getParameterValues(String parameter) {
-
-        String[] values = super.getParameterValues(parameter);
-
-        if (values == null) {
-
-            return null;
-
+    /**
+     * 覆盖getParameter方法，将参数名和参数值都做xss过滤。<br/>
+     * 如果需要获得原始的值，则通过super.getParameterValues(name)来获取<br/>
+     * getParameterNames,getParameterValues和getParameterMap也可能需要覆盖
+     */
+    @Override
+    public String getParameter(String name) {
+        Boolean flag = ("content".equals(name) || name.endsWith("WithHtml"));
+        if( flag && !isIncludeRichText){
+            return super.getParameter(name);
         }
-
-        int count = values.length;
-
-        String[] encodedValues = new String[count];
-
-        for (int i = 0; i < count; i++) {
-
-            encodedValues[i] = cleanXSS(values[i]);
-
+        name = JsoupUtil.clean(name);
+        String value = super.getParameter(name);
+        if (StringUtils.isNotBlank(value)) {
+            value = JsoupUtil.clean(value);
         }
-
-        return encodedValues;
-
-    }
-
-    public String getParameter(String parameter) {
-
-        String value = super.getParameter(parameter);
-
-        if (value == null) {
-
-            return null;
-
-        }
-
-        return cleanXSS(value);
-
-    }
-
-    public String getHeader(String name) {
-
-        String value = super.getHeader(name);
-
-        if (value == null)
-
-            return null;
-
-        return cleanXSS(value);
-
-    }
-
-    private String cleanXSS(String value) {
-
-        //You'll need to remove the spaces from the html entities below
-
-        value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
-
-        value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
-
-        value = value.replaceAll("'", "& #39;");
-
-        value = value.replaceAll("eval\\((.*)\\)", "");
-
-        value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
-
-        value = value.replaceAll("script", "");
-
         return value;
-
     }
+
+    @Override
+    public String[] getParameterValues(String name) {
+        String[] arr = super.getParameterValues(name);
+        if(arr != null){
+            for (int i=0;i<arr.length;i++) {
+                arr[i] = JsoupUtil.clean(arr[i]);
+            }
+        }
+        return arr;
+    }
+
+
+    /**
+     * 覆盖getHeader方法，将参数名和参数值都做xss过滤。<br/>
+     * 如果需要获得原始的值，则通过super.getHeaders(name)来获取<br/>
+     * getHeaderNames 也可能需要覆盖
+     */
+    @Override
+    public String getHeader(String name) {
+        name = JsoupUtil.clean(name);
+        String value = super.getHeader(name);
+        if (StringUtils.isNotBlank(value)) {
+            value = JsoupUtil.clean(value);
+        }
+        return value;
+    }
+
+    /**
+     * 获取最原始的request
+     *
+     * @return
+     */
+    public HttpServletRequest getOrgRequest() {
+        return orgRequest;
+    }
+
+    /**
+     * 获取最原始的request的静态方法
+     *
+     * @return
+     */
+    public static HttpServletRequest getOrgRequest(HttpServletRequest req) {
+        if (req instanceof XssHttpServletRequestWrapper) {
+            return ((XssHttpServletRequestWrapper) req).getOrgRequest();
+        }
+
+        return req;
+    }
+
 }

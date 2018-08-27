@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzPaperMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzPaper">
+        <id column="id" property="id"/>
+        <result column="major_id" property="majorId"/>
+        <result column="question_id" property="questionId"/>
+        <result column="type" property="type"/>
+        <result column="name" property="name"/>
+        <result column="name_jc" property="nameJc"/>
+        <result column="total_time" property="totalTime"/>
+        <result column="total_score" property="totalScore"/>
+        <result column="pass_socre" property="passSocre"/>
+        <result column="avg_difficulty" property="avgDifficulty"/>
+        <result column="avg_differen" property="avgDifferen"/>
+        <result column="knowlcode_id" property="knowlcodeId"/>
+        <result column="paper_userful" property="paperUserful"/>
+        <result column="sls_randowm" property="slsRandowm"/>
+        <result column="question_type_count" property="questionTypeCount"/>
+        <result column="question_count" property="questionCount"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="sys_user_id" property="sysUserId"/>
+        <result column="createtime" property="createtime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="office_id" property="officeId"/>
+        <result column="edit_permissions" property="editPermissions"/>
+        <result column="share_admin" property="shareAdmin"/>
+        <result column="use_student" property="useStudent"/>
+        <result column="last_use_time" property="lastUseTime"/>
+        <result column="question_ids" property="questionIds"/>
+        <result column="batch" property="batch"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="author" property="author"/>
+    </resultMap>
+    <select id="questionnaireList" resultMap="BaseResultMap">
+        select p.id,p.name,p.createtime,u.username as author
+        from qz_paper p left join sys_user u
+        on p.sys_user_id = u.id
+        where state = 1
+    </select>
+    <update id="remove">
+        update qz_paper set state = 0 where id = #{id}
+    </update>
+    <select id="selectPaper" resultMap="BaseResultMap">
+        select id,name
+        from qz_paper
+        where type = 0
+    </select>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.SysUserGroupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysUserGroup">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="group_id" property="groupId" />
+    </resultMap>
+
+    <select id="groupTreeListByUserId" resultType="com.ctrl.education.core.node.ZTreeNode"></select>
+    <select id="getList" resultType="java.util.Map">
+        SELECT
+        sug.id,
+        su.username,
+        su.realname,
+        su.nickname,
+        su.phone,
+        su.mobile,
+        su.status,
+        (
+        CASE
+        su.gender
+        WHEN 0
+        THEN "保密"
+        WHEN 1
+        THEN "男"
+        WHEN 2
+        THEN "女"
+        ELSE "其他"
+        END
+        ) AS gender,
+        su.create_time AS createTime,
+        su.last_login_time AS lastLoginTime,
+        su.email,
+        GROUP_CONCAT( DISTINCT sr.name SEPARATOR '/') AS "roleName",
+        GROUP_CONCAT( DISTINCT sg.group_name SEPARATOR '/') AS "groupName"
+        FROM
+        sys_user su
+        LEFT JOIN sys_user_role sur
+        ON su.id = sur.user_id
+        LEFT JOIN sys_role sr
+        ON sr.id = sur.role_id
+        LEFT JOIN sys_user_group sug
+        ON su.id = sug.user_id
+        LEFT JOIN sys_group sg
+        ON sg.id = sug.group_id
+        where sug.group_id=#{groupId}
+        <if test="username != null and username != ''">
+            and su.username LIKE CONCAT('%', #{username}, '%')
+        </if>
+        <if test="office_id != null and office_id != ''">
+            and su.office_id =#{office_id}
+        </if>
+        group by su.id order by su.create_time desc
+        LIMIT ${offset},${limit}
+    </select>
+    <select id="getListByGroupId" resultType="java.util.List">
+         SELECT
+        su.id,
+        su.username,
+        su.phone,
+        su.email,
+        GROUP_CONCAT( DISTINCT sg.group_name SEPARATOR '/') AS "groupName",
+        FROM
+        sys_user su
+        LEFT JOIN sys_user_group sug
+        ON su.id = sug.user_id
+        LEFT JOIN sys_group sg
+        ON sg.id = sug.group_id
+        where sug.group_id=#{groupId}
+    </select>
+    <select id="getNotInGroupList" resultType="map">
+         SELECT
+        su.id as userId,
+        su.username,
+        su.phone,
+        su.email
+        FROM
+        sys_user su
+        LEFT JOIN sys_user_group sug
+        ON su.id = sug.user_id
+        AND sug.group_id &lt;&gt;#{groupId}
+    </select>
+</mapper>

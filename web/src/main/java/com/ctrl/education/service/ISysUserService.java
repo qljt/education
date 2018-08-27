@@ -29,5 +29,5 @@ public interface ISysUserService extends IService<SysUser> {
 
     Result resetPWD(Map<String, Object> map);
 
-    Result setRole(String id, String roleIds);
+    Result updateSysUserStatus(Map<String, Object> map);
 }

@@ -121,8 +121,8 @@ public class SysMenuController {
     @BussinessLog(value = "根据id获取菜单",type ="2")
     @RequestMapping("info")
     public Result getInfo(@RequestParam(value = "id")String id){
-       SysMenu sysMenu =  this.iSysMenuService.selectById(id);
-       return Result.ok().put(SystemConstant.RESULT_KEY,sysMenu);
+       Map<String,Object> map =  this.iSysMenuService.selectMenuById(id);
+       return Result.ok().put(SystemConstant.RESULT_KEY,map);
 
     }
 

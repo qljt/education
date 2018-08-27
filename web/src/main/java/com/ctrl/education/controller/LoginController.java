@@ -9,7 +9,9 @@ import com.ctrl.education.core.utils.IpUtils;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.utils.ToolUtils;
 import com.ctrl.education.model.SysUser;
+import com.ctrl.education.model.SysUserRole;
 import com.ctrl.education.service.ISysMenuService;
+import com.ctrl.education.service.ISysUserRoleService;
 import com.ctrl.education.shiro.ShiroKit;
 import com.google.code.kaptcha.Constants;
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +44,8 @@ public class LoginController extends BaseController {
 
     @Autowired
     private ISysMenuService iSysMenuService;
+    @Autowired
+    private ISysUserRoleService iSysUserRoleService;
 
     @RequestMapping("login")
     public Result login(@RequestParam Map<String, Object> param) {
@@ -77,13 +82,13 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/unauth")
     public Result unauth() {
-        return Result.error(10002, "您尚未登录");
+        return Result.error("您尚未登录");
     }
 
     @RequestMapping("logout")
     public Result logout() {
-        SecurityUtils.getSubject().logout();
         LogManager.me().executeLog(LogTaskFactory.exitLog(ShiroKit.getUser().getId(), IpUtils.getIpAddr(getHttpServletRequest())));
+        SecurityUtils.getSubject().logout();
         return Result.ok("退出成功");
     }
 
@@ -95,13 +100,15 @@ public class LoginController extends BaseController {
     @RequestMapping("index")
     public Result index() {
         SysUser sysUser = ShiroKit.getUser();
-        String[] roleArray = sysUser.getRoleId().split(",");
-        if (ToolUtils.isEmpty(roleArray)) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("user_id",sysUser.getId());
+        List<SysUserRole> list = iSysUserRoleService.selectByMap(map);
+        if (ToolUtils.isEmpty(list)) {
             return Result.error("该用户没有角色，无法登陆");
         }
         List<String> roleList = new ArrayList<>();
-        for (String roleId : roleArray) {
-            roleList.add(roleId);
+        for (SysUserRole sysUserRole:list) {
+            roleList.add(sysUserRole.getRoleId());
         }
         List<MenuNode> menus = iSysMenuService.getMenusByRoleIds(roleList);
         List<MenuNode> titles = MenuNode.buildTitle(menus);

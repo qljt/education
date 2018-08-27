@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzTestQuestionsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzTestQuestions">
+        <id column="id" property="id" />
+        <result column="bank_id" property="bankId" />
+        <result column="question_class" property="questionClass" />
+        <result column="question_type" property="questionType" />
+        <result column="difficulty" property="difficulty" />
+        <result column="different" property="different" />
+        <result column="cognize" property="cognize" />
+        <result column="knowlcode_id" property="knowlcodeId" />
+        <result column="answertime" property="answertime" />
+        <result column="score" property="score" />
+        <result column="question_title" property="questionTitle" />
+        <result column="qnumber" property="qnumber"/>
+        <result column="is_random" property="isRandom"/>
+        <result column="answer_qnumber" property="answerQnumber"/>
+        <result column="obj_answer" property="objAnswer"/>
+        <result column="question_solution" property="questionSolution"/>
+        <result column="is_have_child" property="isHaveChild"/>
+        <result column="child_count" property="childCount"/>
+        <result column="media_name" property="mediaName"/>
+        <result column="read_number" property="readNumber"/>
+        <result column="state" property="state"/>
+        <result column="status" property="status"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="question_origin" property="questionOrigin"/>
+        <result column="create_man" property="createMan"/>
+        <result column="createtime" property="createtime"/>
+        <result column="register" property="register"/>
+        <result column="office_id" property="officeId"/>
+        <result column="batch" property="batch"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="last_sys_user_id" property="lastSysUserId"/>
+        <result column="remark" property="remark"/>
+        <result column="content_short" property="contentShort"/>
+        <result column="use_count" property="useCount"/>
+        <result column="last_use_time" property="lastUseTime"/>
+        <result column="last_use_bk" property="lastUseBk"/>
+        <result column="last_paper" property="lastPaper"/>
+        <result column="last_paper_bk" property="lastPaperBk"/>
+        <result column="operate_explain" property="operateExplain"/>
+        <result column="pigeonhole_time" property="pigeonholeTime"/>
+    </resultMap>
+</mapper>

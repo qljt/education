@@ -62,6 +62,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/sys/login", "anon");
         filterChainDefinitionMap.put("/sys/getCode", "anon");
+        filterChainDefinitionMap.put("/*/upload*", "anon");
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
         //限制同一帐号同时在线的个数。
@@ -69,10 +70,10 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filtersMap);
 
 
-        //filterChainDefinitionMap.put("/**", "anon");
+        filterChainDefinitionMap.put("/**", "anon");
         //配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
-        shiroFilterFactoryBean.setLoginUrl("/sys/unauth");
-        filterChainDefinitionMap.put("/**", "authc");
+        //shiroFilterFactoryBean.setLoginUrl("/sys/unauth");
+        //filterChainDefinitionMap.put("/**", "authc");
         // 登录成功后要跳转的链接
 //        shiroFilterFactoryBean.setSuccessUrl("/index");
         //未授权界面;

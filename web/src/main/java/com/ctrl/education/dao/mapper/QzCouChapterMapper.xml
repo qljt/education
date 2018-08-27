@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzCouChapterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzCouChapter">
+        <id column="id" property="id"/>
+        <result column="ch_name" property="chName"/>
+        <result column="sort" property="sort"/>
+        <result column="cou_id" property="couId"/>
+        <result column="state" property="state"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="createtime" property="createtime"/>
+        <result column="sys_user_id" property="sysUserId"/>
+    </resultMap>
+    <insert id="addChapter" parameterType="com.ctrl.education.model.QzCouChapter" useGeneratedKeys="true" keyProperty="id">
+        insert into qz_cou_chapter
+        values (#{id},#{chName},#{sort},#{sysCode},#{couId},#{createtime},#{state},#{sysUserId})
+    </insert>
+</mapper>

@@ -35,12 +35,14 @@ public class SystemConstant {
     public static final String DELETE_FAILURE="删除失败";
     public static final String UPDATE_SUCCESS="修改成功";
     public static final String UPDATE_FAILURE="修改失败";
-    public static final String APPROVER_SUCCESS="审批成功";
-    public static final String APPROVER_FAILURE="审批失败";
+    public static final String DISABLE_SUCCESS="禁用成功";
+    public static final String DISABLE_FAILURE="禁用失败";
+    public static final String ENABLE_SUCCESS="启用成功";
+    public static final String ENABLE_FAILURE="启用失败";
     public static final String QUERY_SUCCESS="查询成功";
     public static final String QUERY_FAILURE="查询失败";
-    public static final String SEND_SUCCESS="发送成功";
-    public static final String SEND_FAILURE="发送失败";
+    public static final String SEND_SUCCESS="发布成功";
+    public static final String SEND_FAILURE="发布失败";
     public static final String CODE_OUT_OF_TIME="验证码超时";
     public static final String UPLOAD_IMG_SUCCESS_MSG="上传成功!";
     public static final String UPLOAD_IMG_ERROR_MSG="上传失败！";
@@ -48,8 +50,10 @@ public class SystemConstant {
     public static final String UPLOADANDVALIDATEDERROR = "上传成功，数据验证失败";
     public static final String EXPORT_EXCELDATA_SUCCESS="导入成功";
     public static final String EXPORT_EXCEL_DATA_FAILURE="导入成功";
-    public static final String ALLOT_ROLE_SUCCESS_MSG="设置权限成功!";
-    public static final String ALLOT_ROLE_FAILE_MSG="设置权限失败！";
+    public static final String ALLOT_AUTH_SUCCESS_MSG="设置权限成功!";
+    public static final String ALLOT_AUTH_FAILE_MSG="设置权限失败！";
+    public static final String ALLOT_ROLE_SUCCESS_MSG="分配角色成功!";
+    public static final String ALLOT_ROLE_FAILE_MSG="分配角色失败！";
     public static final String CATEGORY_NAME_REPEAT_MSG="分类名称重复";
     public static final String LOGIN_OUT_MSG="注销成功";
     public static final String LOGIN_SUCESS="登录成功";
@@ -60,6 +64,11 @@ public class SystemConstant {
     public static final String RESULT_KEY="result";
     public static final String USER_NAME_IS_EXIST = "该账号已经存在";
     public static final String PARAM_ERROR = "参数错误";
+    public static final String PARAM_NULL_ERROR = "缺少必要的参数";
+    public static final String EXSIT_CHILD_MENU="存在子集，不允许删除";
+    public static final String RESET_PWD_SUCCESS="重置密码成功";
+    public static final String RESET_PWD_FAILURE="重置密码失败";
+    public static final String USER_ADMIN="admin";//账号为admin不允许删除
 
     /**
      * 数据权限过滤

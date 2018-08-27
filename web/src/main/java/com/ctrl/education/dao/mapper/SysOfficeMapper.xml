@@ -4,25 +4,107 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysOffice">
-        <id column="id" property="id" />
-        <result column="pid" property="pid" />
-        <result column="pids" property="pids" />
-        <result column="name" property="name" />
-        <result column="code" property="code" />
-        <result column="type" property="type" />
-        <result column="status" property="status" />
-        <result column="remark" property="remark" />
-        <result column="sys_code" property="sysCode" />
+        <id column="id" property="id"/>
+        <result column="pid" property="pid"/>
+        <result column="pids" property="pids"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="office_nature" property="officeNature"/>
+        <result column="is_virtual" property="isVirtual"/>
+        <result column="sys_industry" property="sysIndustry"/>
+        <result column="sys_region" property="sysRegion"/>
+        <result column="person_count" property="personCount"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="sort" property="sort"/>
     </resultMap>
-    <select id="tree" resultType="com.ctrl.education.core.node.ZTreeNode">
-		select id,pid as pId,name as name,
-		(
-		CASE
-		WHEN (pId = 0 OR pId IS NULL) THEN
-		'true'
-		ELSE
-		'false'
-		END
-		) as isOpen from sys_office
-	</select>
+    <select id="officeTree" resultType="com.ctrl.education.core.node.ZTreeNode" parameterType="integer">
+        SELECT
+        m1.id AS id,
+        m1.code,
+        m1.name,
+        m1.status,
+        m1.type,
+        IFNULL(m1.pid,0) AS pid,
+        m1.name,
+        (
+        CASE
+        WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) AS isOpen
+        FROM
+        sys_office m1
+        LEFT JOIN sys_office m2 ON m1.pid = m2.id
+        where m1.status=1
+    </select>
+    <select id="deptTree" resultType="java.util.Map">
+        SELECT
+        m1.id,
+        m1.name
+        from sys_office as m1
+        where m1.status=1 and m1.type=1
+    </select>
+    <select id="officeSelect" resultType="java.util.Map">
+        SELECT
+        m1.id,
+        m1.name
+        from sys_office as m1
+        where m1.status=1
+    </select>
+    <select id="getList" resultType="java.util.Map" parameterType="java.util.Map">
+        select office.id,office.name,office.code,office.status,office.pid,office.pids,office.sort,
+        CASE office.is_virtual WHEN 0 THEN "否" ELSE "是" END AS isVirtual,
+        CASE office.type WHEN 1 THEN "部门" ELSE "单位" END AS type,
+        dict.label AS officeNature,
+        dict1.label AS sysIndustry
+        from sys_office as office
+        LEFT JOIN (SELECT d.value,d.label FROM sys_dict_type dt,sys_dict d WHERE dt.id=d.type_id AND
+        dt.name="office_nature") as dict ON office.office_nature = dict.value
+        LEFT JOIN (SELECT d.value,d.label FROM sys_dict_type dt,sys_dict d WHERE dt.id=d.type_id AND
+        dt.name="sys_industry") as dict1 ON office.sys_industry = dict1.value
+        order by office.sort desc
+        <if test="name != null and name != '' ">
+            where name like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+    <select id="selectOfficeById" resultType="java.util.Map">
+        SELECT
+            office.name,
+            office.id,
+            office.pid,
+            office.status,
+            office.code,
+            office.type as type,
+            office.office_nature as officeNature,
+            office.sys_industry as sysIndustry,
+            office.is_virtual as isVirtual,
+            CASE
+              office.pid
+              WHEN "0"
+              THEN "顶级"
+              ELSE
+              (SELECT
+                b.name
+              FROM
+                sys_office b
+              WHERE office.pid = b.id)
+            END AS pName
+          FROM
+            sys_office as office
+            WHERE office.id = #{id}
+    </select>
+    <select id="selectOfficeByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select  id,name
+        from sys_office
+        where type = #{type}
+    </select>
+    <select id="getDeptByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from sys_office where code = #{code} and status = 1 and type = 1
+    </select>
 </mapper>

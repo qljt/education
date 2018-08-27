@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzScoreGiftMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzScoreGift">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="image" property="image" />
+        <result column="content" property="content" />
+        <result column="createtime" property="createtime" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="socre" property="socre" />
+        <result column="last_update_time" property="lastUpdateTime" />
+        <result column="state" property="state" />
+        <result column="supply_num" property="supplyNum" />
+        <result column="num" property="num" />
+    </resultMap>
+    <update id="remove">
+        update qz_score_gift set state=0 where id=#{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.SysConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysConfig">
+        <id column="id" property="id" />
+        <result column="system_name" property="systemName" />
+        <result column="system_version" property="systemVersion" />
+        <result column="system_phone" property="systemPhone" />
+    </resultMap>
+
+</mapper>

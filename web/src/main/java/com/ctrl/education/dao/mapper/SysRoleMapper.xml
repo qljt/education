@@ -39,7 +39,7 @@
         ) "open",
         (
         CASE
-        WHEN (r1.ID = 0 OR r1.ID IS NULL) THEN
+        WHEN ( r1.id IS NULL) THEN
         'false'
         ELSE
         'true'
@@ -49,63 +49,92 @@
         sys_role r
         LEFT JOIN (
         SELECT
-        ID
+        id
         FROM
         sys_role
         WHERE
-        ID IN
+        id IN
 
         <foreach collection="array" index="index" item="i" open="(" separator="," close=")">
             #{i}
         </foreach>
 
-        ) r1 ON r.ID = r1.ID
-        ORDER BY
-        pId,
-        num ASC
+        ) r1 ON r.id = r1.id
     </select>
     <select id="getList" parameterType="java.util.Map" resultType="com.ctrl.education.dto.SysRoleDto">
         SELECT
         role.*,
         office.name AS officeName
-        FROM (SELECT
-        DISTINCT(r1.id),
-        r1.pid,
-        r1.pids,
-        r1.status,
-        r1.desc,
-        r1.office_id,
-        r1.name,
-        r1.create_time AS createTime,
-        r2.name AS pName
-        FROM sys_role AS r1 INNER JOIN sys_role r2 ON (r2.id = r1.pid OR r2.pid = 0)) role LEFT JOIN sys_office office
+        FROM
+        (SELECT
+        a.name,
+        a.id,
+        a.pid,
+        a.pids,
+        a.status,
+        a.desc,
+        a.office_id,
+        a.create_time AS createTime,
+        CASE
+        a.pid
+        WHEN "0"
+        THEN "--"
+        ELSE
+        (SELECT
+        b.name
+        FROM
+        sys_role b
+        WHERE a.pid = b.id)
+        END AS pName
+        FROM
+        sys_role a) role
+        LEFT JOIN sys_office office
         ON role.office_id = office.id
+
 
         <if test="name != null">
             WHERE role.name LIKE CONCAT('%',#{name},'%')
         </if>
-        order by role.createTime desc
+        ORDER BY role.createTime DESC
         LIMIT ${offset},${limit}
     </select>
     <select id="selectByRoleId" resultType="com.ctrl.education.dto.SysRoleDto">
          SELECT
-        role.*,
-        office.name AS officeName
-        FROM (SELECT
-        DISTINCT(r1.id),
-        r1.pid,
-        r1.pids,
-        r1.status,
-        r1.desc,
-        r1.office_id AS officeId,
-        r1.name,
-        r1.create_time AS createTime,
-        r2.name AS pName
-        FROM sys_role AS r1 INNER JOIN sys_role r2 ON (r2.id = r1.pid OR r2.pid = 0)) role LEFT JOIN sys_office office
-        ON role.officeId = office.id
-        where role.id=#{id}
+          role.*,
+          office.name AS officeName
+        FROM
+          (SELECT
+            a.name,
+            a.id,
+            a.pid,
+            a.pids,
+            a.status,
+            a.desc,
+            a.office_id AS officeId,
+            a.create_time AS createTime,
+            CASE
+              a.pid
+              WHEN "0"
+              THEN "顶级"
+              ELSE
+              (SELECT
+                b.name
+              FROM
+                sys_role b
+              WHERE a.pid = b.id)
+            END AS pName
+          FROM
+            sys_role a) role
+          LEFT JOIN sys_office office
+            ON role.officeId = office.id
+              where role.id=#{id}
     </select>
     <delete id="deleteRolesById">
         delete from sys_relation where roleid = #{roleId}
     </delete>
+    <select id="roleTreeList" resultType="com.ctrl.education.core.node.ZTreeNode">
+        select id "id",pId
+        "pId",name as "name",(case when (pId=0 or pId is null) then 'true'
+        else 'false' end) "open" from sys_role
+    </select>
 </mapper>

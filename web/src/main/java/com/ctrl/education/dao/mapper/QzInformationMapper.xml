@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzInformationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzInformation">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="state" property="state" />
+        <result column="click_num" property="clickNum" />
+        <result column="createtime" property="createtime" />
+        <result column="put_time" property="putTime" />
+        <result column="image" property="image" />
+        <result column="sys_code" property="sysCode" />
+        <result column="type_id" property="typeId" />
+        <result column="labels" property="labels" />
+        <result column="author" property="author" />
+        <result column="depart_ids" property="departIds" />
+        <result column="position_ids" property="positionIds" />
+        <result column="level_ids" property="levelIds" />
+        <result column="sort" property="sort" />
+        <result column="type" property="type" />
+        <result column="sys_user_id" property="sysUserId" />
+    </resultMap>
+    <update id="remove">
+        update qz_information set state=0 where id=#{id}
+    </update>
+    <select id="getInfo" resultType="map">
+        SELECT
+          qz.id,
+          qz.title,
+          qz.state,
+          qz.click_num AS clickNum,
+          qz.image,
+          qz.labels,
+          group_concat( dict.label SEPARATOR '/') AS "labelName",
+          qz.author,
+          qz.sort,
+          qz.type_id AS typeId,
+          t.name AS typeName
+        FROM qz_information qz
+          LEFT JOIN qz_information_type t
+            ON qz.type_id = t.id
+          LEFT JOIN sys_dict dict
+          ON find_in_set(dict.id,qz.labels)
+        WHERE qz.id = #{id}
+          GROUP BY qz.id
+    </select>
+    <select id="getList" resultType="map">
+        SELECT
+          qz.id,
+          qz.title,
+          /*  (CASE qz.state
+            WHEN 1
+            THEN "正常"
+            WHEN 2
+            THEN "禁用"
+            WHEN 3
+            THEN "草稿"
+            WHEN "4"
+            THEN "已发布"
+            END ) AS state,*/
+          qz.state,
+          qz.click_num AS clickNum,
+          qz.image,
+          qz.labels,
+          qz.createtime,
+          qz.put_time AS putTime,
+          group_concat( dict.label SEPARATOR '/') AS "labelName",
+          qz.author,
+          qz.sort,
+          qz.type_id AS typeId,
+          t.name AS typeName
+        FROM qz_information qz
+          LEFT JOIN qz_information_type t
+            ON qz.type_id = t.id
+          LEFT JOIN sys_dict dict
+          ON find_in_set(dict.id,qz.labels)
+        where qz.state!=0
+        <if test="title != null and title != ''">
+            and qz.title LIKE CONCAT('%', #{title}, '%')
+        </if>
+        <if test="type_id != null and type_id != ''">
+            and qz.type_id =#{infoTypeId}
+        </if>
+        <if test="state != null and state != ''">
+            and qz.state =#{state}
+        </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            and (createtime between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+          GROUP BY qz.id order by qz.createtime
+          LIMIT ${offset},${limit}
+    </select>
+</mapper>

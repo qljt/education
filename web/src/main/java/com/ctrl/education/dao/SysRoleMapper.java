@@ -30,4 +30,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     SysRoleDto selectByRoleId(String id);
 
     int deleteRolesById(@Param("roleId") String roleId);
+
+    List<ZTreeNode> roleTreeList();
 }

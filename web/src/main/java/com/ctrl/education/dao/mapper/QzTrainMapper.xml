@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzTrainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzTrain">
+        <id column="id" property="id"/>
+        <result column="tr_name" property="trName"/>
+        <result column="code" property="code"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="createtime" property="createtime"/>
+        <result column="edit_time" property="editTime"/>
+        <result column="editor" property="editor"/>
+        <result column="state" property="state"/>
+        <result column="type" property="type"/>
+        <result column="score" property="score"/>
+        <result column="content" property="content"/>
+        <result column="depart_ids" property="departIds"/>
+        <result column="users_ids" property="usersIds"/>
+        <result column="position_ids" property="positionIds"/>
+        <result column="is_pass" property="isPass"/>
+        <result column="sys_code" property="sysCode"/>
+        <result column="status" property="status"/>
+        <result column="cer_template_id" property="cerTemplateId"/>
+        <result column="put_time" property="putTime"/>
+        <result column="max_sign" property="maxSign"/>
+        <result column="already_sign" property="alreadySign"/>
+        <result column="sys_user_id" property="sysUserId"/>
+    </resultMap>
+</mapper>

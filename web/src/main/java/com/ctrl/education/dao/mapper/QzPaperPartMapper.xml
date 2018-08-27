@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzPaperPartMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzPaperPart">
+        <id column="id" property="id"/>
+        <result column="paper_id" property="paperId"/>
+        <result column="bank_id" property="bankId"/>
+        <result column="part_name" property="partName"/>
+        <result column="explains" property="explains"/>
+        <result column="flag" property="flag"/>
+        <result column="sort" property="sort"/>
+        <result column="question_count" property="questionCount"/>
+        <result column="sum_score" property="sumScore"/>
+    </resultMap>
+    <select id="paperPartInfo" resultMap="BaseResultMap" parameterType="com.ctrl.education.model.QzPaperPart">
+        select * from qz_paper_part where paper_id = #{paperId} and part_name = #{partName}
+    </select>
+</mapper>

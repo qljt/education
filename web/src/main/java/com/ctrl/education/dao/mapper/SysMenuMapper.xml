@@ -139,4 +139,33 @@
         where m1.ismenu = 1
         order by levels,num asc
     </select>
+    <select id="selectChildById" resultType="java.util.Map">
+        select id from sys_menu where pid =#{id}
+    </select>
+    <select id="selectMenuById" resultType="java.util.Map">
+        SELECT
+            a.name,
+            a.id,
+            a.pid,
+            a.pids,
+            a.status,
+            a.url,
+            a.num,
+            a.ismenu,
+            a.code,
+            CASE
+              a.pid
+              WHEN "0"
+              THEN "顶级"
+              ELSE
+              (SELECT
+                b.name
+              FROM
+                sys_menu b
+              WHERE a.pid = b.id)
+            END AS pName
+          FROM
+            sys_menu a
+            WHERE a.id = #{id}
+    </select>
 </mapper>

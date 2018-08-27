@@ -1,17 +1,8 @@
 package com.ctrl.education.dto;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.ctrl.education.core.validator.group.AddGroup;
-import com.ctrl.education.core.validator.group.UpdateGroup;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import com.ctrl.education.model.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * com.ctrl.education.dto
@@ -24,35 +15,30 @@ public class SysUserDto {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 账号
      */
-    @TableField("username")
-    @NotNull(message = "登录名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 25, message = "企业名称长度为1-25。", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
     /**
      * 密码
      */
-    @NotNull(message = "密码不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 1, max = 30, message = "密码长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String password;
     /**
      * 真实姓名
      */
-    @Length(min = 1, max = 30, message = "真实长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String realname;
     /**
      * 昵称
      */
-    @Length(min = 1, max = 50, message = "昵称长度为0-0。", groups = {AddGroup.class, UpdateGroup.class})
     private String nickname;
+    /**
+     * 头像
+     */
+    private String avatar;
     /**
      * 生日
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     /**
      * 性别，0保密（默认），1男，2女
@@ -61,34 +47,32 @@ public class SysUserDto {
     /**
      * 邮箱
      */
-    @Email(message = "邮箱格式有误。", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 1, max = 80, message = "邮箱长度为0-0。", groups = {AddGroup.class, UpdateGroup.class})
     private String email;
     /**
      * 手机号
      */
-    @Length(min = 12, max =12, message = "手机号码长度为12位。", groups = {AddGroup.class, UpdateGroup.class})
-    @Pattern(regexp = "^1[3-9]{1}\\d{9}$", message = "手机号格式不正确。", groups = {AddGroup.class, UpdateGroup.class})
     private String mobile;
-    /**
-     * 角色ID数组，逗号隔开
-     */
-    @TableField("role_id")
-    private String roleId;
     /**
      * 座机号
      */
-    @Length(min = 1, max = 18, message = "座机号码长度为1-18。", groups = {AddGroup.class, UpdateGroup.class})
     private String phone;
     /**
      * 账号状态，1：启用，2：冻结 3：删除
      */
     private Integer status;
     /**
-     * 机构id
+     * 创建时间
      */
-    @TableField("office_id")
-    private String officeId;
+    private Date createTime;
+    /**
+     * 最后登录时间
+     */
+    private Date lastLoginTime;
+    private SysOffice sysOffice;
+    private List<SysRole> sysRoles;
+    private List<SysPost> sysPosts;
+    private List<SysUserGroup> sysUserGroups;
+    private SysDict sysDict;
 
     public String getId() {
         return id;
@@ -130,6 +114,14 @@ public class SysUserDto {
         this.nickname = nickname;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Date getBirthday() {
         return birthday;
     }
@@ -162,14 +154,6 @@ public class SysUserDto {
         this.mobile = mobile;
     }
 
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -186,30 +170,60 @@ public class SysUserDto {
         this.status = status;
     }
 
-    public String getOfficeId() {
-        return officeId;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public SysUserDto() {
+    public Date getLastLoginTime() {
+        return lastLoginTime;
     }
 
-    public SysUserDto(String username, String password, String realname, String nickname, Date birthday, Integer gender, String email, String mobile, String roleId, String phone, Integer status, String officeId) {
-        this.username = username;
-        this.password = password;
-        this.realname = realname;
-        this.nickname = nickname;
-        this.birthday = birthday;
-        this.gender = gender;
-        this.email = email;
-        this.mobile = mobile;
-        this.roleId = roleId;
-        this.phone = phone;
-        this.status = status;
-        this.officeId = officeId;
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public SysOffice getSysOffice() {
+        return sysOffice;
+    }
+
+    public void setSysOffice(SysOffice sysOffice) {
+        this.sysOffice = sysOffice;
+    }
+
+    public List<SysRole> getSysRoles() {
+        return sysRoles;
+    }
+
+    public void setSysRoles(List<SysRole> sysRoles) {
+        this.sysRoles = sysRoles;
+    }
+
+    public List<SysPost> getSysPosts() {
+        return sysPosts;
+    }
+
+    public void setSysPosts(List<SysPost> sysPosts) {
+        this.sysPosts = sysPosts;
+    }
+
+    public List<SysUserGroup> getSysUserGroups() {
+        return sysUserGroups;
+    }
+
+    public void setSysUserGroups(List<SysUserGroup> sysUserGroups) {
+        this.sysUserGroups = sysUserGroups;
+    }
+
+    public SysDict getSysDict() {
+        return sysDict;
+    }
+
+    public void setSysDict(SysDict sysDict) {
+        this.sysDict = sysDict;
     }
 
     @Override
@@ -220,14 +234,20 @@ public class SysUserDto {
                 ", password='" + password + '\'' +
                 ", realname='" + realname + '\'' +
                 ", nickname='" + nickname + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", birthday=" + birthday +
                 ", gender=" + gender +
                 ", email='" + email + '\'' +
                 ", mobile='" + mobile + '\'' +
-                ", roleId='" + roleId + '\'' +
                 ", phone='" + phone + '\'' +
                 ", status=" + status +
-                ", officeId='" + officeId + '\'' +
+                ", createTime=" + createTime +
+                ", lastLoginTime=" + lastLoginTime +
+                ", sysOffice=" + sysOffice +
+                ", sysRoles=" + sysRoles +
+                ", sysPosts=" + sysPosts +
+                ", sysUserGroups=" + sysUserGroups +
+                ", sysDict=" + sysDict +
                 '}';
     }
 }

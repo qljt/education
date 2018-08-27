@@ -1,6 +1,8 @@
 package com.ctrl.education.service;
 
+import com.ctrl.education.core.utils.PageUtils;
 import com.ctrl.education.core.utils.Result;
+import com.ctrl.education.dto.SysDictDto;
 import com.ctrl.education.model.SysDict;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -12,18 +14,21 @@ import java.util.Map;
  * 系统字典表 服务类
  * </p>
  *
- * @author ${author}
- * @since 2018-07-15
+ * @author ctrl
+ * @since 2018-07-21
  */
 public interface ISysDictService extends IService<SysDict> {
+    PageUtils queryPage(Map<String, Object> params);
 
-    Result getTreee();
+    boolean hasValue(Integer id, Integer typeId, String value);
 
-    List<Map<String,Object>> getList(Map<String, Object> param);
+    List<SysDictDto> getDictsByTypeName(String typeName);
 
     Result save(SysDict sysDict);
 
     Result modify(SysDict sysDict);
 
-    Result remove(String id);
+    Result remove(Integer id);
+
+    Result selectExamType();
 }

@@ -6,6 +6,7 @@ import com.ctrl.education.model.SysOffice;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,11 +18,23 @@ import java.util.List;
  */
 public interface ISysOfficeService extends IService<SysOffice> {
 
-    Result tree();
+    Result officeTree();
 
     Result save(SysOffice sysOffice);
 
     Result modify(SysOffice sysOffice);
 
     Result remove(String id);
+
+    List<Map<String, Object>> getList(Map<String, Object> map);
+
+    Map<String, Object> selectOfficeById(String id);
+
+    Result deptTree();
+
+    Result officeSelect();
+
+    Result selectOfficeByType(Integer type);
+
+    Result getDeptByCode(String code);
 }

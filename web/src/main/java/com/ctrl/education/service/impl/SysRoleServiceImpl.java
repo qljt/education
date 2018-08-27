@@ -1,31 +1,25 @@
 package com.ctrl.education.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.ctrl.education.core.constant.SystemConstant;
 import com.ctrl.education.core.node.ZTreeNode;
-import com.ctrl.education.core.utils.PageUtils;
-import com.ctrl.education.core.utils.Query;
 import com.ctrl.education.core.utils.Result;
 import com.ctrl.education.core.utils.ToolUtils;
+import com.ctrl.education.dao.SysRoleMapper;
 import com.ctrl.education.dto.SysRoleDto;
-import com.ctrl.education.model.QzEnterprise;
 import com.ctrl.education.model.SysRelation;
 import com.ctrl.education.model.SysRole;
-import com.ctrl.education.dao.SysRoleMapper;
-import com.ctrl.education.model.SysUser;
+import com.ctrl.education.model.SysUserRole;
 import com.ctrl.education.service.ISysRelationService;
 import com.ctrl.education.service.ISysRoleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.ctrl.education.service.ISysUserService;
+import com.ctrl.education.service.ISysUserRoleService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,10 +36,11 @@ import java.util.Map;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
     @Autowired
     private ISysRelationService iSysRelationService;
-    @Autowired
-    private ISysUserService iSysUserService;
+
     @Autowired
     private ISysRoleService iSysRoleService;
+    @Autowired
+    private ISysUserRoleService iSysUserRoleService;
 
     @Override
     @Transactional(
@@ -66,7 +61,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             rollbackFor = {Exception.class}
     )
     public Result modify(SysRole sysRole) {
-        this.roleSetPids(sysRole);
+        //this.roleSetPids(sysRole);
         boolean flag = this.updateById(sysRole);
         if (flag) {
             return Result.ok(SystemConstant.UPDATE_SUCCESS);
@@ -104,41 +99,43 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     )
     public Result setAuthority(String roleId, String ids) {
         if (StringUtils.isEmpty(roleId)) {
-            return Result.error("请求错误");
+            return Result.error(SystemConstant.PARAM_NULL_ERROR);
         }
-        int del = iSysRoleService.deleteRolesById(roleId);
-        if (del>0) {
-            String[] idss = ids.split(",");
-            int count = 0;
-            for (String id:idss) {
-                SysRelation sysRelation = new SysRelation();
-                sysRelation.setRoleid(roleId);
-                sysRelation.setMenuid(String.valueOf(id));
-                boolean bool = iSysRelationService.insert(sysRelation);
-                if(bool){
-                    count++;
-                }
-            }
-            if(idss.length==count){
-                return Result.ok(SystemConstant.ALLOT_ROLE_SUCCESS_MSG);
-            }else{
-                return Result.error(SystemConstant.ALLOT_ROLE_FAILE_MSG);
+        iSysRoleService.deleteRolesById(roleId);
+        String[] idss = ids.split(",");
+        int count = 0;
+        for (String id : idss) {
+            SysRelation sysRelation = new SysRelation();
+            sysRelation.setRoleid(roleId);
+            sysRelation.setMenuid(String.valueOf(id));
+            boolean bool = iSysRelationService.insert(sysRelation);
+            if (bool) {
+                count++;
             }
         }
-
-        return null;
+        if (idss.length == count) {
+            return Result.ok(SystemConstant.ALLOT_AUTH_SUCCESS_MSG);
+        } else {
+            return Result.error(SystemConstant.ALLOT_AUTH_FAILE_MSG);
+        }
     }
 
     @Override
     public Result roleTreeListByUserId(String userId) {
-        SysUser sysUser = iSysUserService.selectById(userId);
-        String roleId = sysUser.getRoleId();
-        if (StringUtils.isEmpty(roleId)) {
-            return this.tree();
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_id", userId);
+        List<SysUserRole> list = iSysUserRoleService.selectByMap(map);
+        if (ToolUtils.isEmpty(list)) {
+            List<ZTreeNode> roleTreeList = this.iSysRoleService.roleTreeList();
+            return Result.ok().put(SystemConstant.RESULT_KEY, roleTreeList);
         } else {
-            String[] roleIds = roleId.split(",");
-            List<ZTreeNode> list = this.baseMapper.roleTreeListByRoleId(roleIds);
-            return Result.ok().put(SystemConstant.RESULT_KEY, list);
+            List<String> roleList=new ArrayList<>();
+            for (SysUserRole sysUserRole:list) {
+                roleList.add(sysUserRole.getRoleId());
+            }
+            String[] strings = new String[roleList.size()];
+            List<ZTreeNode> roleTreeListByUserId = this.iSysRoleService.roleTreeListByRoleId(roleList.toArray(strings));
+            return Result.ok().put(SystemConstant.RESULT_KEY, roleTreeListByUserId);
         }
     }
 
@@ -176,7 +173,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     private void roleSetPids(SysRole sysRole) {
-        if (StringUtils.isEmpty(sysRole.getPid()) || sysRole.getPid().equals(0)) {
+        if (StringUtils.isEmpty(sysRole.getPid()) || sysRole.getPid().equals("0")) {
             sysRole.setPid("0");
             sysRole.setPids("0,");
         } else {
@@ -193,4 +190,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         int count = baseMapper.deleteRolesById(roleId);
         return count;
     }
+
+    @Override
+    public List<ZTreeNode> roleTreeList() {
+        return baseMapper.roleTreeList();
+    }
+
+    @Override
+    public List<ZTreeNode> roleTreeListByRoleId(String[] roleId) {
+        return this.baseMapper.roleTreeListByRoleId(roleId);
+    }
+
 }

@@ -39,7 +39,8 @@ public class UploadUtil {
                     String reName = String.valueOf(System.currentTimeMillis());
                     File targetFile = new File(ImageConstant.ROOT_PATH +folderPath, reName + suffix);
                     if (!targetFile.exists()) {
-                        targetFile.mkdirs();
+                        targetFile.getParentFile().mkdirs();
+                        targetFile.createNewFile();
                     }
                     //保存
                     try {

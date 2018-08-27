@@ -1,6 +1,7 @@
 package com.ctrl.education.model;
 
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.ctrl.education.core.validator.group.AddGroup;
 import com.ctrl.education.core.validator.group.UpdateGroup;
+import com.ctrl.education.dto.SysUserOfficeDto;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -39,23 +42,21 @@ public class SysUser extends Model<SysUser> {
      */
     @TableField("username")
     @NotNull(message = "登录名称不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 4, max = 25, message = "企业名称长度为1-25。", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 25, message = "登录名称长度为1-25。", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
     /**
      * 密码
      */
-    @NotNull(message = "密码不可为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 1, max = 30, message = "密码长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "密码不可为空", groups = {AddGroup.class})
+    @Length(min = 1, max = 250, message = "密码长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String password;
     /**
      * 真实姓名
      */
-    @Length(min = 1, max = 30, message = "真实长度为1-30。", groups = {AddGroup.class, UpdateGroup.class})
     private String realname;
     /**
      * 昵称
      */
-    @Length(min = 1, max = 50, message = "昵称长度为0-0。", groups = {AddGroup.class, UpdateGroup.class})
     private String nickname;
     /**
      * 头像
@@ -74,23 +75,14 @@ public class SysUser extends Model<SysUser> {
      * 邮箱
      */
     @Email(message = "邮箱格式有误。", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 1, max = 80, message = "邮箱长度为0-0。", groups = {AddGroup.class, UpdateGroup.class})
     private String email;
     /**
      * 手机号
      */
-    @Length(min = 12, max =12, message = "手机号码长度为12位。", groups = {AddGroup.class, UpdateGroup.class})
-    @Pattern(regexp = "^1[3-9]{1}\\d{9}$", message = "手机号格式不正确。", groups = {AddGroup.class, UpdateGroup.class})
     private String mobile;
-    /**
-     * 角色ID数组，逗号隔开
-     */
-    @TableField("role_id")
-    private String roleId;
     /**
      * 座机号
      */
-    @Length(min = 1, max = 18, message = "座机号码长度为1-18。", groups = {AddGroup.class, UpdateGroup.class})
     private String phone;
     /**
      * 账号状态，1：启用，2：冻结 3：删除
@@ -102,21 +94,22 @@ public class SysUser extends Model<SysUser> {
     @TableField("create_time")
     private Date createTime;
     /**
-     * 机构id
-     */
-    @TableField("office_id")
-    private String officeId;
-
-    @TableField("post")
-    private String post;
-    /**
      * 最后登录时间
      */
     @TableField("last_login_time")
     private Date lastLoginTime;
-    public SysUser(){
+    /**
+     * 扩展信息集合
+     */
+    @TableField(exist = false)
+    private List<SysUserOffice> extendInfo;
+    @TableField(exist = false)
+    private List<SysUserOfficeDto> sysUserOfficeDtos;
+
+    public SysUser() {
     }
-    public SysUser(SysUser sysUser){
+
+    public SysUser(SysUser sysUser) {
         super();
         this.id = sysUser.getId();
         this.username = sysUser.getUsername();
@@ -131,9 +124,7 @@ public class SysUser extends Model<SysUser> {
         this.phone = sysUser.getPhone();
         this.status = sysUser.getStatus();
         this.createTime = sysUser.getCreateTime();
-        this.officeId = sysUser.getOfficeId();
         this.lastLoginTime = sysUser.getLastLoginTime();
-        this.post = sysUser.getPost();
     }
 
     public String getId() {
@@ -216,14 +207,6 @@ public class SysUser extends Model<SysUser> {
         this.mobile = mobile;
     }
 
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -248,28 +231,29 @@ public class SysUser extends Model<SysUser> {
         this.createTime = createTime;
     }
 
-    public String getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
-    }
 
     public Date getLastLoginTime() {
         return lastLoginTime;
+    }
+
+    public List<SysUserOffice> getExtendInfo() {
+        return extendInfo;
+    }
+
+    public void setExtendInfo(List<SysUserOffice> extendInfo) {
+        this.extendInfo = extendInfo;
     }
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public String getPost() {
-        return post;
+    public List<SysUserOfficeDto> getSysUserOfficeDtos() {
+        return sysUserOfficeDtos;
     }
 
-    public void setPost(String post) {
-        this.post = post;
+    public void setSysUserOfficeDtos(List<SysUserOfficeDto> sysUserOfficeDtos) {
+        this.sysUserOfficeDtos = sysUserOfficeDtos;
     }
 
     @Override
@@ -280,23 +264,21 @@ public class SysUser extends Model<SysUser> {
     @Override
     public String toString() {
         return "SysUser{" +
-        "id=" + id +
-        ", username=" + username +
-        ", password=" + password +
-        ", realname=" + realname +
-        ", nickname=" + nickname +
-        ", avatar=" + avatar +
-        ", birthday=" + birthday +
-        ", gender=" + gender +
-        ", email=" + email +
-        ", mobile=" + mobile +
-        ", roleId=" + roleId +
-        ", phone=" + phone +
-        ", status=" + status +
-        ", createTime=" + createTime +
-        ", officeId=" + officeId +
-        ", post=" + post +
-        ", lastLoginTime=" + lastLoginTime +
-        "}";
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", realname='" + realname + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", lastLoginTime=" + lastLoginTime +
+                ", extendInfo=" + extendInfo +
+                '}';
     }
 }

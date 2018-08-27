@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzAppApkversionsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzAppApkversions">
+        <id column="id" property="id" />
+        <result column="apkname" property="apkname" />
+        <result column="apkversion" property="apkversion" />
+        <result column="apkurl" property="apkurl" />
+        <result column="isnew" property="isnew" />
+        <result column="filesize" property="filesize" />
+        <result column="remark" property="remark" />
+        <result column="updatetime" property="updatetime" />
+        <result column="clienttype" property="clienttype" />
+        <result column="type" property="type" />
+        <result column="two_code" property="twoCode" />
+    </resultMap>
+    <update id="updateIsNotNew">
+        update qz_app_apkversions set isnew =0 where id &lt;&gt;#{id} and type=#{type}
+    </update>
+</mapper>

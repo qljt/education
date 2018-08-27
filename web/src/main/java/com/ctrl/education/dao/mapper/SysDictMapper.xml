@@ -5,31 +5,37 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ctrl.education.model.SysDict">
         <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="pid" property="pid" />
-        <result column="name" property="name" />
+        <result column="type_id" property="typeId" />
+        <result column="parent_id" property="parentId" />
+        <result column="label" property="label" />
+        <result column="value" property="value" />
         <result column="sort" property="sort" />
         <result column="remark" property="remark" />
     </resultMap>
-    <select id="getTree" resultType="com.ctrl.education.core.node.ZTreeNode">
-         SELECT
-        m1.id AS id,
-        m1.name,
-        m1.code,
-        IFNULL(m1.pid,0) AS pid,
-        m1.name,
-        (
-        CASE
-        WHEN (m2.id = 0 OR m2.id IS NULL) THEN
-        'true'
-        ELSE
-        'false'
-        END
-        ) AS isOpen
-        FROM
-        sys_dict m1
-        LEFT JOIN sys_dict m2 ON m1.pid = m2.id
-        WHERE m1.pid=0
-    </select>
+    <resultMap id="getDictsByTypeNameResultMap" type="com.ctrl.education.dto.SysDictDto">
+        <id column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="value" property="value"/>
+    </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type_id AS typeId, parent_id AS parentId, label, value, sort, remark
+    </sql>
+    <select id="getDictsByTypeName" resultMap="getDictsByTypeNameResultMap">
+        SELECT
+            sd.id, sd.label, sd.`value`
+        FROM
+            sys_dict sd
+            LEFT JOIN sys_dict_type sdt ON sd.type_id = sdt.id
+        WHERE
+            sdt.`name` = #{typeName}
+    </select>
+    <select id="selectExamType" resultMap="BaseResultMap">
+        select id,label,value
+        from sys_dict
+        where type_id = (select id
+                          from sys_dict_type
+                          where name = 'exam_grade')
+    </select>
 </mapper>

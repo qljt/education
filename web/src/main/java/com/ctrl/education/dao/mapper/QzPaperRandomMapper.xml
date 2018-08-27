@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzPaperRandomMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzPaperRandom">
+        <id column="id" property="id"/>
+        <result column="paper_id" property="paperId"/>
+        <result column="part_id" property="partId"/>
+        <result column="question_count" property="questionCount"/>
+        <result column="question_type" property="questionType"/>
+        <result column="random_type" property="randomType"/>
+        <result column="knowlcode_id" property="knowlcodeId"/>
+        <result column="knowlcode_num" property="knowlcodeNum"/>
+        <result column="difficulty" property="difficulty"/>
+        <result column="difficulty_num" property="difficultyNum"/>
+        <result column="question_type_name" property="questionTypeName"/>
+        <result column="knowlcode_name" property="knowlcodeName"/>
+    </resultMap>
+</mapper>

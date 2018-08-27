@@ -4,9 +4,9 @@ spring:
     #jdbc配置
         driver-class-name: com.mysql.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://47.92.93.50:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        url: jdbc:mysql://47.92.97.133:3306/jn_qljt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: root
-        password: 52rabbit1314
+        password: root
         #数据库连接池配置
         max-active: 20
         #初始化数量
@@ -29,7 +29,7 @@ spring:
         filters: stat, wall, log4j
   redis:
     host: 127.0.0.1
-    password: foobared
+    password: 123456
     port: 6379
     timeout: 0
     pool:
@@ -71,7 +71,7 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
 logging:
-  path: ../logs/
+  path: logs/
   level.root: INFO
   file: education.log
 server:

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctrl.education.dao.QzPaperQuestionTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ctrl.education.model.QzPaperQuestionType">
+        <id column="id" property="id"/>
+        <result column="paper_id" property="paperId"/>
+        <result column="part_id" property="partId"/>
+        <result column="question_count" property="questionCount"/>
+        <result column="question_type" property="questionType"/>
+        <result column="alias" property="alias"/>
+        <result column="sort" property="sort"/>
+        <result column="deduct" property="deduct"/>
+        <result column="score" property="score"/>
+        <result column="sum_score" property="sum_score"/>
+        <result column="is_have_example" property="isHaveExample"/>
+        <result column="example_id" property="exampleId"/>
+        <result column="explains" property="explains"/>
+    </resultMap>
+    <select id="listByPaperId" parameterType="java.lang.String">
+        select * from qz_paper_question_type where paper_id = #{paperId} and alias = #{alias}
+    </select>
+</mapper>

@@ -89,10 +89,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
     public Result remove(String id) {
         if(StringUtils.isEmpty(id)){
-            return Result.ok(SystemConstant.PARAM_ERROR);
+            return Result.error(SystemConstant.PARAM_ERROR);
+        }
+       List<Map<String,Object>> list =  baseMapper.selectChildById(id);
+        if(ToolUtils.isNotEmpty(list)){
+            return Result.error(SystemConstant.EXSIT_CHILD_MENU);
         }
         boolean flag = this.deleteById(id);
 
@@ -137,5 +143,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<MenuNode> getMenusByRoleIds(List<String> roleIds) {
         return this.baseMapper.getMenusByRoleIds(roleIds);
+    }
+
+    @Override
+    public Map<String, Object> selectMenuById(String id) {
+        Map<String, Object> map = baseMapper.selectMenuById(id);
+        return map;
     }
 }

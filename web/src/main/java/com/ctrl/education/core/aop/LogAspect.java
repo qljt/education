@@ -4,7 +4,6 @@ import com.ctrl.education.core.annotation.BussinessLog;
 import com.ctrl.education.core.constant.SysConstant;
 import com.ctrl.education.core.log.factory.LogManager;
 import com.ctrl.education.core.log.factory.LogTaskFactory;
-import com.ctrl.education.core.support.HttpKit;
 import com.ctrl.education.core.utils.IpUtils;
 import com.ctrl.education.core.utils.JSONUtils;
 import com.ctrl.education.core.utils.Result;
@@ -13,7 +12,6 @@ import com.ctrl.education.model.SysUser;
 import com.ctrl.education.shiro.ShiroKit;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -21,13 +19,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * com.ctrl.education.core.aop
